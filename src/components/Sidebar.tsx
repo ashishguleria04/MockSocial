@@ -54,7 +54,7 @@ export const Sidebar = () => {
             <MessageSquare className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-100 tracking-tight">Chat Mockup</h1>
+            <h1 className="text-2xl font-bold text-slate-100 tracking-tight">MockSocial</h1>
             <p className="text-sm text-slate-400 font-medium mt-1">Create realistic screenshots</p>
           </div>
         </div>
