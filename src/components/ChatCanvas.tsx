@@ -23,10 +23,13 @@ export const ChatCanvas = () => {
   };
 
   return (
-    <div className="flex items-center justify-center p-8 bg-gray-100 min-h-screen">
+    <div className="flex items-center justify-center p-12 min-h-screen">
       <div
         id="chat-canvas"
-        className="relative w-[375px] h-[812px] bg-white shadow-2xl overflow-hidden text-black font-sans"
+        className="relative w-[375px] h-[812px] bg-white shadow-[0_30px_100px_rgba(0,0,0,0.4)] rounded-[2.5rem] overflow-hidden text-black font-sans border border-slate-700/30"
+        style={{
+          boxShadow: '0 30px 100px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1) inset'
+        }}
       >
         {renderSkin()}
       </div>
