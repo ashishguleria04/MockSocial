@@ -1,0 +1,16 @@
+{
+  "name": "temp-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "html-to-image": "^1.11.13",
+    "lucide-react": "^0.562.0",
+    "zustand": "^5.0.10"
+  }
+}
