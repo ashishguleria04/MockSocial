@@ -1,4 +1,4 @@
-# Chat Mockup Generator 📱
+# MockSocial 📱
 
 A pixel-perfect chat simulation tool built with Next.js 15, Tailwind CSS, and Zustand. Create fake chat screenshots for Signal, iMessage, and WhatsApp.
 
