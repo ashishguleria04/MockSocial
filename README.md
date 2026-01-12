@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chat Mockup Generator 📱
+
+A pixel-perfect chat simulation tool built with Next.js 15, Tailwind CSS, and Zustand. Create fake chat screenshots for Signal, iMessage, and WhatsApp.
+
+## Features
+
+- 🎨 **Multi-Platform Support**: Switch instantly between Signal, iMessage (Coming Soon), and WhatsApp (Coming Soon).
+- ✏️ **Live Editing**: Edit message text, toggle sender (Me/Them), and update contact info in real-time.
+- 🖼️ **High-Res Export**: Download 2x scale PNGs perfect for sharing or design mocks.
+- 💾 **State Persistence**: Your work is saved automatically to local storage.
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Open default port**:
+   Visit [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How to Add a New Platform (e.g., Discord)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project uses a **Strategy Pattern** for rendering platform "Skins". To add a new one:
 
-## Learn More
+1.  **Update the Store Types**:
+    - Open `src/store/useChatStore.ts`.
+    - Add `'discord'` to the `Platform` type union.
+    ```typescript
+    export type Platform = 'signal' | 'imessage' | 'whatsapp' | 'discord';
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+2.  **Create the Skin Component**:
+    - Create a new file `src/components/skins/DiscordSkin.tsx`.
+    - Build your component. Access global state using `useChatStore`.
+    ```tsx
+    export const DiscordSkin = () => {
+      const { messages } = useChatStore();
+      return (
+         <div className="bg-[#36393f] text-white h-full p-4">
+            {/* ... implementation ... */}
+         </div>
+      )
+    }
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3.  **Register the Skin**:
+    - Open `src/components/ChatCanvas.tsx`.
+    - Import your new component.
+    - Add a case to the `renderSkin` switch statement.
+    ```tsx
+    case "discord":
+        return <DiscordSkin />;
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4.  **Update the Sidebar UI**:
+    - Open `src/components/Sidebar.tsx`.
+    - Add `'discord'` to the platform list array so the button appears.
 
-## Deploy on Vercel
+## Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS
+- **State**: Zustand (with Persist middleware)
+- **Icons**: Lucide React
+- **Export**: html-to-image
