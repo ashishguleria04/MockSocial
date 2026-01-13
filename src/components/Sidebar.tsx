@@ -78,7 +78,7 @@ export const Sidebar = () => {
       <div className="px-6 py-5 border-b border-gray-200 bg-white">
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-black text-gray-900 tracking-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>MockSocial</h1>
+            <h1 className="text-3xl font-black text-gray-700 tracking-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>MockSocial</h1>
           </div>
           
           <div className="flex gap-3">
