@@ -5,6 +5,9 @@ import { useChatStore } from "@/store/useChatStore";
 import { SignalSkin } from "./skins/SignalSkin";
 import { IMessageSkin } from "./skins/IMessageSkin";
 import { WhatsAppSkin } from "./skins/WhatsAppSkin";
+import { MessengerSkin } from "./skins/MessengerSkin";
+import { TelegramSkin } from "./skins/TelegramSkin";
+import { DiscordSkin } from "./skins/DiscordSkin";
 import { Download, Play } from "lucide-react";
 import { toPng } from "html-to-image";
 
@@ -19,6 +22,12 @@ export const ChatCanvas = () => {
         return <IMessageSkin />;
       case "whatsapp":
         return <WhatsAppSkin />;
+      case "messenger":
+        return <MessengerSkin />;
+      case "telegram":
+        return <TelegramSkin />;
+      case "discord":
+        return <DiscordSkin />;
       default:
         return (
           <div className="flex flex-col items-center justify-center h-full bg-gray-50 text-gray-400 p-8 text-center">
@@ -63,7 +72,7 @@ export const ChatCanvas = () => {
             {/* Inner Screen Container */}
             <div className="relative w-full h-full bg-black rounded-[2.5rem] overflow-hidden border-[6px] border-black">
                  {/* Status Bar */}
-                 <div className={`absolute top-0 left-0 right-0 h-[44px] z-50 flex items-center justify-between px-6 font-medium text-[15px] select-none ${platform === 'whatsapp' ? 'text-white mix-blend-plus-lighter' : 'text-black'}`}>
+                 <div className={`absolute top-0 left-0 right-0 h-[44px] z-50 flex items-center justify-between px-6 font-medium text-[15px] select-none ${platform === 'whatsapp' || platform === 'discord' ? 'text-white mix-blend-plus-lighter' : 'text-black'}`}>
                       <span>9:41</span>
                       <div className="flex items-center gap-1.5">
                           <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M12 2C7.28 2 2.87 4.16 0 7.42L12 22 24 7.42C21.13 4.16 16.72 2 12 2Z" /></svg>

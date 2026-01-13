@@ -51,8 +51,8 @@ interface PlatformItem {
 const platforms: PlatformItem[] = [
   { id: 'whatsapp', name: 'WhatsApp', icon: <Icons.WhatsApp className="w-5 h-5 fill-current" />, color: 'text-green-600', bgColor: 'bg-green-50', locked: false },
   { id: 'messenger', name: 'Messenger', icon: <Icons.Messenger className="w-5 h-5 fill-current" />, color: 'text-blue-500', bgColor: 'bg-blue-50', locked: false },
-  { id: 'telegram', name: 'Telegram', icon: <Icons.Telegram className="w-5 h-5 fill-current" />, color: 'text-sky-500', bgColor: 'bg-sky-50', locked: true },
-  { id: 'discord', name: 'Discord', icon: <Icons.Discord className="w-5 h-5 fill-current" />, color: 'text-indigo-600', bgColor: 'bg-indigo-50', locked: true },
+  { id: 'telegram', name: 'Telegram', icon: <Icons.Telegram className="w-5 h-5 fill-current" />, color: 'text-sky-500', bgColor: 'bg-sky-50', locked: false },
+  { id: 'discord', name: 'Discord', icon: <Icons.Discord className="w-5 h-5 fill-current" />, color: 'text-indigo-600', bgColor: 'bg-indigo-50', locked: false },
   { id: 'imessage', name: 'iMessage', icon: <Icons.Apple className="w-5 h-5 fill-current" />, color: 'text-slate-800', bgColor: 'bg-slate-100', locked: true },
   { id: 'instagram', name: 'Instagram', icon: <Icons.Instagram className="w-5 h-5" />, color: 'text-pink-600', bgColor: 'bg-pink-50', locked: true },
   { id: 'slack', name: 'Slack', icon: <Icons.Slack className="w-5 h-5 fill-current" />, color: 'text-purple-700', bgColor: 'bg-purple-50', locked: false },
