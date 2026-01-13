@@ -481,13 +481,88 @@ export const Sidebar = () => {
                   variants={sectionVariants}
                   initial="hidden"
                   animate="visible"
-                  className="p-6 bg-gradient-to-br from-secondary/50 to-secondary/30 rounded-xl border border-dashed border-border text-center"
+                  className="space-y-4"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-background shadow-soft mx-auto mb-3 flex items-center justify-center">
-                    <Sparkles className="w-6 h-6 text-primary" />
+                  <div className="space-y-4 pt-1">
+                      <div className="flex items-center justify-between">
+                          <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest ml-0.5">Status Bar</label>
+                      </div>
+
+                      <div className="space-y-3">
+                          {/* Time */}
+                          <div className="space-y-1.5">
+                              <label className="text-[10px] font-medium text-muted-foreground ml-0.5">Time</label>
+                              <Input
+                                  type="text"
+                                  value={store.statusBar.time}
+                                  onChange={(e) => store.updateStatusBar({ time: e.target.value })}
+                                  className="h-9 bg-secondary/50 border-border font-medium text-sm"
+                              />
+                          </div>
+
+                          {/* Battery Level Slider */}
+                          <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                  <label className="text-[10px] font-medium text-muted-foreground ml-0.5">Battery Level</label>
+                                  <span className="text-[10px] font-bold text-foreground">{store.statusBar.batteryLevel}%</span>
+                              </div>
+                              <input 
+                                  type="range" 
+                                  min="0" 
+                                  max="100" 
+                                  value={store.statusBar.batteryLevel} 
+                                  onChange={(e) => store.updateStatusBar({ batteryLevel: parseInt(e.target.value) })}
+                                  className="w-full h-1.5 bg-secondary rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary"
+                              />
+                          </div>
+
+                          {/* Signal Strength Slider */}
+                          <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                  <label className="text-[10px] font-medium text-muted-foreground ml-0.5">Signal</label>
+                                  <div className="flex gap-0.5">
+                                      {[1, 2, 3, 4].map(bar => (
+                                          <div key={bar} className={`w-1 h-2 rounded-[1px] ${bar <= store.statusBar.signalStrength ? 'bg-primary' : 'bg-secondary'}`} />
+                                      ))}
+                                  </div>
+                              </div>
+                              <input 
+                                  type="range" 
+                                  min="1" 
+                                  max="4" 
+                                  step="1"
+                                  value={store.statusBar.signalStrength} 
+                                  onChange={(e) => store.updateStatusBar({ signalStrength: parseInt(e.target.value) })}
+                                  className="w-full h-1.5 bg-secondary rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary"
+                              />
+                          </div>
+                      
+                           {/* Toggles */}
+                           <div className="flex items-center justify-between pt-1">
+                                <label className="text-[11px] font-medium text-foreground ml-0.5">WiFi</label>
+                                <Button 
+                                    size="sm"
+                                    variant={store.statusBar.wifi ? "default" : "outline"}
+                                    onClick={() => store.updateStatusBar({ wifi: !store.statusBar.wifi })}
+                                    className={`h-7 w-12 rounded-full transition-all ${store.statusBar.wifi ? 'bg-primary text-primary-foreground' : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'}`}
+                                >
+                                    {store.statusBar.wifi ? "On" : "Off"}
+                                </Button>
+                           </div>
+                           
+                           <div className="flex items-center justify-between">
+                                <label className="text-[11px] font-medium text-foreground ml-0.5">Battery %</label>
+                                <Button 
+                                    size="sm"
+                                    variant={store.statusBar.showBatteryPercentage ? "default" : "outline"}
+                                    onClick={() => store.updateStatusBar({ showBatteryPercentage: !store.statusBar.showBatteryPercentage })}
+                                    className={`h-7 w-12 rounded-full transition-all ${store.statusBar.showBatteryPercentage ? 'bg-primary text-primary-foreground' : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'}`}
+                                >
+                                    {store.statusBar.showBatteryPercentage ? "On" : "Off"}
+                                </Button>
+                           </div>
+                      </div>
                   </div>
-                  <p className="text-sm text-foreground font-bold">More customization coming soon!</p>
-                  <p className="text-xs text-muted-foreground mt-1">Themes, colors, and fonts</p>
                 </motion.div>
               </AccordionContent>
             </AccordionItem>
