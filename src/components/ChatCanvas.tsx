@@ -49,33 +49,33 @@ export const ChatCanvas = () => {
 
   return (
     <div className="flex items-center justify-center p-8 min-h-screen relative">
-      <div id="chat-canvas" className="relative transition-all duration-300 ease-in-out transform hover:scale-[1.02]">
+      <div id="chat-canvas" className="relative transition-all duration-300 ease-in-out transform hover:scale-[1.01]">
         {/* Phone Frame */}
-        <div className="relative w-[400px] h-[850px] bg-[#121212] rounded-[3.5rem] shadow-[0_0_0_12px_#333333,0_0_0_13px_#000000,0_30px_60px_rgba(0,0,0,0.5)] border-[8px] border-[#222222] overflow-hidden">
+        <div className="relative w-[340px] h-[700px] bg-[#121212] rounded-[3rem] shadow-[0_0_0_9px_#333333,0_0_0_10px_#000000,0_20px_50px_rgba(0,0,0,0.5)] border-[6px] border-[#222222] overflow-hidden">
             
             {/* Side Buttons */}
-            <div className="absolute top-28 -left-[20px] w-[12px] h-10 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Mute */}
-            <div className="absolute top-44 -left-[20px] w-[12px] h-16 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Vol Up */}
-            <div className="absolute top-64 -left-[20px] w-[12px] h-16 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Vol Down */}
-            <div className="absolute top-52 -right-[20px] w-[12px] h-24 bg-[#222222] rounded-r-lg shadow-sm" /> {/* Power */}
+            <div className="absolute top-24 -left-[14px] w-[8px] h-8 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Mute */}
+            <div className="absolute top-36 -left-[14px] w-[8px] h-12 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Vol Up */}
+            <div className="absolute top-52 -left-[14px] w-[8px] h-12 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Vol Down */}
+            <div className="absolute top-44 -right-[14px] w-[8px] h-20 bg-[#222222] rounded-r-lg shadow-sm" /> {/* Power */}
 
             {/* Inner Screen Container */}
-            <div className="relative w-full h-full bg-black rounded-[2.8rem] overflow-hidden border-[6px] border-black">
+            <div className="relative w-full h-full bg-black rounded-[2.5rem] overflow-hidden border-[6px] border-black">
                 {/* Dynamic Island / Camera Cutout */}
-                <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[126px] h-[36px] bg-black rounded-full z-50 flex items-center justify-center pointer-events-none">
-                     <div className="w-[124px] h-[34px] bg-black rounded-full relative overflow-hidden flex items-center justify-end px-3">
-                         <div className="w-2.5 h-2.5 rounded-full bg-[#1a1a1a] shadow-inner" />
-                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-purple-900/20 blur-md rounded-full" />
+                <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-[96px] h-[28px] bg-black rounded-full z-50 flex items-center justify-center pointer-events-none">
+                     <div className="w-[92px] h-[26px] bg-black rounded-full relative overflow-hidden flex items-center justify-end px-2">
+                         <div className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a] shadow-inner" />
+                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-purple-900/20 blur-sm rounded-full" />
                      </div>
                 </div>
 
                  {/* Screen Content */}
-                 <div className="w-full h-full pt-0 bg-white overflow-hidden rounded-[2.5rem]">
+                 <div className="w-full h-full pt-1 bg-white overflow-hidden rounded-[2.2rem]">
                     {renderSkin()}
                  </div>
                  
                  {/* Home Indicator line (iOS style) */}
-                 <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[130px] h-1.5 bg-black/90 rounded-full z-50 pointer-events-none mix-blend-difference" />
+                 <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-[110px] h-1 bg-black/90 rounded-full z-50 pointer-events-none mix-blend-difference" />
             </div>
         </div>
       </div>
