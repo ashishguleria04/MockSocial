@@ -561,8 +561,29 @@ export const Sidebar = () => {
                                     {store.statusBar.showBatteryPercentage ? "On" : "Off"}
                                 </Button>
                            </div>
-                      </div>
-                  </div>
+                   </div>
+
+                   <Separator className="bg-border/50" />
+
+                   {/* Dark Mode Config */}
+                   <div className="space-y-3">
+                       <div className="flex items-center justify-between">
+                          <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest ml-0.5">Theme</label>
+                       </div>
+                       
+                       <div className="flex items-center justify-between">
+                            <label className="text-[11px] font-medium text-foreground ml-0.5">Dark Mode</label>
+                            <Button 
+                                size="sm"
+                                variant={store.isDarkMode ? "default" : "outline"}
+                                onClick={() => store.toggleDarkMode(!store.isDarkMode)}
+                                className={`h-7 w-12 rounded-full transition-all ${store.isDarkMode ? 'bg-primary text-primary-foreground' : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'}`}
+                            >
+                                {store.isDarkMode ? "On" : "Off"}
+                            </Button>
+                       </div>
+                   </div>
+                 </div>
                 </motion.div>
               </AccordionContent>
             </AccordionItem>

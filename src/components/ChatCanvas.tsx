@@ -19,7 +19,7 @@ import { Download } from "lucide-react";
 import { toPng } from "html-to-image";
 
 export const ChatCanvas = () => {
-  const { platform } = useChatStore();
+  const { platform, isDarkMode } = useChatStore();
 
   const renderSkin = () => {
     switch (platform) {
@@ -92,16 +92,16 @@ export const ChatCanvas = () => {
             <div className="absolute top-44 -right-[14px] w-[8px] h-20 bg-[#222222] rounded-r-lg shadow-sm" /> {/* Power */}
 
             {/* Inner Screen Container */}
-            <div className="relative w-full h-full bg-black rounded-[2.5rem] overflow-hidden border-[6px] border-black">
+            <div className={`relative w-full h-full rounded-[2.5rem] overflow-hidden border-[6px] border-black ${isDarkMode ? 'bg-black' : 'bg-black'}`}>
                  <StatusBar platform={platform} />
 
                  {/* Screen Content */}
-                 <div className="w-full h-full bg-white overflow-hidden rounded-[2.2rem] relative">
+                 <div className="w-full h-full overflow-hidden rounded-[2.2rem] relative">
                     {renderSkin()}
                  </div>
                  
                  {/* Home Indicator line (iOS style) */}
-                 <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-[110px] h-1.5 bg-black/20 rounded-full z-50 pointer-events-none mix-blend-luminosity" />
+                 <div className={`absolute bottom-2 left-1/2 -translate-x-1/2 w-[110px] h-1.5 rounded-full z-50 pointer-events-none ${isDarkMode ? 'bg-white/20' : 'bg-black/20'}`} />
             </div>
         </div>
       </div>

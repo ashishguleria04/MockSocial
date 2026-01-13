@@ -32,10 +32,12 @@ interface ChatState {
   contact: Contact;
   messages: Message[];
   statusBar: StatusBarConfig;
+  isDarkMode: boolean;
 
   setPlatform: (platform: Platform) => void;
   updateContact: (contact: Partial<Contact>) => void;
   updateStatusBar: (updates: Partial<StatusBarConfig>) => void;
+  toggleDarkMode: (isDark: boolean) => void;
   addMessage: (message: Omit<Message, 'id'>) => void;
   updateMessage: (id: string, updates: Partial<Message>) => void;
   deleteMessage: (id: string) => void;
@@ -57,6 +59,7 @@ export const useChatStore = create<ChatState>()(
         signalStrength: 4,
         wifi: true,
       },
+      isDarkMode: false,
       messages: [
         {
           id: '1',
@@ -86,6 +89,7 @@ export const useChatStore = create<ChatState>()(
         set((state) => ({ contact: { ...state.contact, ...updates } })),
       updateStatusBar: (updates) =>
         set((state) => ({ statusBar: { ...state.statusBar, ...updates } })),
+      toggleDarkMode: (isDark) => set({ isDarkMode: isDark }),
       addMessage: (msg) =>
         set((state) => ({
           messages: [

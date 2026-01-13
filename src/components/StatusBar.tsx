@@ -8,13 +8,14 @@ interface StatusBarProps {
 }
 
 export const StatusBar = ({ platform }: StatusBarProps) => {
-    const { statusBar } = useChatStore();
+    const { statusBar, isDarkMode } = useChatStore();
     const { time, batteryLevel, showBatteryPercentage, signalStrength, wifi } = statusBar;
 
     // Determine text color based on platform
-    // WhatsApp (green header), Discord (Dark), X (Dark) use white text
-    // Others usually use black text on white/light backgrounds
-    const isWhiteText = ['whatsapp', 'discord', 'x'].includes(platform);
+    // In Dark Mode, almost all headers are dark -> White Text
+    // In Light Mode, most headers are White -> Black Text, EXCEPT WhatsApp (Green Header -> White Text)
+    const isWhiteText = isDarkMode || platform === 'whatsapp';
+    
     const textColor = isWhiteText ? 'text-white' : 'text-black';
 
     // Battery Color Logic

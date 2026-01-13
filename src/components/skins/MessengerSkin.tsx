@@ -5,14 +5,14 @@ import { useChatStore } from "@/store/useChatStore";
 import { ArrowLeft, Phone, Video, Info, Image as ImageIcon, Mic, ThumbsUp, PlusCircle, Smile } from "lucide-react";
 
 export const MessengerSkin = () => {
-    const { contact, messages } = useChatStore();
+    const { contact, messages, isDarkMode } = useChatStore();
 
     return (
-        <div className="flex flex-col h-full bg-white font-sans">
+        <div className={`flex flex-col h-full font-sans ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
             {/* Header */}
-            <div className="flex items-center justify-between px-4 pt-12 pb-3 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.05)] z-10 sticky top-0">
+            <div className={`flex items-center justify-between px-4 pt-12 pb-3 shadow-[0_1px_2px_rgba(0,0,0,0.05)] z-10 sticky top-0 ${isDarkMode ? 'bg-black shadow-[0_1px_2px_rgba(255,255,255,0.05)]' : 'bg-white shadow-[0_1px_2px_rgba(0,0,0,0.05)]'}`}>
                 <div className="flex items-center gap-3">
-                    <ArrowLeft className="w-6 h-6 text-[#0084ff]" />
+                    <ArrowLeft className={`w-6 h-6 ${isDarkMode ? 'text-[#0084ff]' : 'text-[#0084ff]'}`} />
                     <div className="relative">
                         {contact.avatar ? (
                             <img src={contact.avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover" />
@@ -24,7 +24,7 @@ export const MessengerSkin = () => {
                         <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="font-semibold text-[17px] text-black leading-tight">{contact.name}</span>
+                        <span className={`font-semibold text-[17px] leading-tight ${isDarkMode ? 'text-white' : 'text-black'}`}>{contact.name}</span>
                         <span className="text-[12px] text-gray-500 font-normal">Active now</span>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ export const MessengerSkin = () => {
                                     px-4 py-2.5 max-w-[70%] text-[15px] leading-snug
                                     ${isMe 
                                         ? "bg-[#0084ff] text-white" 
-                                        : "bg-[#f0f0f0] text-black"
+                                        : (isDarkMode ? "bg-[#303030] text-white" : "bg-[#f0f0f0] text-black")
                                     }
                                 `}
                                 style={{
@@ -103,18 +103,18 @@ export const MessengerSkin = () => {
             </div>
 
             {/* Footer */}
-            <div className="px-3 pt-2 pb-8 bg-white flex items-center gap-3 min-h-[50px] z-20">
+            <div className={`px-3 pt-2 pb-8 flex items-center gap-3 min-h-[50px] z-20 ${isDarkMode ? 'bg-black' : 'bg-white'}`}>
                 <div className="flex items-center gap-4 text-[#0084ff]">
                     <PlusCircle className="w-6 h-6 fill-current" />
                     <ImageIcon className="w-6 h-6 -ml-1" />
                     <Mic className="w-6 h-6 -ml-1" />
                 </div>
                 
-                <div className="flex-1 relative bg-[#f0f0f0] rounded-full h-9 flex items-center px-3">
+                <div className={`flex-1 relative rounded-full h-9 flex items-center px-3 ${isDarkMode ? 'bg-[#303030] text-white' : 'bg-[#f0f0f0] text-black'}`}>
                     <input 
                         type="text" 
                         placeholder="Aa" 
-                        className="bg-transparent border-none outline-none w-full text-[15px] placeholder:text-gray-500 text-black"
+                        className={`bg-transparent border-none outline-none w-full text-[15px] placeholder:text-gray-500 ${isDarkMode ? 'text-white' : 'text-black'}`}
                     />
                     <Smile className="w-6 h-6 text-[#0084ff] absolute right-2" />
                 </div>

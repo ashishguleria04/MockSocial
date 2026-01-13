@@ -5,17 +5,17 @@ import { useChatStore } from "@/store/useChatStore";
 import { ArrowLeft, MoreVertical, Paperclip, Smile, Mic, Send } from "lucide-react";
 
 export const TelegramSkin = () => {
-    const { contact, messages } = useChatStore();
+    const { contact, messages, isDarkMode } = useChatStore();
 
     return (
-        <div className="flex flex-col h-full bg-[#708499] relative font-sans">
+        <div className={`flex flex-col h-full relative font-sans ${isDarkMode ? 'bg-[#0f0f0f]' : 'bg-[#708499]'}`}>
              {/* Background Pattern Overlay */}
              <div className="absolute inset-0 z-0 opacity-40 bg-repeat bg-[url('https://telegram.org/file/811140600/1/9Na5yWbdS9w.287958/395627254c41461622')] bg-[length:400px]" />
 
             {/* Header */}
-            <div className="flex items-center justify-between px-4 pt-12 pb-2 bg-white z-10 shadow-sm shrink-0">
+            <div className={`flex items-center justify-between px-4 pt-12 pb-2 z-10 shadow-sm shrink-0 ${isDarkMode ? 'bg-[#212121] text-white' : 'bg-white text-gray-900'}`}>
                 <div className="flex items-center gap-4 flex-1">
-                    <ArrowLeft className="w-6 h-6 text-gray-500 cursor-pointer" />
+                    <ArrowLeft className={`w-6 h-6 cursor-pointer ${isDarkMode ? 'text-white' : 'text-gray-500'}`} />
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                         {contact.avatar ? (
                             <img src={contact.avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover" />
@@ -25,13 +25,12 @@ export const TelegramSkin = () => {
                             </div>
                         )}
                         <div className="flex flex-col overflow-hidden">
-                            <span className="font-semibold text-[16px] text-gray-900 leading-tight truncate">{contact.name}</span>
-                            <span className="text-[13px] text-gray-500 font-normal truncate">last seen recently</span>
+                            <span className={`font-semibold text-[16px] leading-tight truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{contact.name}</span>
+                            <span className={`text-[13px] font-normal truncate ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>last seen recently</span>
                         </div>
                     </div>
                 </div>
-                {/* No other icons usually in this view besides overflow, maybe call */}
-                 {/* Only overflow usually on right for basic chats */}
+                <MoreVertical className={`w-6 h-6 cursor-pointer ${isDarkMode ? 'text-white' : 'text-gray-500'}`} />
             </div>
 
             {/* Messages */}
@@ -50,7 +49,10 @@ export const TelegramSkin = () => {
                              <div 
                                 className={`
                                     relative px-3 py-1.5 min-w-[80px] max-w-[75%] rounded-lg shadow-sm text-[15px] leading-snug
-                                    ${isMe ? "bg-[#eeffde] text-black" : "bg-white text-black"}
+                                    ${isMe 
+                                        ? (isDarkMode ? "bg-[#2b5278] text-white" : "bg-[#eeffde] text-black") 
+                                        : (isDarkMode ? "bg-[#182533] text-white" : "bg-white text-black")
+                                    }
                                 `}
                                 style={{
                                     borderRadius: '12px',
@@ -61,7 +63,7 @@ export const TelegramSkin = () => {
                                  <div className="pb-3 break-words whitespace-pre-wrap">
                                      {msg.text}
                                  </div>
-                                 <div className={`absolute bottom-1 right-2 flex items-center gap-1 ${isMe ? "text-[#59a648]" : "text-[#aeb5bc]"}`}>
+                                 <div className={`absolute bottom-1 right-2 flex items-center gap-1 ${isMe ? (isDarkMode ? "text-[#768d9f]" : "text-[#59a648]") : (isDarkMode ? "text-[#5e778a]" : "text-[#aeb5bc]")}`}>
                                      <span className="text-[11px] font-normal">{msg.time}</span>
                                      {isMe && (
                                          // Telegram double check
@@ -73,12 +75,12 @@ export const TelegramSkin = () => {
 
                                  {/* Tail SVG */}
                                  {isMe && (
-                                     <svg className="absolute -bottom-[0px] -right-[7px] w-3 h-3 text-[#eeffde] fill-current" viewBox="0 0 10 10">
+                                     <svg className={`absolute -bottom-[0px] -right-[7px] w-3 h-3 fill-current ${isDarkMode ? "text-[#2b5278]" : "text-[#eeffde]"}`} viewBox="0 0 10 10">
                                          <path d="M0,0 L0,10 L10,10 C5,10 2,8 0,0 Z" />
                                      </svg>
                                  )}
                                  {!isMe && (
-                                      <svg className="absolute -bottom-[0px] -left-[7px] w-3 h-3 text-white fill-current transform scale-x-[-1]" viewBox="0 0 10 10">
+                                      <svg className={`absolute -bottom-[0px] -left-[7px] w-3 h-3 fill-current transform scale-x-[-1] ${isDarkMode ? "text-[#182533]" : "text-white"}`} viewBox="0 0 10 10">
                                           <path d="M0,0 L0,10 L10,10 C5,10 2,8 0,0 Z" />
                                       </svg>
                                  )}
@@ -89,21 +91,21 @@ export const TelegramSkin = () => {
             </div>
 
             {/* Footer */}
-            <div className="px-2 pt-2 pb-8 bg-white flex items-center gap-2 z-10 border-t border-gray-100">
-                <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+            <div className={`px-2 pt-2 pb-8 flex items-center gap-2 z-10 border-t ${isDarkMode ? 'bg-[#212121] border-black/20' : 'bg-white border-gray-100'}`}>
+                <button className={`p-2 transition-colors ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'}`}>
                      <Paperclip className="w-6 h-6 -rotate-45" strokeWidth={1.5} />
                 </button>
                 <div className="flex-1 bg-transparent">
                      <input 
                         type="text" 
                         placeholder="Message" 
-                        className="w-full h-10 outline-none text-[16px] placeholder:text-gray-400"
+                        className={`w-full h-10 outline-none text-[16px] placeholder:text-gray-400 bg-transparent ${isDarkMode ? 'text-white' : 'text-black'}`}
                     />
                 </div>
-                <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                <button className={`p-2 transition-colors ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'}`}>
                      <Smile className="w-6 h-6" strokeWidth={1.5} />
                 </button>
-                <button className="p-2 text-blue-500 hover:text-blue-600 transition-colors">
+                <button className={`p-2 transition-colors ${isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-500 hover:text-blue-600'}`}>
                      {messages.length > 0 ? <Send className="w-6 h-6 fill-current" /> : <Mic className="w-6 h-6" strokeWidth={2} />}
                 </button>
             </div>
