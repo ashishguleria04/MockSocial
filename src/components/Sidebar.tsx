@@ -85,7 +85,7 @@ export const Sidebar = () => {
   } as const;
 
   return (
-    <div className="w-full max-w-[460px] h-screen bg-background flex flex-col overflow-hidden font-sans border-r border-border">
+    <div className="w-full max-w-[440px] h-screen bg-background/60 backdrop-blur-2xl flex flex-col overflow-hidden font-sans border-r border-white/10 relative z-20">
       {/* Header */}
       <motion.div 
         initial={{ opacity: 0, y: -10 }}

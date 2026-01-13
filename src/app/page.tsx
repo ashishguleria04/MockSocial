@@ -3,33 +3,20 @@ import { Sidebar } from "@/components/Sidebar";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen overflow-hidden relative">
-      {/* Light Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-50" />
+    <main className="flex min-h-screen overflow-hidden relative bg-background text-foreground">
+      {/* Dynamic Animated Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[120px] animate-[float_8s_infinite]" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-secondary/20 blur-[120px] animate-[float_10s_infinite_reverse]" />
+          <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] rounded-full bg-accent/20 blur-[100px] animate-[float_12s_infinite]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+      </div>
       
-      {/* Subtle accent overlay */}
-      <div 
-        className="fixed inset-0 opacity-30"
-        style={{
-          background: `
-            radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%)
-          `
-        }}
-      />
-      
-      {/* Subtle grid pattern */}
-      <div 
-        className="fixed inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px)`,
-          backgroundSize: '48px 48px'
-        }}
-      />
-      
-      <Sidebar />
-      <div className="flex-1 flex items-center justify-center relative z-10">
-         <ChatCanvas />
+      <div className="flex w-full relative z-10">
+        <Sidebar />
+        <div className="flex-1 flex items-center justify-center p-8">
+           <ChatCanvas />
+        </div>
       </div>
     </main>
   );
