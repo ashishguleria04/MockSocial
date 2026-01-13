@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: #0f172a;
-  --foreground: #f1f5f9;
+  --background: #ffffff;
+  --foreground: #111827;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(59, 130, 246, 0.4) transparent;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -22,14 +22,14 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, rgba(59, 130, 246, 0.5), rgba(99, 102, 241, 0.5));
+  background: rgba(156, 163, 175, 0.5);
   border-radius: 10px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, rgba(59, 130, 246, 0.7), rgba(99, 102, 241, 0.7));
+  background: rgba(156, 163, 175, 0.7);
   background-clip: padding-box;
 }
 
