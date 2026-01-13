@@ -12,6 +12,8 @@ import { InstagramSkin } from "./skins/InstagramSkin";
 import { SlackSkin } from "./skins/SlackSkin";
 import { TeamsSkin } from "./skins/TeamsSkin";
 import { XSkin } from "./skins/XSkin";
+import { SnapchatSkin } from "./skins/SnapchatSkin";
+import { TikTokSkin } from "./skins/TikTokSkin";
 import { Download, Play } from "lucide-react";
 import { toPng } from "html-to-image";
 
@@ -40,6 +42,10 @@ export const ChatCanvas = () => {
         return <TeamsSkin />;
       case "x":
         return <XSkin />;
+      case "snapchat":
+        return <SnapchatSkin />;
+      case "tiktok":
+        return <TikTokSkin />;
       default:
         return (
           <div className="flex flex-col items-center justify-center h-full bg-gray-50 text-gray-400 p-8 text-center">
