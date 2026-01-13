@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type Platform = 'signal' | 'imessage' | 'whatsapp';
+export type Platform = 'signal' | 'imessage' | 'whatsapp' | 'discord' | 'instagram' | 'messenger' | 'telegram' | 'twitter';
 export type Sender = 'me' | 'them';
 export type MessageStatus = 'sent' | 'delivered' | 'read';
 
