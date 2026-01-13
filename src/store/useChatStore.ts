@@ -13,6 +13,14 @@ export interface Message {
   status: MessageStatus;
 }
 
+export interface StatusBarConfig {
+  time: string;
+  batteryLevel: number;
+  showBatteryPercentage: boolean;
+  signalStrength: number; // 0-4
+  wifi: boolean;
+}
+
 export interface Contact {
   name: string;
   status: string;
@@ -23,9 +31,11 @@ interface ChatState {
   platform: Platform;
   contact: Contact;
   messages: Message[];
+  statusBar: StatusBarConfig;
 
   setPlatform: (platform: Platform) => void;
   updateContact: (contact: Partial<Contact>) => void;
+  updateStatusBar: (updates: Partial<StatusBarConfig>) => void;
   addMessage: (message: Omit<Message, 'id'>) => void;
   updateMessage: (id: string, updates: Partial<Message>) => void;
   deleteMessage: (id: string) => void;
@@ -39,6 +49,13 @@ export const useChatStore = create<ChatState>()(
         name: 'Friend',
         status: 'Online',
         avatar: null,
+      },
+      statusBar: {
+        time: '9:41',
+        batteryLevel: 100,
+        showBatteryPercentage: true,
+        signalStrength: 4,
+        wifi: true,
       },
       messages: [
         {
@@ -67,6 +84,8 @@ export const useChatStore = create<ChatState>()(
       setPlatform: (platform) => set({ platform }),
       updateContact: (updates) =>
         set((state) => ({ contact: { ...state.contact, ...updates } })),
+      updateStatusBar: (updates) =>
+        set((state) => ({ statusBar: { ...state.statusBar, ...updates } })),
       addMessage: (msg) =>
         set((state) => ({
           messages: [
