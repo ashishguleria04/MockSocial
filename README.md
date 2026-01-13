@@ -21,8 +21,7 @@
 ### 🛠️ Powerful Tools
 - **Multi-Platform Support**:  
   - ✅ **WhatsApp** (Fully implemented with realistic bubbles & status checks)
-  - ✅ **Signal**
-  - 🚧 **Messenger, Telegram, Discord** (Coming Soon / UI Hooks ready)
+  - ✅ **Signal**, **Slack**, **Discord**, **Telegram**, **Messenger**, **Instagram**, **Teams**, **X**
 - **Live Visual Editing**: 
   - Edit Contact Name, Status, and Avatar URL.
   - Send/Receive messages instantly (toggle "Me" vs "Them").
@@ -78,4 +77,4 @@ MockSocial uses a robust Strategy Pattern.
 
 ## 📄 License
 
-MIT © 2024 MockSocial
+MIT © 2026 MockSocial
