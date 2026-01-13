@@ -26,7 +26,7 @@ export const StatusBar = ({ platform }: StatusBarProps) => {
     // If text is black, battery body outline is black
     
     return (
-        <div className={`absolute top-0 left-0 right-0 h-[44px] z-50 flex items-center justify-between px-6 font-medium text-[15px] select-none ${textColor} mix-blend-plus-lighter transition-colors duration-300`}>
+        <div className={`absolute top-0 left-0 right-0 h-[44px] z-50 flex items-center justify-between px-6 font-medium text-[15px] select-none ${textColor} transition-colors duration-300`}>
             {/* Time */}
             <span className="w-14 font-semibold tracking-wide text-center" style={{ fontVariantNumeric: 'tabular-nums' }}>
                 {time}

@@ -14,6 +14,9 @@ import { TeamsSkin } from "./skins/TeamsSkin";
 import { XSkin } from "./skins/XSkin";
 import { SnapchatSkin } from "./skins/SnapchatSkin";
 import { StatusBar } from "./StatusBar";
+import { TikTokSkin } from "./skins/TikTokSkin";
+import { Download } from "lucide-react";
+import { toPng } from "html-to-image";
 
 export const ChatCanvas = () => {
   const { platform } = useChatStore();
@@ -62,7 +65,10 @@ export const ChatCanvas = () => {
     if (!node) return;
 
     try {
-      const dataUrl = await toPng(node, { pixelRatio: 2 });
+      const dataUrl = await toPng(node, { 
+          pixelRatio: 2,
+          cacheBust: true,
+      });
       const link = document.createElement("a");
       link.download = `mockup_${platform}_${Date.now()}.png`;
       link.href = dataUrl;
