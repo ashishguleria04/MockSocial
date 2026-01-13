@@ -1,4 +1,4 @@
-"use client";
+"use strict";
 
 import React from "react";
 import { useChatStore } from "@/store/useChatStore";
@@ -12,119 +12,90 @@ import {
   Camera, 
   Mic, 
   Check, 
-  CheckCheck 
+  CheckCheck,
+  Plus
 } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const WhatsAppSkin = () => {
   const { contact, messages } = useChatStore();
 
   return (
-    <div className="flex flex-col h-full bg-[#efe7dd] relative overflow-hidden" style={{ fontFamily: 'Segoe UI, Helvetica Neue, Helvetica, Lucida Grande, Arial, Ubuntu, Cantarell, Fira Sans, sans-serif' }}>
-      {/* Background Pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.06] pointer-events-none z-0"
-        style={{ 
-          backgroundImage: "url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')",
-          backgroundSize: '400px'
-        }}
-      />
-
+    <div className="flex flex-col h-full bg-[#EFE7DD] relative overflow-hidden font-sans">
       {/* Header */}
-      <div className="flex items-center justify-between px-2 py-2 bg-[#008069] text-white z-10 relative shadow-sm" style={{ height: '60px' }}>
+      <div className="flex items-center justify-between px-3 py-2 bg-[#008069] text-white z-10 shadow-sm shrink-0">
         <div className="flex items-center gap-2 flex-1 min-w-0">
-          <button className="p-2 rounded-full hover:bg-white/10 transition-colors flex-shrink-0" aria-label="Back">
+          <button className="p-1 rounded-full hover:bg-white/10 transition-colors -ml-1">
              <ArrowLeft className="w-6 h-6" strokeWidth={2} />
           </button>
           
-          <div className="flex flex-col justify-center min-w-0 flex-1 ml-1 cursor-pointer">
-              <span className="text-[17px] leading-[22px] font-medium truncate">{contact.name}</span>
-              <span className="text-[13px] leading-[18px] truncate opacity-80 font-normal">
-                  {contact.status || 'Online'}
-              </span>
+          <div className="flex items-center gap-2.5 flex-1 min-w-0 cursor-pointer ml-1">
+              <Avatar className="w-9 h-9 border border-white/10">
+                <AvatarImage src={contact.avatar || undefined} className="object-cover" />
+                <AvatarFallback className="bg-slate-200 text-slate-500 font-bold">
+                  {contact.name.charAt(0)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col justify-center min-w-0 overflow-hidden">
+                  <span className="text-[16px] font-semibold leading-tight truncate">{contact.name}</span>
+                  <span className="text-[12px] opacity-80 leading-tight truncate font-medium">
+                      {contact.status || 'Online'}
+                  </span>
+              </div>
           </div>
         </div>
         
-        <div className="flex items-center gap-5 pr-2 flex-shrink-0">
-            <Video className="w-6 h-6 fill-white stroke-white cursor-pointer" strokeWidth={1.5} />
-            <Phone className="w-5 h-5 fill-white stroke-white cursor-pointer" strokeWidth={1.5} />
-            <MoreVertical className="w-5 h-5 cursor-pointer" strokeWidth={2} />
+        <div className="flex items-center gap-4 pr-1">
+            <Video className="w-6 h-6 cursor-pointer opacity-90 hover:opacity-100" strokeWidth={1.5} />
+            <Phone className="w-5 h-5 cursor-pointer opacity-90 hover:opacity-100" strokeWidth={1.5} />
+            <MoreVertical className="w-5 h-5 cursor-pointer opacity-90 hover:opacity-100" strokeWidth={2} />
         </div>
       </div>
 
       {/* Message Area */}
-      <div className="flex-1 overflow-y-auto px-4 pt-4 pb-2 flex flex-col z-10 relative scrollbar-hide">
-        {/* Date Chip */}
-        <div className="flex justify-center mb-6">
-          <div className="bg-[#FFF] px-3 py-[5px] rounded-lg text-[12.5px] text-[#54656f] shadow-[0_1px_2px_rgba(0,0,0,0.1)] font-medium tracking-wide">
+      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-2 scrollbar-hide bg-[url('https://camo.githubusercontent.com/854a93c27d64274c4f8f5a0b6ec36ee1d053cfcd934eac6c63bed9eaef9764bd/68747470733a2f2f7765622e77686174736170702e636f6d2f696d672f62672d636861742d74696c652d6461726b5f61346265353132653731393562366237333364393131303234323533653934312e706e67')] bg-opacity-40 bg-repeat bg-[length:400px]">
+        {/* Date Divider */}
+        <div className="flex justify-center my-4 opacity-90">
+          <span className="bg-white/90 px-3 py-1 rounded-[7px] text-[11px] font-medium text-slate-600 shadow-sm uppercase tracking-wide">
             Today
-          </div>
+          </span>
         </div>
 
         {messages.map((msg, index) => {
-          const prevMsg = index > 0 ? messages[index - 1] : null;
-          const nextMsg = index < messages.length - 1 ? messages[index + 1] : null;
-          const isGroupedWithPrev = prevMsg && prevMsg.sender === msg.sender;
-          const isGroupedWithNext = nextMsg && nextMsg.sender === msg.sender;
+          const isMe = msg.sender === "me";
+          // Simple grouping logic for tails
+          const nextMsg = messages[index + 1];
+          const isLastInGroup = !nextMsg || nextMsg.sender !== msg.sender;
           
           return (
             <div
               key={msg.id}
-              className={`flex w-full ${
-                msg.sender === "me" ? "justify-end" : "justify-start"
-              }`}
-              style={{ 
-                marginTop: isGroupedWithPrev ? '2px' : '8px',
-                marginBottom: isGroupedWithNext ? '0px' : '0px'
-              }}
+              className={`flex w-full ${isMe ? "justify-end" : "justify-start"} mb-0.5`}
             >
               <div
-                className={`relative inline-block max-w-[85%] sm:max-w-[70%] ${
-                  msg.sender === "me" 
-                    ? "bg-[#d9fdd3]" 
-                    : "bg-white"
-                }`}
-                style={{
-                  borderRadius: msg.sender === "me" 
-                    ? '7.5px 0 7.5px 7.5px' 
-                    : '0 7.5px 7.5px 7.5px',
-                   // On real whatsapp, grouped messages have rounded corners, but simpler to keep 'tailed' look or subtle 
-                  boxShadow: '0 1px 0.5px rgba(11,20,26,0.13)',
-                  padding: '6px 7px 8px 9px',
-                  fontSize: '14.2px',
-                  lineHeight: '19px',
-                  color: '#111b21',
-                  wordWrap: 'break-word',
-                  whiteSpace: 'pre-wrap'
-                }}
+                className={`
+                  relative max-w-[75%] px-3 py-1.5 rounded-lg text-[14.2px] leading-[19px] text-[#111b21] shadow-[0_1px_0.5px_rgba(11,20,26,0.13)]
+                  ${isMe ? "bg-[#d9fdd3] rounded-tr-none" : "bg-white rounded-tl-none"}
+                `}
               >
-                {/* Message Tail - Logic simplified for visual fidelity */}
-                <div
-                    className={`absolute ${msg.sender === "me" ? "-right-2" : "-left-2"} top-0 z-10`}
-                >
-                    {msg.sender === 'me' ? (
-                      <svg viewBox="0 0 8 13" height="13" width="8" aria-hidden="true" className="text-[#d9fdd3] fill-current block">
-                        <path d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z" />
-                      </svg>
-                    ) : (
-                      <svg viewBox="0 0 8 13" height="13" width="8" aria-hidden="true" className="text-white fill-current block transform -scale-x-100">
-                         <path d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z" />
-                      </svg>
-                    )}
-                </div>
-
-                <div className="relative pr-7 pb-1">
+                {/* Tail SVG */}
+                {isLastInGroup && (
+                  <span className={`absolute top-0 ${isMe ? "-right-2" : "-left-2"} w-2 h-3 overflow-hidden`}>
+                    <svg viewBox="0 0 8 13" width="8" height="13" className={`w-full h-full ${isMe ? 'text-[#d9fdd3]' : 'text-white'} fill-current`}>
+                       <path d={isMe ? "M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z" : "M-2.188 1H3v11.193l-6.467-8.625C-4.526 2.156 -3.958 1 -2.188 1z"} transform={!isMe ? "scale(-1, 1) translate(-8, 0)" : ""} />
+                    </svg>
+                  </span>
+                )}
+                
+                <div className="pr-16 pb-1 whitespace-pre-wrap break-words">
                   {msg.text}
                 </div>
                 
-                <div 
-                  className="absolute bottom-1 right-2 flex items-center gap-0.5 select-none"
-                >
-                  <span className="text-[11px] text-[#667781] mr-1">
+                <div className="absolute bottom-1 right-2 flex items-center gap-1 select-none">
+                  <span className="text-[10px] text-[rgba(17,27,33,0.6)] font-medium">
                     {msg.time}
                   </span>
-                  {msg.sender === "me" && (
-                    <WhatsAppStatusIcon status={msg.status} />
-                  )}
+                  {isMe && <WhatsAppStatusIcon status={msg.status} />}
                 </div>
               </div>
             </div>
@@ -133,30 +104,35 @@ export const WhatsAppSkin = () => {
       </div>
 
       {/* Footer */}
-      <div className="px-2 py-1.5 flex items-end gap-2 z-10 relative" style={{ 
-        backgroundColor: '#f0f2f5',
-        minHeight: '62px',
-        paddingBottom: '8px'
-      }}>
-        <div className="flex-1 bg-white rounded-2xl flex items-end min-h-[42px] py-2 px-3 shadow-sm border border-transparent focus-within:border-transparent">
-            <Smile className="w-6 h-6 text-[#8696a0] cursor-pointer mb-0.5 hover:text-[#54656f] transition-colors" />
-            
+      <div className="p-2 bg-[#f0f2f5] flex items-end gap-2 shrink-0 min-h-[60px]">
+        <div className="flex-1 bg-white rounded-3xl flex items-end py-2 px-3 shadow-sm min-h-[46px]">
+            <button className="p-1 mb-0.5 text-[#8696a0] hover:text-[#54656f]">
+              <Smile className="w-6 h-6" />
+            </button>
             <input 
                 type="text" 
                 placeholder="Message" 
-                className="flex-1 outline-none text-[15px] text-[#111b21] placeholder-[#667781] bg-transparent mx-3 mb-0.5"
+                className="flex-1 min-w-0 bg-transparent outline-none text-[15px] px-3 mb-1.5 placeholder:text-[#8696a0]"
                 disabled
             />
-            
-            <div className="flex items-center gap-4 mb-0.5">
-                <Paperclip className="w-5 h-5 text-[#8696a0] -rotate-45 cursor-pointer hover:text-[#54656f] transition-colors" />
-                <Camera className="w-5 h-5 text-[#8696a0] cursor-pointer hover:text-[#54656f] transition-colors" />
+            <div className="flex items-center gap-3 mb-0.5 mr-1">
+                <button className="text-[#8696a0] hover:text-[#54656f]">
+                   <Paperclip className="w-5 h-5 -rotate-45" />
+                </button>
+               {!messages.length && (
+                 <button className="text-[#8696a0] hover:text-[#54656f]">
+                    <Camera className="w-5 h-5" />
+                 </button>
+               )}
             </div>
         </div>
-        <button 
-          className="w-12 h-12 bg-[#008069] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#00705a] shadow-sm transition-transform active:scale-95" 
-        >
-            <Mic className="w-5 h-5 text-white fill-white" />
+        <button className="w-11 h-11 bg-[#008069] rounded-full flex items-center justify-center shadow-sm text-white hover:bg-[#00705a] active:scale-95 transition-all mb-0.5">
+            {messages.length > 0 ? (
+                // Show Mic if no text, but here we assume always Mic for mockup unless user types
+                <Mic className="w-5 h-5" fill="currentColor" />
+            ) : (
+                <Mic className="w-5 h-5" fill="currentColor" />
+            )}
         </button>
       </div>
     </div>
@@ -164,20 +140,11 @@ export const WhatsAppSkin = () => {
 };
 
 const WhatsAppStatusIcon = ({ status }: { status: string }) => {
-    // Current WhatsApp Web/Desktop colors
-    // Read: #53bdeb (Blue)
-    // Delivered/Sent: #8696a0 (Gray)
-    const gray = "#8696a0";
-    const blue = "#53bdeb";
-
-    if (status === 'sent') {
-        return <Check className="w-4 h-4" color={gray} strokeWidth={2} />
-    }
-    if (status === 'delivered') {
-        return <CheckCheck className="w-4 h-4" color={gray} strokeWidth={2} />
-    }
-    if (status === 'read') {
-        return <CheckCheck className="w-4 h-4" color={blue} strokeWidth={2} />
-    }
-    return null;
-}
+    const color = status === 'read' ? '#53bdeb' : '#8696a0';
+    return (
+        <span className="flex" style={{ color }}>
+            {status === 'sent' && <Check className="w-3.5 h-3.5" strokeWidth={2} />}
+            {status !== 'sent' && <CheckCheck className="w-3.5 h-3.5" strokeWidth={2} />}
+        </span>
+    );
+};

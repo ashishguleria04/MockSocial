@@ -1,14 +1,5 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
-
-// Since I didn't install cva or radix-slot, I will implement a simpler version that doesn't depend on them
-// but still maintains the API structure for future compatibility.
-// Wait, I should probably install class-variance-authority and radix-ui/react-slot for the "Full" experience.
-// But the user just asked for "use some component library". 
-// To make it robust without too many deps, I'll write a solid reusable component first.
-// ACTUALLY: Let's install `class-variance-authority` and `@radix-ui/react-slot` to do it RIGHT.
+import * as React from "react"
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,22 +8,22 @@ export interface ButtonProps
 }
 
 const buttonVariants = (variant: string = "default", size: string = "default", className: string = "") => {
-  const base = "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+  const base = "inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-sm font-semibold ring-offset-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.96]"
   
   const variants: Record<string, string> = {
-    default: "bg-gray-900 text-gray-50 hover:bg-gray-900/90",
-    destructive: "bg-red-500 text-gray-50 hover:bg-red-500/90",
-    outline: "border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900",
-    secondary: "bg-gray-100 text-gray-900 hover:bg-gray-100/80",
-    ghost: "hover:bg-gray-100 hover:text-gray-900",
-    link: "text-gray-900 underline-offset-4 hover:underline",
+    default: "bg-slate-900 text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800 hover:shadow-xl hover:shadow-slate-900/30 hover:-translate-y-0.5",
+    destructive: "bg-red-500 text-slate-50 shadow-sm hover:bg-red-600",
+    outline: "border-[1.5px] border-slate-200 bg-white shadow-sm hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300",
+    secondary: "bg-slate-100 text-slate-900 hover:bg-slate-200",
+    ghost: "hover:bg-slate-100/50 hover:text-slate-900 text-slate-500",
+    link: "text-slate-900 underline-offset-4 hover:underline",
   }
 
   const sizes: Record<string, string> = {
-    default: "h-10 px-4 py-2",
-    sm: "h-9 rounded-md px-3",
-    lg: "h-11 rounded-md px-8",
-    icon: "h-10 w-10",
+    default: "h-12 px-8 py-3",
+    sm: "h-10 rounded-xl px-4 text-xs",
+    lg: "h-14 rounded-3xl px-10 text-base",
+    icon: "h-11 w-11 shrink-0 rounded-full",
   }
 
   return cn(base, variants[variant], sizes[size], className)
