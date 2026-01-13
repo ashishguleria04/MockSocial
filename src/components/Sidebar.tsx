@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useChatStore, Platform } from "@/store/useChatStore";
+import { useChatStore, Platform, MockupType } from "@/store/useChatStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   MessageSquare, 
@@ -22,10 +22,16 @@ import {
   CheckCircle2,
   Image as ImageIcon,
   Send,
-  ChevronRight
+  ChevronRight,
+  Linkedin,
+  AtSign,
+  Heart,
+  MessageCircle,
+  Repeat2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { 
   Accordion, 
@@ -46,27 +52,29 @@ interface PlatformItem {
   color: string;
   bgColor: string;
   locked: boolean;
+  types: MockupType[];
 }
 
 const platforms: PlatformItem[] = [
-  { id: 'whatsapp', name: 'WhatsApp', icon: <Icons.WhatsApp className="w-5 h-5 fill-current" />, color: 'text-green-600', bgColor: 'bg-green-50', locked: false },
-  { id: 'messenger', name: 'Messenger', icon: <Icons.Messenger className="w-5 h-5 fill-current" />, color: 'text-blue-500', bgColor: 'bg-blue-50', locked: false },
-  { id: 'telegram', name: 'Telegram', icon: <Icons.Telegram className="w-5 h-5 fill-current" />, color: 'text-sky-500', bgColor: 'bg-sky-50', locked: false },
-  { id: 'discord', name: 'Discord', icon: <Icons.Discord className="w-5 h-5 fill-current" />, color: 'text-indigo-600', bgColor: 'bg-indigo-50', locked: false },
-  { id: 'imessage', name: 'iMessage', icon: <Icons.Apple className="w-5 h-5 fill-current" />, color: 'text-slate-800', bgColor: 'bg-slate-100', locked: false },
-  { id: 'instagram', name: 'Instagram', icon: <Icons.Instagram className="w-5 h-5" />, color: 'text-pink-600', bgColor: 'bg-pink-50', locked: false },
-  { id: 'slack', name: 'Slack', icon: <Icons.Slack className="w-5 h-5 fill-current" />, color: 'text-purple-700', bgColor: 'bg-purple-50', locked: false },
-  { id: 'teams', name: 'Teams', icon: <Users className="w-5 h-5" />, color: 'text-blue-700', bgColor: 'bg-blue-50', locked: false },
-  { id: 'signal', name: 'Signal', icon: <Icons.Signal className="w-5 h-5 fill-current" />, color: 'text-blue-600', bgColor: 'bg-blue-50', locked: false },
-  { id: 'x', name: 'X', icon: <Icons.Twitter className="w-5 h-5 fill-current" />, color: 'text-slate-900', bgColor: 'bg-slate-100', locked: false },
-  { id: 'snapchat', name: 'Snapchat', icon: <MessageSquare className="w-5 h-5" />, color: 'text-yellow-500', bgColor: 'bg-yellow-50', locked: false },
-  { id: 'tiktok', name: 'TikTok', icon: <Smartphone className="w-5 h-5" />, color: 'text-slate-900', bgColor: 'bg-slate-100', locked: false },
+  { id: 'whatsapp', name: 'WhatsApp', icon: <Icons.WhatsApp className="w-5 h-5 fill-current" />, color: 'text-green-600', bgColor: 'bg-green-50', locked: false, types: ['chat'] },
+  { id: 'messenger', name: 'Messenger', icon: <Icons.Messenger className="w-5 h-5 fill-current" />, color: 'text-blue-500', bgColor: 'bg-blue-50', locked: false, types: ['chat'] },
+  { id: 'telegram', name: 'Telegram', icon: <Icons.Telegram className="w-5 h-5 fill-current" />, color: 'text-sky-500', bgColor: 'bg-sky-50', locked: false, types: ['chat'] },
+  { id: 'discord', name: 'Discord', icon: <Icons.Discord className="w-5 h-5 fill-current" />, color: 'text-indigo-600', bgColor: 'bg-indigo-50', locked: false, types: ['chat'] },
+  { id: 'imessage', name: 'iMessage', icon: <Icons.Apple className="w-5 h-5 fill-current" />, color: 'text-slate-800', bgColor: 'bg-slate-100', locked: false, types: ['chat'] },
+  { id: 'instagram', name: 'Instagram', icon: <Icons.Instagram className="w-5 h-5" />, color: 'text-pink-600', bgColor: 'bg-pink-50', locked: false, types: ['chat', 'post'] },
+  { id: 'slack', name: 'Slack', icon: <Icons.Slack className="w-5 h-5 fill-current" />, color: 'text-purple-700', bgColor: 'bg-purple-50', locked: false, types: ['chat'] },
+  { id: 'teams', name: 'Teams', icon: <Users className="w-5 h-5" />, color: 'text-blue-700', bgColor: 'bg-blue-50', locked: false, types: ['chat'] },
+  { id: 'signal', name: 'Signal', icon: <Icons.Signal className="w-5 h-5 fill-current" />, color: 'text-blue-600', bgColor: 'bg-blue-50', locked: false, types: ['chat'] },
+  { id: 'x', name: 'X / Twitter', icon: <Icons.Twitter className="w-5 h-5 fill-current" />, color: 'text-slate-900', bgColor: 'bg-slate-100', locked: false, types: ['chat', 'post'] },
+  { id: 'snapchat', name: 'Snapchat', icon: <MessageSquare className="w-5 h-5" />, color: 'text-yellow-500', bgColor: 'bg-yellow-50', locked: false, types: ['chat'] },
+  { id: 'tiktok', name: 'TikTok', icon: <Smartphone className="w-5 h-5" />, color: 'text-slate-900', bgColor: 'bg-slate-100', locked: false, types: ['chat'] }, // TikTok post? Maybe later
+  { id: 'linkedin', name: 'LinkedIn', icon: <Linkedin className="w-5 h-5" />, color: 'text-blue-700', bgColor: 'bg-blue-50', locked: false, types: ['post'] },
+  { id: 'threads', name: 'Threads', icon: <AtSign className="w-5 h-5" />, color: 'text-slate-900', bgColor: 'bg-slate-100', locked: false, types: ['post'] },
 ];
 
 export const Sidebar = () => {
   const store = useChatStore();
   const [newMessageText, setNewMessageText] = useState("");
-  const [activeTab, setActiveTab] = useState("chat");
 
   const handleAddMessage = () => {
     if (!newMessageText.trim()) return;
@@ -83,6 +91,8 @@ export const Sidebar = () => {
     hidden: { opacity: 0, y: 8 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.2 } }
   } as const;
+
+  const validPlatforms = platforms.filter(p => p.types.includes(store.mockupType));
 
   return (
     <div className="w-full max-w-[440px] h-screen bg-background/60 backdrop-blur-2xl flex flex-col overflow-hidden font-sans border-r border-white/10 relative z-20">
@@ -106,10 +116,7 @@ export const Sidebar = () => {
                 MockSocial
               </h1>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">v2.4 Beta</span>
-                <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-primary/10 text-primary">
-                  NEW
-                </span>
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">v2.5</span>
               </div>
             </div>
           </div>
@@ -125,28 +132,21 @@ export const Sidebar = () => {
           </div>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs value={store.mockupType} onValueChange={(v) => store.setMockupType(v as MockupType)} className="w-full">
           <TabsList className="w-full h-11 bg-secondary gap-1 rounded-xl p-1">
             <TabsTrigger 
               value="chat" 
               className="flex-1 rounded-lg gap-2 text-xs font-bold data-[state=active]:bg-background data-[state=active]:shadow-soft transition-all"
             >
               <MessageSquare className="w-3.5 h-3.5" />
-              Chat
+              Chat Mockup
             </TabsTrigger>
             <TabsTrigger 
-              value="ai" 
-              className="flex-1 rounded-lg gap-2 text-xs font-bold data-[state=active]:bg-background data-[state=active]:shadow-soft transition-all"
-            >
-              <Bot className="w-3.5 h-3.5" />
-              AI Chat
-            </TabsTrigger>
-            <TabsTrigger 
-              value="social" 
+              value="post" 
               className="flex-1 rounded-lg gap-2 text-xs font-bold data-[state=active]:bg-background data-[state=active]:shadow-soft transition-all"
             >
               <Share2 className="w-3.5 h-3.5" />
-              Social
+              Post Mockup
             </TabsTrigger>
           </TabsList>
         </Tabs>
@@ -178,7 +178,7 @@ export const Sidebar = () => {
                   animate="visible"
                   className="grid grid-cols-2 gap-2.5"
                 >
-                  {platforms.map((p, index) => {
+                  {validPlatforms.map((p, index) => {
                     const isSelected = store.platform === p.id;
                     return (
                       <motion.button
@@ -263,7 +263,81 @@ export const Sidebar = () => {
               </AccordionContent>
             </AccordionItem>
 
-            {/* PEOPLE SECTION */}
+            {/* POST CONFIGURATION SECTION */}
+            {store.mockupType === 'post' && (
+              <AccordionItem value="post_config" className="border border-border rounded-2xl overflow-hidden bg-card shadow-card">
+                <AccordionTrigger className="hover:no-underline py-4 px-4 group">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-pink-500/10 flex items-center justify-center transition-all duration-200 group-hover:scale-105">
+                      <Share2 className="w-5 h-5 text-pink-500" strokeWidth={2} />
+                    </div>
+                    <div className="flex flex-col items-start gap-0.5 text-left">
+                      <span className="text-sm font-bold text-foreground leading-none">Post Content</span>
+                      <span className="text-xs font-medium text-muted-foreground">Main content & metrics</span>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-4 pb-5 space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-0.5">Content</label>
+                    <Textarea 
+                      value={store.postConfig.text}
+                      onChange={(e: { target: { value: any; }; }) => {
+                        return store.updatePostConfig({ text: e.target.value });
+                      }}
+                      className="bg-secondary/50 border-border focus:bg-background min-h-[100px]" 
+                      placeholder="Write your post caption..."
+                    />
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                     <div className="space-y-1.5">
+                        <div className="flex items-center gap-1">
+                          <Heart className="w-3 h-3 text-muted-foreground" />
+                          <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Likes</label>
+                        </div>
+                        <Input 
+                          value={store.postConfig.likes}
+                          onChange={(e) => store.updatePostConfig({ likes: e.target.value })}
+                          className="h-9 text-xs bg-secondary/50"
+                        />
+                     </div>
+                     <div className="space-y-1.5">
+                        <div className="flex items-center gap-1">
+                          <MessageCircle className="w-3 h-3 text-muted-foreground" />
+                          <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Comm</label>
+                        </div>
+                        <Input 
+                          value={store.postConfig.comments}
+                          onChange={(e) => store.updatePostConfig({ comments: e.target.value })}
+                          className="h-9 text-xs bg-secondary/50"
+                        />
+                     </div>
+                     <div className="space-y-1.5">
+                        <div className="flex items-center gap-1">
+                          <Repeat2 className="w-3 h-3 text-muted-foreground" />
+                          <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Share</label>
+                        </div>
+                        <Input 
+                          value={store.postConfig.shares}
+                          onChange={(e) => store.updatePostConfig({ shares: e.target.value })}
+                          className="h-9 text-xs bg-secondary/50"
+                        />
+                     </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-0.5">Image URL</label>
+                    <Input 
+                      value={store.postConfig.image || ''}
+                      onChange={(e) => store.updatePostConfig({ image: e.target.value })}
+                      className="h-9 text-xs bg-secondary/50"
+                      placeholder="https://example.com/image.jpg"
+                    />
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            )}
+
+            {/* PEOPLE / AUTHOR SECTION */}
             <AccordionItem value="people" className="border border-border rounded-2xl overflow-hidden bg-card shadow-card">
               <AccordionTrigger className="hover:no-underline py-4 px-4 group">
                 <div className="flex items-center gap-4">
@@ -271,8 +345,8 @@ export const Sidebar = () => {
                     <Users className="w-5 h-5 text-section-purple" strokeWidth={2} />
                   </div>
                   <div className="flex flex-col items-start gap-0.5 text-left">
-                    <span className="text-sm font-bold text-foreground leading-none">People</span>
-                    <span className="text-xs font-medium text-muted-foreground">Edit profiles</span>
+                    <span className="text-sm font-bold text-foreground leading-none">{store.mockupType === 'post' ? 'Author' : 'People'}</span>
+                    <span className="text-xs font-medium text-muted-foreground">{store.mockupType === 'post' ? 'Edit author info' : 'Edit profiles'}</span>
                   </div>
                 </div>
               </AccordionTrigger>
@@ -292,12 +366,14 @@ export const Sidebar = () => {
                           <User className="w-7 h-7 text-muted-foreground" />
                         </AvatarFallback>
                       </Avatar>
-                      <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-background rounded-full flex items-center justify-center shadow-soft border border-border">
-                        <span className="relative flex h-3 w-3">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-section-green opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-section-green border-2 border-background"></span>
-                        </span>
-                      </div>
+                      {store.mockupType === 'chat' && (
+                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-background rounded-full flex items-center justify-center shadow-soft border border-border">
+                          <span className="relative flex h-3 w-3">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-section-green opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-section-green border-2 border-background"></span>
+                          </span>
+                        </div>
+                      )}
                     </div>
                     
                     <div className="flex-1 space-y-3 pt-0.5">
@@ -316,21 +392,23 @@ export const Sidebar = () => {
 
                   {/* Status & Avatar URL */}
                   <div className="space-y-4">
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-0.5">Status</label>
-                      <div className="relative group">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors">
-                          <Clock className="w-4 h-4" />
+                    {store.mockupType === 'chat' && (
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-0.5">Status</label>
+                        <div className="relative group">
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors">
+                            <Clock className="w-4 h-4" />
+                          </div>
+                          <Input
+                            type="text"
+                            value={store.contact.status}
+                            onChange={(e) => store.updateContact({ status: e.target.value })}
+                            className="pl-10 h-10 bg-secondary/50 border-border focus:bg-background focus:border-primary/50 transition-all font-medium text-foreground"
+                            placeholder="e.g. Online, Busy..."
+                          />
                         </div>
-                        <Input
-                          type="text"
-                          value={store.contact.status}
-                          onChange={(e) => store.updateContact({ status: e.target.value })}
-                          className="pl-10 h-10 bg-secondary/50 border-border focus:bg-background focus:border-primary/50 transition-all font-medium text-foreground"
-                          placeholder="e.g. Online, Busy..."
-                        />
                       </div>
-                    </div>
+                    )}
                     
                     <div className="space-y-1.5 pt-3 border-t border-dashed border-border">
                       <div className="flex items-center justify-between">
@@ -356,6 +434,7 @@ export const Sidebar = () => {
             </AccordionItem>
 
             {/* MESSAGES SECTION */}
+            {store.mockupType === 'chat' && (
             <AccordionItem value="messages" className="border border-border rounded-2xl overflow-hidden bg-card shadow-card">
               <AccordionTrigger className="hover:no-underline py-4 px-4 group">
                 <div className="flex items-center gap-4">
@@ -462,6 +541,7 @@ export const Sidebar = () => {
                 </div>
               </AccordionContent>
             </AccordionItem>
+            )}
 
             {/* APPEARANCE SECTION */}
             <AccordionItem value="appearance" className="border border-border rounded-2xl overflow-hidden bg-card shadow-card">
