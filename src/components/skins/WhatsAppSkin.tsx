@@ -23,7 +23,7 @@ export const WhatsAppSkin = () => {
   return (
     <div className="flex flex-col h-full bg-[#EFE7DD] relative overflow-hidden font-sans">
       {/* Header */}
-      <div className="flex items-center justify-between px-3 py-2 bg-[#008069] text-white z-10 shadow-sm shrink-0">
+      <div className="flex items-center justify-between px-3 pt-11 pb-2 bg-[#008069] text-white z-10 shadow-sm shrink-0">
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <button className="p-1 rounded-full hover:bg-white/10 transition-colors -ml-1">
              <ArrowLeft className="w-6 h-6" strokeWidth={2} />
@@ -104,7 +104,7 @@ export const WhatsAppSkin = () => {
       </div>
 
       {/* Footer */}
-      <div className="p-2 bg-[#f0f2f5] flex items-end gap-2 shrink-0 min-h-[60px]">
+      <div className="px-2 pt-2 pb-8 bg-[#f0f2f5] flex items-end gap-2 shrink-0 min-h-[60px]">
         <div className="flex-1 bg-white rounded-3xl flex items-end py-2 px-3 shadow-sm min-h-[46px]">
             <button className="p-1 mb-0.5 text-[#8696a0] hover:text-[#54656f]">
               <Smile className="w-6 h-6" />

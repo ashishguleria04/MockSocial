@@ -13,7 +13,7 @@ export const SignalSkin = () => {
   return (
     <div className="flex flex-col h-full bg-white text-gray-900">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 shadow-sm z-10 bg-white">
+      <div className="flex items-center justify-between px-4 pt-12 pb-3 shadow-sm z-10 bg-white">
         <div className="flex items-center gap-4">
           <ArrowLeft className="w-6 h-6 text-gray-800" />
           <div className="flex items-center gap-3">
@@ -76,7 +76,7 @@ export const SignalSkin = () => {
       </div>
 
       {/* Footer / Input */}
-      <div className="px-2 py-3 mb-2 flex items-center gap-2 bg-white">
+      <div className="px-2 pt-3 pb-8 flex items-center gap-2 bg-white">
         <div className="p-2 bg-gray-100 rounded-full text-gray-500">
             <Plus className="w-6 h-6" />
         </div>

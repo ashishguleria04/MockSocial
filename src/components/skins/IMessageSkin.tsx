@@ -97,7 +97,7 @@ export const IMessageSkin = () => {
       </div>
 
       {/* Footer / Input */}
-      <div className="p-2 pb-6 bg-white flex items-end gap-3 z-20">
+      <div className="p-2 pb-8 bg-white flex items-end gap-3 z-20">
         <div className="flex-shrink-0 pb-2 pl-2">
             <Plus className="w-7 h-7 text-gray-400 bg-gray-200 rounded-full p-1.5 cursor-pointer" />
         </div>
