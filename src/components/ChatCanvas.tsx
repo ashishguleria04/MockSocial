@@ -49,11 +49,35 @@ export const ChatCanvas = () => {
 
   return (
     <div className="flex items-center justify-center p-8 min-h-screen relative">
-      <div
-        id="chat-canvas"
-        className="relative w-[375px] h-[812px] bg-white shadow-2xl rounded-[2.5rem] overflow-hidden text-black font-sans"
-      >
-        {renderSkin()}
+      <div id="chat-canvas" className="relative transition-all duration-300 ease-in-out transform hover:scale-[1.02]">
+        {/* Phone Frame */}
+        <div className="relative w-[400px] h-[850px] bg-[#121212] rounded-[3.5rem] shadow-[0_0_0_12px_#333333,0_0_0_13px_#000000,0_30px_60px_rgba(0,0,0,0.5)] border-[8px] border-[#222222] overflow-hidden">
+            
+            {/* Side Buttons */}
+            <div className="absolute top-28 -left-[20px] w-[12px] h-10 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Mute */}
+            <div className="absolute top-44 -left-[20px] w-[12px] h-16 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Vol Up */}
+            <div className="absolute top-64 -left-[20px] w-[12px] h-16 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Vol Down */}
+            <div className="absolute top-52 -right-[20px] w-[12px] h-24 bg-[#222222] rounded-r-lg shadow-sm" /> {/* Power */}
+
+            {/* Inner Screen Container */}
+            <div className="relative w-full h-full bg-black rounded-[2.8rem] overflow-hidden border-[6px] border-black">
+                {/* Dynamic Island / Camera Cutout */}
+                <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[126px] h-[36px] bg-black rounded-full z-50 flex items-center justify-center pointer-events-none">
+                     <div className="w-[124px] h-[34px] bg-black rounded-full relative overflow-hidden flex items-center justify-end px-3">
+                         <div className="w-2.5 h-2.5 rounded-full bg-[#1a1a1a] shadow-inner" />
+                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-purple-900/20 blur-md rounded-full" />
+                     </div>
+                </div>
+
+                 {/* Screen Content */}
+                 <div className="w-full h-full pt-0 bg-white overflow-hidden rounded-[2.5rem]">
+                    {renderSkin()}
+                 </div>
+                 
+                 {/* Home Indicator line (iOS style) */}
+                 <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[130px] h-1.5 bg-black/90 rounded-full z-50 pointer-events-none mix-blend-difference" />
+            </div>
+        </div>
       </div>
       
       {/* Floating Action Buttons */}
