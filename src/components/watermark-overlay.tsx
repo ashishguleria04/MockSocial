@@ -20,8 +20,7 @@ export const WatermarkOverlay: React.FC<WatermarkOverlayProps> = ({
       {Array.from({ length: count }).map((_, i) => (
         <div 
           key={i} 
-          className="transform -rotate-45 text-slate-500/20 font-black text-xl whitespace-nowrap mix-blend-difference"
-          style={{ opacity: opacity / 100 }}
+          className="transform -rotate-45 text-slate-900/10 dark:text-slate-100/10 font-black text-2xl whitespace-nowrap"
         >
           MockSocial
         </div>

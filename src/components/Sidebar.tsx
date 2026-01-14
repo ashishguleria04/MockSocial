@@ -666,11 +666,11 @@ export const Sidebar = () => {
                             <label className="text-[11px] font-medium text-foreground ml-0.5">Watermark</label>
                             <Button 
                                 size="sm"
-                                variant={store.showWatermark ? "default" : "outline"}
-                                onClick={() => store.toggleWatermark(!store.showWatermark)}
-                                className={`h-7 w-12 rounded-full transition-all ${store.showWatermark ? 'bg-primary text-primary-foreground' : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'}`}
+                                variant={(store.showWatermark ?? true) ? "default" : "outline"}
+                                onClick={() => store.toggleWatermark(!(store.showWatermark ?? true))}
+                                className={`h-7 w-12 rounded-full transition-all ${(store.showWatermark ?? true) ? 'bg-primary text-primary-foreground' : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'}`}
                             >
-                                {store.showWatermark ? "On" : "Off"}
+                                {(store.showWatermark ?? true) ? "On" : "Off"}
                             </Button>
                        </div>
 

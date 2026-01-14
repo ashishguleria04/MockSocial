@@ -126,7 +126,7 @@ export const ChatCanvas = () => {
                         {/* Screen Content */}
                         <div className="w-full h-full overflow-hidden rounded-[2.2rem] relative">
                             {renderSkin()}
-                            {useChatStore(s => s.showWatermark) && <WatermarkOverlay />}
+                            {useChatStore(s => s.showWatermark ?? true) && <WatermarkOverlay />}
                         </div>
 
                         {/* Home Indicator line (iOS style) */}
