@@ -14,7 +14,7 @@ export default function Home() {
       
       <div className="flex flex-col lg:flex-row w-full relative z-10">
         <Sidebar />
-        <div className="flex-1 flex items-center justify-center p-4 lg:p-8 overflow-hidden">
+        <div className="flex-1 flex items-center justify-center p-4 lg:p-8 overflow-y-auto overflow-x-hidden">
            <ChatCanvas />
         </div>
       </div>
