@@ -108,7 +108,7 @@ export const ChatCanvas = () => {
 
     return (
 
-        <div className="flex items-center justify-center py-8 lg:p-8 min-h-0 lg:min-h-screen relative w-full">
+        <div className="flex items-center justify-center py-8 pb-32 lg:p-8 min-h-0 lg:min-h-screen relative w-full">
             <div id="chat-canvas" className="relative group transition-all duration-500 ease-in-out transform scale-[0.85] sm:scale-90 md:scale-100 hover:md:scale-[1.01] origin-center z-50">
                 <div className="absolute -inset-4 bg-gradient-to-tr from-primary/40 via-purple-500/40 to-secondary/40 rounded-[3.5rem] blur-2xl opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse pointer-events-none" />
                 {/* Phone Frame */}

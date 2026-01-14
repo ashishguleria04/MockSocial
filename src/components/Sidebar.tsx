@@ -27,7 +27,9 @@ import {
   AtSign,
   Heart,
   MessageCircle,
-  Repeat2
+  Repeat2,
+  Sun,
+  Moon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -122,7 +124,15 @@ export const Sidebar = () => {
             </div>
           </div>
           
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => store.toggleDarkMode(!store.isDarkMode)}
+              className="h-9 w-9 rounded-xl text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all"
+            >
+              {store.isDarkMode ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+            </Button>
             <UserAuthButton />
             <Button className="h-9 px-4 rounded-xl font-bold text-xs gap-1.5 bg-foreground text-background shadow-medium hover:shadow-glow hover:-translate-y-0.5 transition-all duration-200">
               <Sparkles className="w-3.5 h-3.5" />
