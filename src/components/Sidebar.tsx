@@ -661,11 +661,24 @@ export const Sidebar = () => {
                                 {store.isDarkMode ? "On" : "Off"}
                             </Button>
                        </div>
+
+                       <div className="flex items-center justify-between">
+                            <label className="text-[11px] font-medium text-foreground ml-0.5">Watermark</label>
+                            <Button 
+                                size="sm"
+                                variant={store.showWatermark ? "default" : "outline"}
+                                onClick={() => store.toggleWatermark(!store.showWatermark)}
+                                className={`h-7 w-12 rounded-full transition-all ${store.showWatermark ? 'bg-primary text-primary-foreground' : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'}`}
+                            >
+                                {store.showWatermark ? "On" : "Off"}
+                            </Button>
+                       </div>
+
+                       </div>
                    </div>
-                 </div>
-                </motion.div>
-              </AccordionContent>
-            </AccordionItem>
+                 </motion.div>
+               </AccordionContent>
+             </AccordionItem>
 
             {/* ABOUT SECTION */}
             <AccordionItem value="about" className="border border-border rounded-2xl overflow-hidden bg-card shadow-card">

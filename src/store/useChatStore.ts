@@ -44,6 +44,7 @@ interface ChatState {
   statusBar: StatusBarConfig;
   postConfig: PostConfig;
   isDarkMode: boolean;
+  showWatermark: boolean;
 
   setMockupType: (type: MockupType) => void;
   setPlatform: (platform: Platform) => void;
@@ -51,6 +52,7 @@ interface ChatState {
   updateStatusBar: (updates: Partial<StatusBarConfig>) => void;
   updatePostConfig: (updates: Partial<PostConfig>) => void;
   toggleDarkMode: (isDark: boolean) => void;
+  toggleWatermark: (show: boolean) => void;
   addMessage: (message: Omit<Message, 'id'>) => void;
   updateMessage: (id: string, updates: Partial<Message>) => void;
   deleteMessage: (id: string) => void;
@@ -81,6 +83,9 @@ export const useChatStore = create<ChatState>()(
         shares: '12',
       },
       isDarkMode: false,
+      showWatermark: true,
+
+      toggleWatermark: (show) => set({ showWatermark: show }),
       messages: [
         {
           id: '1',

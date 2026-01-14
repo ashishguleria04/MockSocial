@@ -21,6 +21,7 @@ import { ThreadsPostSkin } from "./skins/ThreadsPostSkin";
 import { StatusBar } from "./StatusBar";
 import { Download } from "lucide-react";
 import { toPng } from "html-to-image";
+import { WatermarkOverlay } from "./watermark-overlay";
 
 export const ChatCanvas = () => {
     const { platform, isDarkMode, mockupType } = useChatStore();
@@ -125,6 +126,7 @@ export const ChatCanvas = () => {
                         {/* Screen Content */}
                         <div className="w-full h-full overflow-hidden rounded-[2.2rem] relative">
                             {renderSkin()}
+                            {useChatStore(s => s.showWatermark) && <WatermarkOverlay />}
                         </div>
 
                         {/* Home Indicator line (iOS style) */}
