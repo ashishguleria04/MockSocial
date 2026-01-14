@@ -44,6 +44,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
+import { UserAuthButton } from "@/components/user-auth-button";
 
 interface PlatformItem {
   id: Platform;
@@ -122,9 +123,7 @@ export const Sidebar = () => {
           </div>
           
           <div className="flex gap-2">
-            <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl hover:bg-secondary">
-              <LogIn className="w-4 h-4 text-muted-foreground" />
-            </Button>
+            <UserAuthButton />
             <Button className="h-9 px-4 rounded-xl font-bold text-xs gap-1.5 bg-foreground text-background shadow-medium hover:shadow-glow hover:-translate-y-0.5 transition-all duration-200">
               <Sparkles className="w-3.5 h-3.5" />
               Pro
