@@ -96,7 +96,7 @@ export const Sidebar = () => {
   const validPlatforms = platforms.filter(p => p.types.includes(store.mockupType));
 
   return (
-    <div className="w-full lg:w-[440px] lg:max-w-[440px] h-auto lg:h-screen order-2 lg:order-1 bg-background/60 backdrop-blur-2xl flex flex-col lg:overflow-hidden font-sans border-t lg:border-t-0 lg:border-r border-white/10 relative z-20 shrink-0">
+    <div className="w-full lg:w-[440px] lg:max-w-[440px] max-h-[45vh] lg:max-h-none lg:h-screen bg-background/60 backdrop-blur-2xl flex flex-col overflow-hidden font-sans border-b lg:border-b-0 lg:border-r border-white/10 relative z-20 shrink-0">
       {/* Header */}
       <motion.div 
         initial={{ opacity: 0, y: -10 }}
@@ -152,7 +152,7 @@ export const Sidebar = () => {
       </motion.div>
 
       {/* Content */}
-      <div className="flex-1 lg:overflow-y-auto overflow-visible">
+      <div className="flex-1 overflow-y-auto">
         <div className="p-5 pb-24 space-y-2">
           
           <Accordion type="single" collapsible defaultValue="platform" className="space-y-2">
