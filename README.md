@@ -1,80 +1,82 @@
-# MockSocial ✨
-
-![MockSocial Banner](https://img.shields.io/badge/Status-Beta_v2.4-blue?style=for-the-badge&logo=appveyor)
-![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
-![Tailwind](https://img.shields.io/badge/Tailwind_v4-38B2AC?style=for-the-badge&logo=tailwind-css)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer)
+# MockSocial
 
 > **The Ultimate Social Media Mockup Generator.**  
 > Create high-fidelity, stunning chat simulations for WhatsApp, Messenger, Telegram, and more purely in the browser.
 
 ---
 
-## 🚀 Features
+## Overview
 
-### 💎 Premium Design
-- **Modern SaaS Aesthetics**: A sleek, light-themed interface with vibrant, punchy colors (`#4f46e5`, `#ff0080`) and glassmorphism.
-- **Realistic Phone Frame**: A pixel-perfect smartphone chassis with Dynamic Island, physical buttons, and realistic shadows.
-- **Fluid Animations**: Powered by **Framer Motion**, every interaction feels alive.
-- **Neon Glows**: Dynamic background gradients and hovering effects.
+MockSocial offers a premium, pixel-perfect environment for designing realistic social media chat interfaces. Bridging the gap between design and functionality, it combines modern aesthetics with powerful customization tools, making it the ideal solution for developers, designers, and content creators.
 
-### 🛠️ Powerful Tools
-- **Multi-Platform Support**:  
-  - ✅ **WhatsApp** (Fully implemented with realistic bubbles & status checks)
-  - ✅ **Signal**, **Slack**, **Discord**, **Telegram**, **Messenger**, **Instagram**, **Teams**, **X**
-- **Live Visual Editing**: 
-  - Edit Contact Name, Status, and Avatar URL.
-  - Send/Receive messages instantly (toggle "Me" vs "Them").
-  - Real-time updates.
-- **Export Ready**: One-click download of high-resolution (2x) PNGs of the entire phone frame.
+## Features
 
----
+### Premium Design
+*   **Modern SaaS Aesthetics**: Featuring a sleek, light-themed interface with curated color palettes and sophisticated glassmorphism.
+*   **Realistic Architecture**: A pixel-perfect smartphone chassis complete with Dynamic Island, physical buttons, and lifelike shadows.
+*   **Fluid Interactions**: Powered by **Framer Motion**, delivering an interface where every interaction feels alive and responsive.
+*   **Visual Depth**: Enhanced by dynamic background gradients and subtle, premium lighting effects.
 
-## 🏗️ Tech Stack
-
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) (using the new `@theme` configuration)
-- **Animation**: [Framer Motion](https://www.framer.com/motion/)
-- **State Management**: [Zustand](https://github.com/pmndrs/zustand) (with local storage persistence)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Image Generation**: `html-to-image`
+### Powerful Tools
+*   **Comprehensive Platform Support**: 
+    *   Fully implemented skins for **WhatsApp**, **Signal**, **Slack**, **Discord**, **Telegram**, **Messenger**, **Instagram**, **Teams**, and **X**.
+*   **Live Visual Editing**: 
+    *   Instantly modify contact names, statuses, and avatars.
+    *   Toggle between sender and receiver roles seamlessly.
+    *   Experience real-time updates as you type.
+*   **Production-Ready Export**: One-click generation of high-resolution (2x) PNGs of the entire phone frame, ready for presentations or portfolios.
 
 ---
 
-## 🏁 Getting Started
+## Tech Stack
 
-1. **Clone & Install**:
-   ```bash
-   git clone https://github.com/your-repo/mock-social.git
-   cd mock-social
-   npm install
-   ```
+![Next.js](https://img.shields.io/badge/Next.js_15-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=white)
 
-2. **Run Locally**:
-   ```bash
-   npm run dev
-   ```
-   Visit `http://localhost:3000` to see the magic.
-
-3. **Build**:
-   ```bash
-   npm run build
-   ```
+*   **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+*   **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+*   **Animation**: [Framer Motion](https://www.framer.com/motion/)
+*   **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+*   **Icons**: [Lucide React](https://lucide.dev/)
 
 ---
 
-## 🧩 Extending
+## Getting Started
 
-### Adding a New Platform Skin
-MockSocial uses a robust Strategy Pattern.
+1.  **Clone & Install**
+    ```bash
+    git clone https://github.com/your-repo/mock-social.git
+    cd mock-social
+    npm install
+    ```
 
-1.  **Add Type**: Update `Platform` in `src/store/useChatStore.ts`.
-2.  **Build Component**: Create `src/components/skins/YourNewSkin.tsx`.
-3.  **Register**: Add it to the switch case in `src/components/ChatCanvas.tsx`.
-4.  **Update UI**: Add the icon and config to `src/components/Sidebar.tsx`.
+2.  **Run Locally**
+    ```bash
+    npm run dev
+    ```
+    Visit `http://localhost:3000` to view the application.
+
+3.  **Build**
+    ```bash
+    npm run build
+    ```
 
 ---
 
-## 📄 License
+## Extensibility
+
+MockSocial is architected with a robust Strategy Pattern to ensure easy expansion.
+
+**Adding a New Platform Skin:**
+1.  **Define**: Update the `Platform` type in `src/store/useChatStore.ts`.
+2.  **Build**: Create your new skin component in `src/components/skins/`.
+3.  **Register**: Add the component to the switch case in `src/components/ChatCanvas.tsx`.
+4.  **Configure**: Add the icon and settings to `src/components/Sidebar.tsx`.
+
+---
+
+## License
 
 MIT © 2026 MockSocial
