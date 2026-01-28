@@ -9,6 +9,7 @@ export interface ChatSlice {
     addMessage: (message: Omit<Message, 'id'>) => void;
     updateMessage: (id: string, updates: Partial<Message>) => void;
     deleteMessage: (id: string) => void;
+    reorderMessages: (fromIndex: number, toIndex: number) => void;
 }
 
 export const createChatSlice: StateCreator<ChatSlice> = (set) => ({
@@ -60,4 +61,11 @@ export const createChatSlice: StateCreator<ChatSlice> = (set) => ({
         set((state) => ({
             messages: state.messages.filter((m) => m.id !== id),
         })),
+    reorderMessages: (fromIndex, toIndex) =>
+        set((state) => {
+            const newMessages = [...state.messages];
+            const [movedMessage] = newMessages.splice(fromIndex, 1);
+            newMessages.splice(toIndex, 0, movedMessage);
+            return { messages: newMessages };
+        }),
 });

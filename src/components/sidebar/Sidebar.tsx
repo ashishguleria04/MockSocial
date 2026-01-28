@@ -35,6 +35,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { SortableMessage } from "./SortableMessage";
+
 import { 
   Accordion, 
   AccordionContent, 
@@ -78,6 +82,23 @@ const platforms: PlatformItem[] = [
 export const Sidebar = () => {
   const store = useChatStore();
   const [newMessageText, setNewMessageText] = useState("");
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = store.messages.findIndex((msg) => msg.id === active.id);
+      const newIndex = store.messages.findIndex((msg) => msg.id === over.id);
+      store.reorderMessages(oldIndex, newIndex);
+    }
+  }
 
   const handleAddMessage = () => {
     if (!newMessageText.trim()) return;
@@ -494,57 +515,27 @@ export const Sidebar = () => {
                         <p className="text-xs text-muted-foreground/70 mt-1">Add your first message above</p>
                       </motion.div>
                     ) : (
-                      store.messages.map((msg, index) => (
-                        <motion.div
-                          key={msg.id}
-                          layout
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.9, y: -10 }}
-                          transition={{ delay: index * 0.05 }}
-                          className="group relative bg-secondary/30 p-4 rounded-xl border border-border hover:border-primary/20 hover:bg-secondary/50 transition-all"
+                      <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCenter}
+                        onDragEnd={handleDragEnd}
+                      >
+                        <SortableContext
+                          items={store.messages.map((m) => m.id)}
+                          strategy={verticalListSortingStrategy}
                         >
-                          <div className="flex justify-between items-center mb-2.5">
-                            <Badge 
-                              variant={msg.sender === 'me' ? 'default' : 'secondary'} 
-                              className={cn(
-                                "uppercase text-[10px] tracking-wider px-2 py-0.5 h-auto font-bold shadow-none border-0",
-                                msg.sender === 'me' 
-                                  ? 'bg-primary/10 text-primary hover:bg-primary/10' 
-                                  : 'bg-secondary text-muted-foreground hover:bg-secondary'
-                              )}
-                            >
-                              {msg.sender === 'me' ? 'You' : 'Them'}
-                            </Badge>
-                            <div className="flex items-center gap-1">
-                              <span className="text-[11px] text-muted-foreground font-semibold mr-1">{msg.time}</span>
-                              <Button 
-                                variant="ghost"
-                                size="icon"
-                                className="h-6 w-6 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all" 
-                                onClick={() => store.deleteMessage(msg.id)}
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </Button>
-                              <Button 
-                                variant="ghost"
-                                size="icon"
-                                className="h-6 w-6 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-foreground hover:bg-secondary transition-all" 
-                                onClick={() => store.updateMessage(msg.id, { sender: msg.sender === 'me' ? 'them' : 'me' })}
-                              >
-                                <ArrowLeftRight className="w-3.5 h-3.5" />
-                              </Button>
-                            </div>
-                          </div>
-                          <textarea
-                            value={msg.text}
-                            onChange={(e) => store.updateMessage(msg.id, { text: e.target.value })}
-                            className="w-full text-sm text-foreground bg-transparent outline-none resize-none font-medium leading-relaxed placeholder:text-muted-foreground focus:ring-0"
-                            rows={Math.max(1, Math.ceil(msg.text.length / 45))}
-                            spellCheck={false}
-                          />
-                        </motion.div>
-                      ))
+                          <AnimatePresence mode="popLayout">
+                            {store.messages.map((msg) => (
+                              <SortableMessage
+                                key={msg.id}
+                                message={msg}
+                                updateMessage={store.updateMessage}
+                                deleteMessage={store.deleteMessage}
+                              />
+                            ))}
+                          </AnimatePresence>
+                        </SortableContext>
+                      </DndContext>
                     )}
                   </AnimatePresence>
                 </div>

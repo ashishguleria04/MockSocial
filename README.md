@@ -25,6 +25,8 @@ MockSocial offers a premium, pixel-perfect environment for designing realistic s
     *   Instantly modify contact names, statuses, and avatars.
     *   Toggle between sender and receiver roles seamlessly.
     *   Experience real-time updates as you type.
+*   **Drag-and-Drop Reordering**:
+    *   Effortlessly reorder messages in the sidebar using intuitive drag-and-drop interactions.
 *   **Production-Ready Export**: One-click generation of high-resolution (2x) PNGs of the entire phone frame, ready for presentations or portfolios.
 
 ---
