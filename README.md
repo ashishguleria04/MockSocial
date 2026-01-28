@@ -77,6 +77,16 @@ MockSocial is architected with a robust Strategy Pattern to ensure easy expansio
 
 ---
 
+## Star History
+
+<a href="https://star-history.com/#ashishguleria04/MockSocial&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ashishguleria04/MockSocial&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ashishguleria04/MockSocial&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=ashishguleria04/MockSocial&type=Date" />
+ </picture>
+</a>
+
 ## License
 
 MIT © 2026 MockSocial
