@@ -1,9 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { AuthProvider } from "@/components/auth-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
+import { AuthProvider } from "@/components/providers/auth-provider";
 
 const font = Plus_Jakarta_Sans({ 
   subsets: ["latin"],

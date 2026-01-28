@@ -1,5 +1,5 @@
-import { ChatCanvas } from "@/components/ChatCanvas";
-import { Sidebar } from "@/components/Sidebar";
+import { ChatCanvas } from "@/components/canvas/ChatCanvas";
+import { Sidebar } from "@/components/sidebar/Sidebar";
 
 export default function Home() {
   return (

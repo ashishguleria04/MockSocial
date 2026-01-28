@@ -45,8 +45,8 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { Icons } from "@/components/icons";
-import { UserAuthButton } from "@/components/user-auth-button";
+import { Icons } from "@/components/shared/icons";
+import { UserAuthButton } from "@/components/shared/user-auth-button";
 
 interface PlatformItem {
   id: Platform;

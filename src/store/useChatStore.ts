@@ -1,5 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { createAppSlice, AppSlice } from './slices/createAppSlice';
+import { createChatSlice, ChatSlice } from './slices/createChatSlice';
+import { createPostSlice, PostSlice } from './slices/createPostSlice';
 
 export type Platform = 'signal' | 'imessage' | 'whatsapp' | 'discord' | 'instagram' | 'messenger' | 'telegram' | 'twitter' | 'slack' | 'teams' | 'x' | 'snapchat' | 'tiktok' | 'linkedin' | 'threads';
 export type Sender = 'me' | 'them';
@@ -12,6 +15,7 @@ export interface PostConfig {
   likes: string;
   comments: string;
   shares: string;
+  // TODO: Add any other missing fields from original if needed, but looks complete based on previous file
 }
 
 export interface Message {
@@ -36,109 +40,29 @@ export interface Contact {
   avatar: string | null;
 }
 
-interface ChatState {
-  mockupType: MockupType;
-  platform: Platform;
-  contact: Contact;
-  messages: Message[];
-  statusBar: StatusBarConfig;
-  postConfig: PostConfig;
-  isDarkMode: boolean;
-  showWatermark: boolean;
-
-  setMockupType: (type: MockupType) => void;
-  setPlatform: (platform: Platform) => void;
-  updateContact: (contact: Partial<Contact>) => void;
-  updateStatusBar: (updates: Partial<StatusBarConfig>) => void;
-  updatePostConfig: (updates: Partial<PostConfig>) => void;
-  toggleDarkMode: (isDark: boolean) => void;
-  toggleWatermark: (show: boolean) => void;
-  addMessage: (message: Omit<Message, 'id'>) => void;
-  updateMessage: (id: string, updates: Partial<Message>) => void;
-  deleteMessage: (id: string) => void;
-}
+// Combine all slice interfaces
+export type ChatState = AppSlice & ChatSlice & PostSlice;
 
 export const useChatStore = create<ChatState>()(
   persist(
-    (set) => ({
-      mockupType: 'chat',
-      platform: 'signal',
-      contact: {
-        name: 'Friend',
-        status: 'Online',
-        avatar: null,
-      },
-      statusBar: {
-        time: '9:41',
-        batteryLevel: 100,
-        showBatteryPercentage: true,
-        signalStrength: 4,
-        wifi: true,
-      },
-      postConfig: {
-        text: 'Just launched my new portfolio! 🚀 check it out #webdev #design',
-        image: null,
-        likes: '1.2k',
-        comments: '42',
-        shares: '12',
-      },
-      isDarkMode: false,
-      showWatermark: true,
-
-      toggleWatermark: (show) => set({ showWatermark: show }),
-      messages: [
-        {
-          id: '1',
-          text: 'Hey!',
-          sender: 'me',
-          time: '10:00',
-          status: 'read',
-        },
-        {
-          id: '2',
-          text: 'Want to build an app?',
-          sender: 'me',
-          time: '10:01',
-          status: 'read',
-        },
-        {
-          id: '3',
-          text: 'Exactly!',
-          sender: 'them',
-          time: '10:02',
-          status: 'read',
-        },
-      ],
-
-      setMockupType: (type) => set({ mockupType: type }),
-      setPlatform: (platform) => set({ platform }),
-      updateContact: (updates) =>
-        set((state) => ({ contact: { ...state.contact, ...updates } })),
-      updateStatusBar: (updates) =>
-        set((state) => ({ statusBar: { ...state.statusBar, ...updates } })),
-      updatePostConfig: (updates) =>
-        set((state) => ({ postConfig: { ...state.postConfig, ...updates } })),
-      toggleDarkMode: (isDark) => set({ isDarkMode: isDark }),
-      addMessage: (msg) =>
-        set((state) => ({
-          messages: [
-            ...state.messages,
-            { ...msg, id: Math.random().toString(36).substring(7) },
-          ],
-        })),
-      updateMessage: (id, updates) =>
-        set((state) => ({
-          messages: state.messages.map((m) =>
-            m.id === id ? { ...m, ...updates } : m
-          ),
-        })),
-      deleteMessage: (id) =>
-        set((state) => ({
-          messages: state.messages.filter((m) => m.id !== id),
-        })),
+    (...a) => ({
+      ...createAppSlice(...a),
+      ...createChatSlice(...a),
+      ...createPostSlice(...a),
     }),
     {
       name: 'chat-mockup-storage',
+      partialize: (state) => ({
+        // Selectively persist fields if needed, or persist everything
+        mockupType: state.mockupType,
+        platform: state.platform,
+        contact: state.contact,
+        messages: state.messages,
+        statusBar: state.statusBar,
+        postConfig: state.postConfig,
+        isDarkMode: state.isDarkMode,
+        showWatermark: state.showWatermark,
+      }),
     }
   )
 );
