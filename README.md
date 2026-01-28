@@ -20,6 +20,7 @@ MockSocial offers a premium, pixel-perfect environment for designing realistic s
 ### Powerful Tools
 *   **Comprehensive Platform Support**: 
     *   Fully implemented skins for **WhatsApp**, **Signal**, **Slack**, **Discord**, **Telegram**, **Messenger**, **Instagram**, **Teams**, and **X**.
+    *   Post mockups for **Instagram**, **X (Twitter)**, **LinkedIn**, and **Threads**.
 *   **Live Visual Editing**: 
     *   Instantly modify contact names, statuses, and avatars.
     *   Toggle between sender and receiver roles seamlessly.
@@ -43,37 +44,115 @@ MockSocial offers a premium, pixel-perfect environment for designing realistic s
 
 ---
 
+## Project Structure
+
+The project is organized to effectively process, render, and manage state for multiple social media skins.
+
+```
+src/
+├── app/                  # Next.js App Router pages
+│   ├── layout.tsx        # Root layout with providers
+│   └── page.tsx          # Main application entry
+├── components/           # React components
+│   ├── canvas/           # Canvas-related components
+│   │   ├── ChatCanvas.tsx     # Main phone frame and skin renderer
+│   │   ├── StatusBar.tsx      # Dynamic phone status bar
+│   │   └── watermark-overlay.tsx
+│   ├── providers/        # Context providers
+│   │   ├── auth-provider.tsx  # NextAuth session provider
+│   │   └── theme-provider.tsx # Next-themes provider
+│   ├── shared/           # Reusable UI elements
+│   │   ├── icons.tsx          # SVG icon definitions
+│   │   ├── theme-toggle.tsx
+│   │   └── user-auth-button.tsx
+│   ├── sidebar/          # Configuration sidebar
+│   │   └── Sidebar.tsx        # Main controls interface
+│   ├── skins/            # Platform-specific UI implementations
+│   │   ├── WhatsAppSkin.tsx
+│   │   ├── DiscordSkin.tsx
+│   │   └── ... (other skins)
+│   └── ui/               # Shadcn/UI primitive components
+├── store/                # Zustand State Management
+│   ├── slices/           # Modular state slices
+│   │   ├── createAppSlice.ts  # Global app state (Platform, Theme)
+│   │   ├── createChatSlice.ts # Chat data (Messages, Contacts)
+│   │   └── createPostSlice.ts # Post data (Config)
+│   └── useChatStore.ts   # Main store combiner
+└── lib/                  # Utilities
+    └── utils.ts
+```
+
+---
+
 ## Getting Started
 
-1.  **Clone & Install**
+### Prerequisites
+*   Node.js 18+
+*   npm
+
+### Installation
+
+1.  **Clone the repository**
     ```bash
     git clone https://github.com/your-repo/mock-social.git
     cd mock-social
+    ```
+
+2.  **Install dependencies**
+    ```bash
     npm install
     ```
 
-2.  **Run Locally**
+3.  **Run Development Server**
     ```bash
     npm run dev
     ```
     Visit `http://localhost:3000` to view the application.
 
-3.  **Build**
+4.  **Build for Production**
     ```bash
     npm run build
     ```
 
 ---
 
-## Extensibility
+## Development Guide
 
-MockSocial is architected with a robust Strategy Pattern to ensure easy expansion.
+### State Management
+We use **Zustand** with a sliced architecture for global state management.
+*   **App Slice**: Handles global UI state like the selected `platform`, `isDarkMode`, and `statusBar` settings.
+*   **Chat Slice**: Manages `messages`, `contact` info, and conversation history.
+*   **Post Slice**: Manages configuration for post mockups (`likes`, `comments`, `shares`).
 
-**Adding a New Platform Skin:**
-1.  **Define**: Update the `Platform` type in `src/store/useChatStore.ts`.
-2.  **Build**: Create your new skin component in `src/components/skins/`.
-3.  **Register**: Add the component to the switch case in `src/components/ChatCanvas.tsx`.
-4.  **Configure**: Add the icon and settings to `src/components/Sidebar.tsx`.
+To use the store in a component:
+```typescript
+import { useChatStore } from "@/store/useChatStore";
+
+const MyComponent = () => {
+  const { platform, setPlatform } = useChatStore();
+  // ...
+};
+```
+
+### Adding a New Skin
+
+MockSocial is built with the Strategy Pattern to make adding new platforms easy.
+
+1.  **Define the Platform**:
+    Open `src/store/useChatStore.ts` and add your platform ID to the `Platform` type.
+    ```typescript
+    export type Platform = '...' | 'new-platform';
+    ```
+
+2.  **Create the Skin Component**:
+    Create a new file in `src/components/skins/NewPlatformSkin.tsx`.  
+    Use the `useChatStore` hook to access dynamic data (messages, contact info).
+
+3.  **Register the Skin**:
+    Import and add your component to the switch statement in `src/components/canvas/ChatCanvas.tsx`.
+
+4.  **Add Sidebar Configuration**:
+    Add your platform's configuration (colors, icon) to the `platforms` array in `src/components/sidebar/Sidebar.tsx`.
 
 ---
 
