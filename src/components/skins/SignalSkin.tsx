@@ -8,10 +8,10 @@ import { ArrowLeft, Video, Phone, MoreVertical, Plus, Camera, Mic, Sticker } fro
 // Signal Gray: #f6f6f6
 
 export const SignalSkin = () => {
-  const { contact, messages, isDarkMode } = useChatStore();
+  const { contact, messages, isDarkMode, wallpaper } = useChatStore();
 
   return (
-    <div className={`flex flex-col h-full ${isDarkMode ? 'bg-[#1b1b1b] text-white' : 'bg-white text-gray-900'}`}>
+    <div className={`flex flex-col h-full ${wallpaper ? 'bg-transparent' : (isDarkMode ? 'bg-[#1b1b1b] text-white' : 'bg-white text-gray-900')}`}>
       {/* Header */}
       <div className={`flex items-center justify-between px-4 pt-12 pb-3 shadow-sm z-10 ${isDarkMode ? 'bg-[#1b1b1b] text-white' : 'bg-white text-gray-900'}`}>
         <div className="flex items-center gap-4">

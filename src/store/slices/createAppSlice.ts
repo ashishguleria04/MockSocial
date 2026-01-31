@@ -13,6 +13,10 @@ export interface AppSlice {
   updateStatusBar: (updates: Partial<StatusBarConfig>) => void;
   toggleDarkMode: (isDark: boolean) => void;
   toggleWatermark: (show: boolean) => void;
+  wallpaper: string | null;
+  setWallpaper: (url: string | null) => void;
+  showKeyboard: boolean;
+  toggleKeyboard: (show: boolean) => void;
 }
 
 export const createAppSlice: StateCreator<AppSlice> = (set) => ({
@@ -27,6 +31,8 @@ export const createAppSlice: StateCreator<AppSlice> = (set) => ({
   },
   isDarkMode: false,
   showWatermark: true,
+  wallpaper: null,
+  showKeyboard: false,
 
   setMockupType: (type) => set({ mockupType: type }),
   setPlatform: (platform) => set({ platform }),
@@ -34,4 +40,6 @@ export const createAppSlice: StateCreator<AppSlice> = (set) => ({
     set((state) => ({ statusBar: { ...state.statusBar, ...updates } })),
   toggleDarkMode: (isDark) => set({ isDarkMode: isDark }),
   toggleWatermark: (show) => set({ showWatermark: show }),
+  setWallpaper: (url) => set({ wallpaper: url }),
+  toggleKeyboard: (show) => set({ showKeyboard: show }),
 });

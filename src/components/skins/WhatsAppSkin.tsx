@@ -18,10 +18,10 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const WhatsAppSkin = () => {
-  const { contact, messages, isDarkMode } = useChatStore();
+  const { contact, messages, isDarkMode, wallpaper } = useChatStore();
 
   return (
-    <div className={`flex flex-col h-full relative overflow-hidden font-sans ${isDarkMode ? 'bg-[#0b141a] text-[#e9edef]' : 'bg-[#EFE7DD] text-[#111b21]'}`}>
+    <div className={`flex flex-col h-full relative overflow-hidden font-sans ${wallpaper ? 'bg-transparent' : (isDarkMode ? 'bg-[#0b141a] text-[#e9edef]' : 'bg-[#EFE7DD] text-[#111b21]')}`}>
       {/* Header */}
       <div className={`flex items-center justify-between px-3 pt-11 pb-2 z-10 shadow-sm shrink-0 transition-colors ${isDarkMode ? 'bg-[#202c33] text-[#e9edef]' : 'bg-[#008069] text-white'}`}>
         <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -53,7 +53,7 @@ export const WhatsAppSkin = () => {
       </div>
 
       {/* Message Area */}
-      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-2 scrollbar-hide bg-[url('https://camo.githubusercontent.com/854a93c27d64274c4f8f5a0b6ec36ee1d053cfcd934eac6c63bed9eaef9764bd/68747470733a2f2f7765622e77686174736170702e636f6d2f696d672f62672d636861742d74696c652d6461726b5f61346265353132653731393562366237333364393131303234323533653934312e706e67')] bg-opacity-40 bg-repeat bg-[length:400px]">
+      <div className={`flex-1 overflow-y-auto p-4 flex flex-col gap-2 scrollbar-hide ${!wallpaper ? "bg-[url('https://camo.githubusercontent.com/854a93c27d64274c4f8f5a0b6ec36ee1d053cfcd934eac6c63bed9eaef9764bd/68747470733a2f2f7765622e77686174736170702e636f6d2f696d672f62672d636861742d74696c652d6461726b5f61346265353132653731393562366237333364393131303234323533653934312e706e67')] bg-opacity-40 bg-repeat bg-[length:400px]" : ""}`}>
         {/* Date Divider */}
         <div className="flex justify-center my-4 opacity-90">
           <span className={`px-3 py-1 rounded-[7px] text-[11px] font-medium shadow-sm uppercase tracking-wide ${isDarkMode ? 'bg-[#202c33] text-[#8696a0]' : 'bg-white/90 text-slate-600'}`}>

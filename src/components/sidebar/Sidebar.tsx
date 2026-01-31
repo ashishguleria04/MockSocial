@@ -675,6 +675,34 @@ export const Sidebar = () => {
                             </Button>
                        </div>
 
+                       <div className="flex items-center justify-between">
+                            <label className="text-[11px] font-medium text-foreground ml-0.5">Keyboard</label>
+                            <Button 
+                                size="sm"
+                                variant={store.showKeyboard ? "default" : "outline"}
+                                onClick={() => store.toggleKeyboard(!store.showKeyboard)}
+                                className={`h-7 w-12 rounded-full transition-all ${store.showKeyboard ? 'bg-primary text-primary-foreground' : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'}`}
+                            >
+                                {store.showKeyboard ? "On" : "Off"}
+                            </Button>
+                       </div>
+
+                       <div className="space-y-1.5 pt-1">
+                          <label className="text-[11px] font-medium text-foreground ml-0.5">Wallpaper</label>
+                          <div className="relative group">
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors">
+                              <ImageIcon className="w-3.5 h-3.5" />
+                            </div>
+                            <Input
+                              type="text"
+                              value={store.wallpaper || ''}
+                              onChange={(e) => store.setWallpaper(e.target.value)}
+                              className="pl-9 h-8 bg-secondary/50 border-border focus:bg-background focus:border-primary/50 transition-all text-xs"
+                              placeholder="Image URL"
+                            />
+                          </div>
+                       </div>
+
                        </div>
                    </div>
                  </motion.div>

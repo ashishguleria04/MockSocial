@@ -5,10 +5,10 @@ import { useChatStore } from "@/store/useChatStore";
 import { Hash, Phone, Video, Users, Search, PlusCircle, Gift, Sticker, Smile, Send } from "lucide-react";
 
 export const DiscordSkin = () => {
-    const { contact, messages, isDarkMode } = useChatStore();
+    const { contact, messages, isDarkMode, wallpaper } = useChatStore();
 
     return (
-        <div className={`flex flex-col h-full font-sans ${isDarkMode ? 'bg-[#313338] text-[#dbdee1]' : 'bg-white text-[#2e3338]'}`}>
+        <div className={`flex flex-col h-full font-sans ${wallpaper ? 'bg-transparent' : (isDarkMode ? 'bg-[#313338] text-[#dbdee1]' : 'bg-white text-[#2e3338]')}`}>
              {/* Header */}
              <div className={`flex items-center justify-between px-4 pt-12 pb-3 border-b shadow-sm shrink-0 ${isDarkMode ? 'bg-[#313338] border-[#26272d]' : 'bg-white border-[#e3e5e8]'}`}>
                  <div className="flex items-center gap-3 overflow-hidden">

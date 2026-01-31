@@ -5,12 +5,14 @@ import { useChatStore } from "@/store/useChatStore";
 import { ArrowLeft, MoreVertical, Paperclip, Smile, Mic, Send } from "lucide-react";
 
 export const TelegramSkin = () => {
-    const { contact, messages, isDarkMode } = useChatStore();
+    const { contact, messages, isDarkMode, wallpaper } = useChatStore();
 
     return (
-        <div className={`flex flex-col h-full relative font-sans ${isDarkMode ? 'bg-[#0f0f0f]' : 'bg-[#708499]'}`}>
-             {/* Background Pattern Overlay */}
-             <div className="absolute inset-0 z-0 opacity-40 bg-repeat bg-[url('https://telegram.org/file/811140600/1/9Na5yWbdS9w.287958/395627254c41461622')] bg-[length:400px]" />
+        <div className={`flex flex-col h-full relative font-sans ${wallpaper ? 'bg-transparent' : (isDarkMode ? 'bg-[#0f0f0f]' : 'bg-[#708499]')}`}>
+             {/* Background Pattern Overlay - Hide if custom wallpaper is set */}
+             {!wallpaper && (
+                <div className="absolute inset-0 z-0 opacity-40 bg-repeat bg-[url('https://telegram.org/file/811140600/1/9Na5yWbdS9w.287958/395627254c41461622')] bg-[length:400px]" />
+             )}
 
             {/* Header */}
             <div className={`flex items-center justify-between px-4 pt-12 pb-2 z-10 shadow-sm shrink-0 ${isDarkMode ? 'bg-[#212121] text-white' : 'bg-white text-gray-900'}`}>

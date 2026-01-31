@@ -22,9 +22,10 @@ import { StatusBar } from "./StatusBar";
 import { Download } from "lucide-react";
 import { toPng } from "html-to-image";
 import { WatermarkOverlay } from "./watermark-overlay";
+import { KeyboardOverlay } from "./KeyboardOverlay";
 
 export const ChatCanvas = () => {
-    const { platform, isDarkMode, mockupType } = useChatStore();
+    const { platform, isDarkMode, mockupType, wallpaper, showKeyboard } = useChatStore();
 
     const renderSkin = () => {
         // If mockup type is 'post', use post skins
@@ -125,9 +126,13 @@ export const ChatCanvas = () => {
                         <StatusBar platform={platform} />
 
                         {/* Screen Content */}
-                        <div className="w-full h-full overflow-hidden rounded-[2.2rem] relative">
+                        <div 
+                            className="w-full h-full overflow-hidden rounded-[2.2rem] relative bg-cover bg-center bg-no-repeat"
+                            style={wallpaper ? { backgroundImage: `url(${wallpaper})` } : {}}
+                        >
                             {renderSkin()}
                             {useChatStore(s => s.showWatermark ?? true) && <WatermarkOverlay />}
+                            {showKeyboard && <KeyboardOverlay />}
                         </div>
 
                         {/* Home Indicator line (iOS style) */}

@@ -5,10 +5,10 @@ import { useChatStore } from "@/store/useChatStore";
 import { ArrowLeft, Phone, Video, Camera, Mic, Image as ImageIcon, Heart, Smile } from "lucide-react";
 
 export const InstagramSkin = () => {
-    const { contact, messages, isDarkMode } = useChatStore();
+    const { contact, messages, isDarkMode, wallpaper } = useChatStore();
 
     return (
-        <div className={`flex flex-col h-full font-sans ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
+        <div className={`flex flex-col h-full font-sans ${wallpaper ? 'bg-transparent' : (isDarkMode ? 'bg-black' : 'bg-white')} ${isDarkMode ? 'text-white' : 'text-black'}`}>
             {/* Header */}
             <div className={`flex items-center justify-between px-4 pt-12 pb-3 border-b z-10 sticky top-0 ${isDarkMode ? 'bg-black border-[#262626]' : 'bg-white border-gray-100'}`}>
                 <div className="flex items-center gap-3">
