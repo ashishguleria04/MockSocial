@@ -83,7 +83,7 @@ export const InstagramSkin = () => {
                                  {msg.text}
                              </div>
                              {isMe && isLast && (
-                                 <span className="text-[10px] text-gray-400 ml-1 mb-1">Seen</span>
+                                 <span className={`text-[10px] ml-1 mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Seen</span>
                              )}
                          </div>
                      );

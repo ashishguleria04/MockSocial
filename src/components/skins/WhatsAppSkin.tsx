@@ -93,12 +93,12 @@ export const WhatsAppSkin = () => {
                   {msg.text}
                 </div>
                 
-                <div className="absolute bottom-1 right-2 flex items-center gap-1 select-none">
-                  <span className={`text-[10px] font-medium ${isDarkMode ? 'text-[#8696a0]' : 'text-[rgba(17,27,33,0.6)]'}`}>
-                    {msg.time}
-                  </span>
-                  {isMe && <WhatsAppStatusIcon status={msg.status} isDarkMode={isDarkMode} />}
-                </div>
+                  <div className="absolute bottom-1 right-2 flex items-center gap-1 select-none">
+                    <span className={`text-[10px] font-medium ${isMe && isDarkMode ? 'text-[#c1cdd3]' : (isDarkMode ? 'text-[#8696a0]' : 'text-[rgba(17,27,33,0.6)]')}`}>
+                      {msg.time}
+                    </span>
+                    {isMe && <WhatsAppStatusIcon status={msg.status} isDarkMode={isDarkMode} />}
+                  </div>
               </div>
             </div>
           );

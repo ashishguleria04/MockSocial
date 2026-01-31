@@ -82,40 +82,43 @@
 }
 
 .dark {
-  --background: #020617;
-  /* Slate 950 */
-  --foreground: #f8fafc;
-  /* Slate 50 */
+  --background: #09090b;
+  /* Zinc 950 */
+  --foreground: #fafafa;
+  /* Zinc 50 */
 
   --primary: #818cf8;
   /* Indigo 400 */
-  --primary-foreground: #020617;
+  --primary-foreground: #09090b;
 
-  --secondary: #1e293b;
-  /* Slate 800 */
-  --secondary-foreground: #f8fafc;
+  --secondary: #27272a;
+  /* Zinc 800 */
+  --secondary-foreground: #fafafa;
 
-  --muted: #0f172a;
-  /* Slate 900 */
-  --muted-foreground: #94a3b8;
+  --muted: #27272a;
+  /* Zinc 800 */
+  --muted-foreground: #a1a1aa;
+  /* Zinc 400 */
 
-  --card: #0f172a;
-  /* Slate 900 */
-  --card-foreground: #f8fafc;
+  --card: #18181b;
+  /* Zinc 900 */
+  --card-foreground: #fafafa;
 
-  --border: #1e293b;
-  /* Slate 800 */
-  --input: #1e293b;
+  --border: #27272a;
+  /* Zinc 800 */
+  --input: #27272a;
 
-  --accent: #6366f1;
-  /* Indigo 500 */
-  --accent-foreground: #f8fafc;
+  --accent: #27272a;
+  /* Zinc 800 (used for hover usually) */
+  --accent-foreground: #fafafa;
 
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  
-  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.2);
-  --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  --destructive: #7f1d1d;
+  /* Red 900 */
+  --destructive-foreground: #fef2f2;
+  /* Red 50 */
+
+  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
 }
 
 body {
@@ -135,8 +138,8 @@ body {
 }
 
 .dark .glass {
-  background: rgba(2, 6, 23, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(9, 9, 11, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-card {
@@ -147,8 +150,8 @@ body {
 }
 
 .dark .glass-card {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(24, 24, 27, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Scrollbar */

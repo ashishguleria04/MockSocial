@@ -1,11 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { AuthProvider } from "@/components/providers/auth-provider";
 
-const font = Plus_Jakarta_Sans({ 
+const font = Inter({ 
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",

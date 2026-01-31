@@ -119,7 +119,7 @@ export const Sidebar = () => {
   const validPlatforms = platforms.filter(p => p.types.includes(store.mockupType));
 
   return (
-    <div className="w-full lg:w-[440px] lg:max-w-[440px] max-h-[45vh] lg:max-h-none lg:h-screen bg-background/60 backdrop-blur-2xl flex flex-col overflow-hidden font-sans border-b lg:border-b-0 lg:border-r border-white/10 relative z-20 shrink-0">
+    <div className="w-full lg:w-[440px] lg:max-w-[440px] max-h-[45vh] lg:max-h-none lg:h-screen bg-background/80 backdrop-blur-xl flex flex-col overflow-hidden font-sans border-b lg:border-b-0 lg:border-r border-border relative z-20 shrink-0">
       {/* Header */}
       <motion.div 
         initial={{ opacity: 0, y: -10 }}

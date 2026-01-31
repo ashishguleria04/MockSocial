@@ -65,7 +65,7 @@ export const TelegramSkin = () => {
                                  <div className="pb-3 break-words whitespace-pre-wrap">
                                      {msg.text}
                                  </div>
-                                 <div className={`absolute bottom-1 right-2 flex items-center gap-1 ${isMe ? (isDarkMode ? "text-[#768d9f]" : "text-[#59a648]") : (isDarkMode ? "text-[#5e778a]" : "text-[#aeb5bc]")}`}>
+                                 <div className={`absolute bottom-1 right-2 flex items-center gap-1 ${isMe ? (isDarkMode ? "text-[#8faabf]" : "text-[#59a648]") : (isDarkMode ? "text-[#5e778a]" : "text-[#aeb5bc]")}`}>
                                      <span className="text-[11px] font-normal">{msg.time}</span>
                                      {isMe && (
                                          // Telegram double check
