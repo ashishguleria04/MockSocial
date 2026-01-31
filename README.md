@@ -27,6 +27,9 @@ MockSocial offers a premium, pixel-perfect environment for designing realistic s
     *   Experience real-time updates as you type.
 *   **Drag-and-Drop Reordering**:
     *   Effortlessly reorder messages in the sidebar using intuitive drag-and-drop interactions.
+*   **Customization Freedom**:
+    *   **Custom Wallpapers**: Upload any image to set as your chat background for a personalized touch.
+    *   **Keyboard Overlay**: Toggle a realistic iOS keyboard to simulate active typing scenarios.
 *   **Production-Ready Export**: One-click generation of high-resolution (2x) PNGs of the entire phone frame, ready for presentations or portfolios.
 
 ---
