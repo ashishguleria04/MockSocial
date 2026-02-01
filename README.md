@@ -22,9 +22,9 @@ MockSocial offers a premium, pixel-perfect environment for designing realistic s
     *   Fully implemented skins for **WhatsApp**, **Signal**, **Slack**, **Discord**, **Telegram**, **Messenger**, **Instagram**, **Teams**, and **X**.
     *   Post mockups for **Instagram**, **X (Twitter)**, **LinkedIn**, and **Threads**.
 *   **Live Visual Editing**: 
-    *   Instantly modify contact names, statuses, and avatars.
-    *   Toggle between sender and receiver roles seamlessly.
-    *   Experience real-time updates as you type.
+    *   **Dynamic Status Bar**: Real-time control over time, battery (level & percentage), signal strength, and WiFi across supported skins.
+    *   **Interactive Chat**: Type messages, send emojis, and upload images directly in the mockups (Instagram).
+    *   **Avatar Uploads**: Drag and drop or select local images for user profiles.
 *   **Drag-and-Drop Reordering**:
     *   Effortlessly reorder messages in the sidebar using intuitive drag-and-drop interactions.
 *   **Customization Freedom**:
