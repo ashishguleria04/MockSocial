@@ -16,40 +16,51 @@ import {
   Plus
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { StatusBar } from "@/components/shared/StatusBar";
 
 export const WhatsAppSkin = () => {
-  const { contact, messages, isDarkMode, wallpaper } = useChatStore();
+  const { contact, messages, isDarkMode, wallpaper, statusBar } = useChatStore();
 
   return (
     <div className={`flex flex-col h-full relative overflow-hidden font-sans ${wallpaper ? 'bg-transparent' : (isDarkMode ? 'bg-[#0b141a] text-[#e9edef]' : 'bg-[#EFE7DD] text-[#111b21]')}`}>
-      {/* Header */}
-      <div className={`flex items-center justify-between px-3 pt-11 pb-2 z-10 shadow-sm shrink-0 transition-colors ${isDarkMode ? 'bg-[#202c33] text-[#e9edef]' : 'bg-[#008069] text-white'}`}>
-        <div className="flex items-center gap-2 flex-1 min-w-0">
-          <button className="p-1 rounded-full hover:bg-white/10 transition-colors -ml-1">
-             <ArrowLeft className="w-6 h-6" strokeWidth={2} />
-          </button>
-          
-          <div className="flex items-center gap-2.5 flex-1 min-w-0 cursor-pointer ml-1">
-              <Avatar className="w-9 h-9 border border-white/10">
-                <AvatarImage src={contact.avatar || undefined} className="object-cover" />
-                <AvatarFallback className="bg-slate-200 text-slate-500 font-bold">
-                  {contact.name.charAt(0)}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col justify-center min-w-0 overflow-hidden">
-                  <span className="text-[16px] font-semibold leading-tight truncate">{contact.name}</span>
-                  <span className="text-[12px] opacity-80 leading-tight truncate font-medium">
-                      {contact.status || 'Online'}
-                  </span>
+      {/* Status Bar */}
+      <div className={`sticky top-0 z-50 ${isDarkMode ? 'bg-[#202c33]' : 'bg-[#008069]'}`}>
+           <StatusBar variant="light" />{/* WhatsApp usually has dark header so light text always? Or depends on mode. 
+                                            Actually deep green header in light mode -> white text.
+                                            Dark mode header -> white/gray text.
+                                            So 'light' variant (white text) works for both usually, 
+                                            but let's check dark mode bg. #202c33 is dark. 
+                                            So yes, white text is safe. */}
+      
+          {/* Header */}
+          <div className={`flex items-center justify-between px-3 pt-2 pb-2 z-10 shadow-sm shrink-0 transition-colors ${isDarkMode ? 'bg-[#202c33] text-[#e9edef]' : 'bg-[#008069] text-white'}`}>
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              <button className="p-1 rounded-full hover:bg-white/10 transition-colors -ml-1">
+                 <ArrowLeft className="w-6 h-6" strokeWidth={2} />
+              </button>
+              
+              <div className="flex items-center gap-2.5 flex-1 min-w-0 cursor-pointer ml-1">
+                  <Avatar className="w-9 h-9 border border-white/10">
+                    <AvatarImage src={contact.avatar || undefined} className="object-cover" />
+                    <AvatarFallback className="bg-slate-200 text-slate-500 font-bold">
+                      {contact.name.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col justify-center min-w-0 overflow-hidden">
+                      <span className="text-[16px] font-semibold leading-tight truncate">{contact.name}</span>
+                      <span className="text-[12px] opacity-80 leading-tight truncate font-medium">
+                          {contact.status || 'Online'}
+                      </span>
+                  </div>
               </div>
+            </div>
+            
+            <div className="flex items-center gap-4 pr-1">
+                <Video className="w-6 h-6 cursor-pointer opacity-90 hover:opacity-100" strokeWidth={1.5} />
+                <Phone className="w-5 h-5 cursor-pointer opacity-90 hover:opacity-100" strokeWidth={1.5} />
+                <MoreVertical className="w-5 h-5 cursor-pointer opacity-90 hover:opacity-100" strokeWidth={2} />
+            </div>
           </div>
-        </div>
-        
-        <div className="flex items-center gap-4 pr-1">
-            <Video className="w-6 h-6 cursor-pointer opacity-90 hover:opacity-100" strokeWidth={1.5} />
-            <Phone className="w-5 h-5 cursor-pointer opacity-90 hover:opacity-100" strokeWidth={1.5} />
-            <MoreVertical className="w-5 h-5 cursor-pointer opacity-90 hover:opacity-100" strokeWidth={2} />
-        </div>
       </div>
 
       {/* Message Area */}

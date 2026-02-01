@@ -21,6 +21,7 @@ export interface PostConfig {
 export interface Message {
   id: string;
   text: string;
+  image?: string;
   sender: Sender;
   time: string;
   status: MessageStatus;

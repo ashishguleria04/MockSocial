@@ -29,7 +29,8 @@ import {
   MessageCircle,
   Repeat2,
   Sun,
-  Moon
+  Moon,
+  Upload
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -445,17 +446,44 @@ export const Sidebar = () => {
                         <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-0.5">Avatar URL</label>
                         <span className="text-[10px] text-muted-foreground font-medium">Optional</span>
                       </div>
-                      <div className="relative group">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors">
-                          <ImageIcon className="w-4 h-4" />
+                      <div className="relative group flex gap-2">
+                        <div className="relative flex-1">
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors">
+                            <ImageIcon className="w-4 h-4" />
+                            </div>
+                            <Input
+                            type="text"
+                            value={store.contact.avatar || ''}
+                            onChange={(e) => store.updateContact({ avatar: e.target.value })}
+                            className="pl-10 h-10 bg-secondary/50 border-border focus:bg-background focus:border-primary/50 transition-all text-xs font-mono text-muted-foreground"
+                            placeholder="https://example.com/image.png"
+                            />
                         </div>
-                        <Input
-                          type="text"
-                          value={store.contact.avatar || ''}
-                          onChange={(e) => store.updateContact({ avatar: e.target.value })}
-                          className="pl-10 h-10 bg-secondary/50 border-border focus:bg-background focus:border-primary/50 transition-all text-xs font-mono text-muted-foreground"
-                          placeholder="https://example.com/image.png"
+                        <input
+                            type="file"
+                            id="avatar-upload"
+                            className="hidden"
+                            accept="image/*"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onload = (ev) => {
+                                        store.updateContact({ avatar: ev.target?.result as string });
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            }}
                         />
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-10 w-10 shrink-0 bg-secondary/50 border-border hover:bg-background hover:border-primary/50 transition-all"
+                            onClick={() => document.getElementById('avatar-upload')?.click()}
+                            title="Upload Image"
+                        >
+                            <Upload className="w-4 h-4 text-muted-foreground" />
+                        </Button>
                       </div>
                     </div>
                   </div>

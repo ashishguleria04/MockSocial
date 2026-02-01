@@ -3,21 +3,21 @@
 import React from "react";
 import { useChatStore } from "@/store/useChatStore";
 import { ArrowLeft, MoreVertical, Paperclip, Smile, Mic, Send } from "lucide-react";
+import { StatusBar } from "@/components/shared/StatusBar";
 
 export const TelegramSkin = () => {
-    const { contact, messages, isDarkMode, wallpaper } = useChatStore();
+    const { contact, messages, isDarkMode, wallpaper, statusBar } = useChatStore();
 
     return (
         <div className={`flex flex-col h-full relative font-sans ${wallpaper ? 'bg-transparent' : (isDarkMode ? 'bg-[#0f0f0f]' : 'bg-[#708499]')}`}>
-             {/* Background Pattern Overlay - Hide if custom wallpaper is set */}
-             {!wallpaper && (
-                <div className="absolute inset-0 z-0 opacity-40 bg-repeat bg-[url('https://telegram.org/file/811140600/1/9Na5yWbdS9w.287958/395627254c41461622')] bg-[length:400px]" />
-             )}
-
-            {/* Header */}
-            <div className={`flex items-center justify-between px-4 pt-12 pb-2 z-10 shadow-sm shrink-0 ${isDarkMode ? 'bg-[#212121] text-white' : 'bg-white text-gray-900'}`}>
-                <div className="flex items-center gap-4 flex-1">
-                    <ArrowLeft className={`w-6 h-6 cursor-pointer ${isDarkMode ? 'text-white' : 'text-gray-500'}`} />
+             {/* Status Bar */}
+             <div className={`sticky top-0 z-50 ${isDarkMode ? 'bg-[#212121]' : 'bg-[#517da2]'}`}> {/* Telegram default header color varies but approx blueish or dark gray */}
+                <StatusBar variant="light" />
+             
+                {/* Header */}
+                <div className={`flex items-center justify-between px-4 pt-2 pb-2 z-10 shadow-sm shrink-0 ${isDarkMode ? 'bg-[#212121] text-white' : 'bg-white text-gray-900'}`}>
+                    <div className="flex items-center gap-4 flex-1">
+                        <ArrowLeft className={`w-6 h-6 cursor-pointer ${isDarkMode ? 'text-white' : 'text-gray-500'}`} />
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                         {contact.avatar ? (
                             <img src={contact.avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover" />
@@ -33,6 +33,7 @@ export const TelegramSkin = () => {
                     </div>
                 </div>
                 <MoreVertical className={`w-6 h-6 cursor-pointer ${isDarkMode ? 'text-white' : 'text-gray-500'}`} />
+            </div>
             </div>
 
             {/* Messages */}
