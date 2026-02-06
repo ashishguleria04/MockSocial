@@ -35,6 +35,7 @@ MockSocial uses **Next.js 15 (App Router)** and **Zustand** for state management
 - `src/components/skins`: Where all the platform-specific UIs live (e.g., `WhatsAppSkin.tsx`).
 - `src/components/sidebar`: The configuration panel.
 - `src/store`: Global state management.
+- `src/lib`: core utilities including `url-state.ts` (sharing engine) and `autofill-utils.ts` (random data generator).
 
 ## How to Add a New Skin
 
@@ -92,6 +93,11 @@ Open `src/components/sidebar/Sidebar.tsx`.
   type: "chat" // or "post"
 },
 ```
+
+### 5. Update State Persistence (If needed)
+If your new skin requires **new top-level state fields** in the Zustand store (beyond `messages`, `contact`, etc.), you **must** update `src/lib/url-state.ts`.
+- Add your new field to the `ShareableState` type.
+- This ensures your new feature is preserved when users share a link.
 
 ## Pull Request Guidelines
 

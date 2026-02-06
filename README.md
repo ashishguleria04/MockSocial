@@ -25,6 +25,8 @@ MockSocial offers a premium, pixel-perfect environment for designing realistic s
     *   **Dynamic Status Bar**: Real-time control over time, battery (level & percentage), signal strength, and WiFi across supported skins.
     *   **Interactive Chat**: Type messages, send emojis, and upload images directly in the mockups (Instagram).
     *   **Avatar Uploads**: Drag and drop or select local images for user profiles.
+    *   **Smart Autofill ✨**: Instantly populate your mockup with realistic, coherent English data (messages, profiles, posts) using the "Magic Wand" tool.
+    *   **Db-Free Sharing 🔗**: Share your creations instantly with a unique link. The entire state is compressed into the URL, requiring no backend or database.
 *   **Drag-and-Drop Reordering**:
     *   Effortlessly reorder messages in the sidebar using intuitive drag-and-drop interactions.
 *   **Customization Freedom**:
