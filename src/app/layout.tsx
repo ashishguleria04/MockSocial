@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { AuthProvider } from "@/components/providers/auth-provider";
+import { UrlHydrator } from "@/components/shared/url-hydrator";
+import { Suspense } from "react";
 
 const font = Inter({ 
   subsets: ["latin"],
@@ -31,6 +33,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <Suspense fallback={null}>
+              <UrlHydrator />
+            </Suspense>
             {children}
             <div className="fixed top-4 right-4 z-[100]">
               <ThemeToggle />

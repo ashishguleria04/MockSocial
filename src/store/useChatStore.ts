@@ -45,6 +45,7 @@ export interface Contact {
 // Combine all slice interfaces
 export type ChatState = AppSlice & ChatSlice & PostSlice & {
   generateRandomContent: () => void;
+  importState: (state: Partial<ChatState>) => void;
 };
 
 export const useChatStore = create<ChatState>()(
@@ -55,6 +56,9 @@ export const useChatStore = create<ChatState>()(
         ...createAppSlice(...a),
         ...createChatSlice(...a),
         ...createPostSlice(...a),
+        importState: (newState) => {
+          set((state) => ({ ...state, ...newState }));
+        },
         generateRandomContent: () => {
           const state = get();
           if (state.mockupType === 'chat') {

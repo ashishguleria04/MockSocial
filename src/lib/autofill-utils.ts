@@ -21,7 +21,7 @@ export const generateRandomMessages = (count: number = 5): Message[] => {
     for (let i = 0; i < count; i++) {
         // Advance time by 1-5 minutes for next message
         currentTime.setMinutes(currentTime.getMinutes() + faker.number.int({ min: 1, max: 5 }));
-        
+
         const isMe = faker.datatype.boolean(); // 50/50 chance
 
         messages.push({
@@ -39,9 +39,9 @@ export const generateRandomMessages = (count: number = 5): Message[] => {
 export const generateRandomPost = (): Partial<PostConfig> => {
     return {
         text: faker.lorem.paragraph({ min: 1, max: 3 }),
-        likes: faker.helpers.replaceSymbolWithNumber('##.#K'),
-        comments: faker.helpers.replaceSymbolWithNumber('#.###'),
-        shares: faker.helpers.replaceSymbolWithNumber('###'),
+        likes: faker.helpers.replaceSymbols('##.#K'),
+        comments: faker.helpers.replaceSymbols('#.###'),
+        shares: faker.helpers.replaceSymbols('###'),
         image: Math.random() > 0.3 ? faker.image.urlLoremFlickr({ category: 'nature' }) : null,
     };
 }

@@ -53,6 +53,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/shared/icons";
 import { UserAuthButton } from "@/components/shared/user-auth-button";
+import { ShareDialog } from "@/components/shared/share-dialog";
 
 interface PlatformItem {
   id: Platform;
@@ -165,6 +166,7 @@ export const Sidebar = () => {
             >
                <Wand2 className="w-4 h-4 group-hover/wand:animate-pulse" />
             </Button>
+            <ShareDialog />
             <UserAuthButton />
             <Button className="h-9 px-4 rounded-xl font-bold text-xs gap-1.5 bg-foreground text-background shadow-medium hover:shadow-glow hover:-translate-y-0.5 transition-all duration-200">
               <Sparkles className="w-3.5 h-3.5" />
