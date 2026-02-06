@@ -30,7 +30,8 @@ import {
   Repeat2,
   Sun,
   Moon,
-  Upload
+  Upload,
+  Wand2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -154,6 +155,15 @@ export const Sidebar = () => {
               className="h-9 w-9 rounded-xl text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all"
             >
               {store.isDarkMode ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+            </Button>
+            <Button
+               variant="ghost"
+               size="icon"
+               onClick={() => store.generateRandomContent()}
+               title="Smart Autofill (Populate random data)"
+               className="h-9 w-9 rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all group/wand"
+            >
+               <Wand2 className="w-4 h-4 group-hover/wand:animate-pulse" />
             </Button>
             <UserAuthButton />
             <Button className="h-9 px-4 rounded-xl font-bold text-xs gap-1.5 bg-foreground text-background shadow-medium hover:shadow-glow hover:-translate-y-0.5 transition-all duration-200">

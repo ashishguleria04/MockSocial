@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import { createAppSlice, AppSlice } from './slices/createAppSlice';
 import { createChatSlice, ChatSlice } from './slices/createChatSlice';
 import { createPostSlice, PostSlice } from './slices/createPostSlice';
+import { generateRandomContact, generateRandomMessages, generateRandomPost } from '@/lib/autofill-utils';
 
 export type Platform = 'signal' | 'imessage' | 'whatsapp' | 'discord' | 'instagram' | 'messenger' | 'telegram' | 'twitter' | 'slack' | 'teams' | 'x' | 'snapchat' | 'tiktok' | 'linkedin' | 'threads';
 export type Sender = 'me' | 'them';
@@ -42,15 +43,33 @@ export interface Contact {
 }
 
 // Combine all slice interfaces
-export type ChatState = AppSlice & ChatSlice & PostSlice;
+export type ChatState = AppSlice & ChatSlice & PostSlice & {
+  generateRandomContent: () => void;
+};
 
 export const useChatStore = create<ChatState>()(
   persist(
-    (...a) => ({
-      ...createAppSlice(...a),
-      ...createChatSlice(...a),
-      ...createPostSlice(...a),
-    }),
+    (...a) => {
+      const [set, get, api] = a;
+      return {
+        ...createAppSlice(...a),
+        ...createChatSlice(...a),
+        ...createPostSlice(...a),
+        generateRandomContent: () => {
+          const state = get();
+          if (state.mockupType === 'chat') {
+            state.updateContact(generateRandomContact());
+            state.setMessages(generateRandomMessages(Math.floor(Math.random() * 5) + 3)); // 3 to 7 messages
+          } else {
+            state.updatePostConfig(generateRandomPost());
+            state.updateContact({
+              name: generateRandomContact().name,
+              avatar: generateRandomContact().avatar
+            })
+          }
+        }
+      };
+    },
     {
       name: 'chat-mockup-storage',
       partialize: (state) => ({

@@ -7,6 +7,7 @@ export interface ChatSlice {
 
     updateContact: (contact: Partial<Contact>) => void;
     addMessage: (message: Omit<Message, 'id'>) => void;
+    setMessages: (messages: Message[]) => void;
     updateMessage: (id: string, updates: Partial<Message>) => void;
     deleteMessage: (id: string) => void;
     reorderMessages: (fromIndex: number, toIndex: number) => void;
@@ -44,6 +45,7 @@ export const createChatSlice: StateCreator<ChatSlice> = (set) => ({
 
     updateContact: (updates) =>
         set((state) => ({ contact: { ...state.contact, ...updates } })),
+    setMessages: (messages) => set({ messages }),
     addMessage: (msg) =>
         set((state) => ({
             messages: [
