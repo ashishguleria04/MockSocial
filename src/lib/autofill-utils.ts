@@ -2,6 +2,48 @@
 import { faker } from '@faker-js/faker';
 import { Contact, Message, PostConfig } from '@/store/useChatStore';
 
+// Authentic chat messages for realistic autofill
+const chatMessages = [
+    "Hey, how are you doing?",
+    "Did you see that video I sent?",
+    "I'll be there in 5 minutes!",
+    "Can we reschedule for tomorrow?",
+    "That sounds amazing! 🎉",
+    "Let me check my calendar.",
+    "Sorry, I missed your call.",
+    "Omg you won't believe what happened...",
+    "Are you free this weekend?",
+    "Sounds good to me.",
+    "K.",
+    "😂😂😂",
+    "Where are we meeting?",
+    "Just sent you the files.",
+    "Happy Birthday!! 🎂",
+    "On my way!",
+    "Can you call me?",
+    "No way!",
+    "Dinner tonight?",
+    "See you soon 👋"
+];
+
+// Authentic social media captions
+const postCaptions = [
+    "Just another day in paradise! 🌴 #vacation #vibes",
+    "Coffee first, schemes later. ☕️",
+    "So grateful for this amazing team! 🙌",
+    "New project coming soon... stay tuned! 👀",
+    "Weekend mood enabled.",
+    "Can't believe it's already Friday!",
+    "Throwback to this amazing trip.",
+    "Work hard, play hard.",
+    "Minimalist vibes today.",
+    "Life is better when you're laughing.",
+    "Nature is healing 🌿",
+    "Just posted a new update! Link in bio.",
+    "Monday blues...",
+    "Golden hour ✨"
+];
+
 export const generateRandomContact = (): Partial<Contact> => {
     const firstName = faker.person.firstName();
     const lastName = faker.person.lastName();
@@ -26,7 +68,7 @@ export const generateRandomMessages = (count: number = 5): Message[] => {
 
         messages.push({
             id: faker.string.uuid(),
-            text: faker.lorem.sentence({ min: 2, max: 10 }),
+            text: faker.helpers.arrayElement(chatMessages),
             sender: isMe ? 'me' : 'them',
             time: currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             status: 'read',
@@ -38,7 +80,7 @@ export const generateRandomMessages = (count: number = 5): Message[] => {
 
 export const generateRandomPost = (): Partial<PostConfig> => {
     return {
-        text: faker.lorem.paragraph({ min: 1, max: 3 }),
+        text: faker.helpers.arrayElement(postCaptions),
         likes: faker.helpers.replaceSymbols('##.#K'),
         comments: faker.helpers.replaceSymbols('#.###'),
         shares: faker.helpers.replaceSymbols('###'),
