@@ -45,6 +45,7 @@ export interface Contact {
 // Combine all slice interfaces
 export type ChatState = AppSlice & ChatSlice & PostSlice & {
   generateRandomContent: () => void;
+  resetState: () => void;
   importState: (state: Partial<ChatState>) => void;
 };
 
@@ -71,6 +72,26 @@ export const useChatStore = create<ChatState>()(
               avatar: generateRandomContact().avatar
             })
           }
+        },
+        resetState: () => {
+          set((state) => ({
+            ...state,
+            messages: [],
+            contact: {
+              name: '',
+              status: '',
+              avatar: null
+            },
+            postConfig: {
+              text: '',
+              image: null,
+              likes: '',
+              comments: '',
+              shares: ''
+            }
+            // We intentionally don't reset platform, theme, or general settings
+            // as the user likely wants to keep those preferences.
+          }));
         }
       };
     },

@@ -85,6 +85,13 @@ const platforms: PlatformItem[] = [
 export const Sidebar = () => {
   const store = useChatStore();
   const [newMessageText, setNewMessageText] = useState("");
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [store.messages]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -165,6 +172,19 @@ export const Sidebar = () => {
                className="h-9 w-9 rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all group/wand"
             >
                <Wand2 className="w-4 h-4 group-hover/wand:animate-pulse" />
+            </Button>
+            <Button
+               variant="ghost"
+               size="icon"
+               onClick={() => {
+                   if (confirm("Are you sure you want to reset all content? This cannot be undone.")) {
+                       store.resetState();
+                   }
+               }}
+               title="Reset / Clear All"
+               className="h-9 w-9 rounded-xl text-muted-foreground hover:text-red-500 hover:bg-red-500/10 transition-all"
+            >
+               <Trash2 className="w-4 h-4" />
             </Button>
             <ShareDialog />
             <UserAuthButton />
@@ -542,7 +562,7 @@ export const Sidebar = () => {
                   </div>
                 </motion.div>
 
-                <div className="space-y-2.5">
+                  <div className="space-y-2.5 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                   <AnimatePresence mode="popLayout">
                     {store.messages.length === 0 ? (
                       <motion.div
@@ -578,6 +598,7 @@ export const Sidebar = () => {
                       </DndContext>
                     )}
                   </AnimatePresence>
+                  <div ref={messagesEndRef} />
                 </div>
               </AccordionContent>
             </AccordionItem>
