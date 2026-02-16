@@ -16,7 +16,6 @@ export interface PostConfig {
   likes: string;
   comments: string;
   shares: string;
-  // TODO: Add any other missing fields from original if needed, but looks complete based on previous file
 }
 
 export interface Message {

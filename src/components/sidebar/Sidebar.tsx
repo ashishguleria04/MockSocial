@@ -54,6 +54,7 @@ import { cn } from "@/lib/utils";
 import { Icons } from "@/components/shared/icons";
 import { UserAuthButton } from "@/components/shared/user-auth-button";
 import { ShareDialog } from "@/components/shared/share-dialog";
+import { useToast } from "@/components/shared/toast";
 
 interface PlatformItem {
   id: Platform;
@@ -86,6 +87,7 @@ export const Sidebar = () => {
   const store = useChatStore();
   const [newMessageText, setNewMessageText] = useState("");
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
+  const { showToast } = useToast();
 
   React.useEffect(() => {
     if (messagesEndRef.current) {
@@ -159,7 +161,10 @@ export const Sidebar = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => store.toggleDarkMode(!store.isDarkMode)}
+              onClick={() => {
+                store.toggleDarkMode(!store.isDarkMode);
+                showToast(store.isDarkMode ? "Switched to light mode" : "Switched to dark mode", "info");
+              }}
               className="h-9 w-9 rounded-xl text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all"
             >
               {store.isDarkMode ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
@@ -167,7 +172,12 @@ export const Sidebar = () => {
             <Button
                variant="ghost"
                size="icon"
-               onClick={() => store.generateRandomContent()}
+               onClick={() => {
+                  store.generateRandomContent();
+                  store.mockupType === 'chat' 
+                    ? showToast("Generated random chat content!", "success")
+                    : showToast("Generated random post content!", "success");
+               }}
                title="Smart Autofill (Populate random data)"
                className="h-9 w-9 rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all group/wand"
             >
@@ -179,6 +189,7 @@ export const Sidebar = () => {
                onClick={() => {
                    if (confirm("Are you sure you want to reset all content? This cannot be undone.")) {
                        store.resetState();
+                       showToast("Mockup reset successfully", "success");
                    }
                }}
                title="Reset / Clear All"
@@ -345,7 +356,7 @@ export const Sidebar = () => {
                     <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-0.5">Content</label>
                     <Textarea 
                       value={store.postConfig.text}
-                      onChange={(e: { target: { value: any; }; }) => {
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                         return store.updatePostConfig({ text: e.target.value });
                       }}
                       className="bg-secondary/50 border-border focus:bg-background min-h-[100px]" 
@@ -717,7 +728,10 @@ export const Sidebar = () => {
                             <Button 
                                 size="sm"
                                 variant={store.isDarkMode ? "default" : "outline"}
-                                onClick={() => store.toggleDarkMode(!store.isDarkMode)}
+                                onClick={() => {
+                                  store.toggleDarkMode(!store.isDarkMode);
+                                  showToast(store.isDarkMode ? "Switched to light mode" : "Switched to dark mode", "info");
+                                }}
                                 className={`h-7 w-12 rounded-full transition-all ${store.isDarkMode ? 'bg-primary text-primary-foreground' : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'}`}
                             >
                                 {store.isDarkMode ? "On" : "Off"}

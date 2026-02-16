@@ -2,13 +2,12 @@
 
 import React, { useRef } from "react";
 import { useChatStore } from "@/store/useChatStore";
-import { ArrowLeft, Phone, Video, Camera, Mic, Image as ImageIcon, Heart, Smile } from "lucide-react";
-import { StatusBar } from "@/components/shared/StatusBar";
+import { ArrowLeft, Phone, Video, Camera, Mic, Image as ImageIcon, Heart, Smile, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import EmojiPicker from "emoji-picker-react";
+import EmojiPicker, { Theme } from "emoji-picker-react";
 
 export const InstagramSkin = () => {
-    const { contact, messages, isDarkMode, wallpaper, statusBar, addMessage, deleteMessage } = useChatStore();
+    const { contact, messages, isDarkMode, wallpaper, statusBar, addMessage, deleteMessage, updateMessage } = useChatStore();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [inputValue, setInputValue] = React.useState("");
     const [showEmojiPicker, setShowEmojiPicker] = React.useState(false);
@@ -51,16 +50,29 @@ export const InstagramSkin = () => {
         setShowEmojiPicker(false);
     };
 
-    const handleEmojiClick = (emojiObject: any) => {
+    const handleEmojiClick = (emojiObject: { emoji: string }) => {
         setInputValue((prev) => prev + emojiObject.emoji);
     };
+
+    
 
     return (
         <div className={`flex flex-col h-full font-sans relative overflow-hidden ${wallpaper ? 'bg-transparent' : (isDarkMode ? 'bg-black' : 'bg-white')} ${isDarkMode ? 'text-white' : 'text-black'}`}>
             
             {/* Status Bar */}
             <div className={`sticky top-0 z-50 ${isDarkMode ? 'bg-black' : 'bg-white'}`}>
-                <StatusBar variant={isDarkMode ? 'dark' : 'light'} />
+                {/* Status bar time */}
+                <div className={`flex justify-between items-center px-6 py-2 text-xs font-medium ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                    <span>9:41</span>
+                    <div className="flex items-center gap-2">
+                        <div className="flex gap-0.5">
+                            <div className="w-1 h-3 bg-current rounded-[1px]" />
+                            <div className="w-1 h-2 bg-current rounded-[1px] opacity-60" />
+                            <div className="w-1 h-1.5 bg-current rounded-[1px] opacity-40" />
+                        </div>
+                        <span>100%</span>
+                    </div>
+                </div>
             
                 {/* Header */}
                 <div className={`flex items-center justify-between px-4 pb-3 pt-1 border-b ${isDarkMode ? 'border-[#262626]' : 'border-gray-100'}`}>
@@ -142,7 +154,15 @@ export const InstagramSkin = () => {
                                  }}
                              >
                                  {msg.image ? (
-                                     <img src={msg.image} alt="Sent image" className="rounded-[22px]" />
+                                     <div className="relative group">
+                                         <img src={msg.image} alt="Sent image" className="rounded-[22px] max-w-[250px]" />
+                                         <button
+                                             onClick={() => deleteMessage(msg.id)}
+                                             className="absolute top-2 right-2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                                         >
+                                             <X className="w-4 h-4" />
+                                         </button>
+                                     </div>
                                  ) : (
                                      msg.text
                                  )}
@@ -229,7 +249,7 @@ export const InstagramSkin = () => {
                             className="absolute bottom-16 right-4 z-50 shadow-2xl rounded-2xl overflow-hidden"
                         >
                             <EmojiPicker 
-                                theme={isDarkMode ? 'dark' as any : 'light' as any}
+                                theme={isDarkMode ? Theme.DARK : Theme.LIGHT}
                                 onEmojiClick={handleEmojiClick}
                                 width={300}
                                 height={400}

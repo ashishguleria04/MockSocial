@@ -9,12 +9,14 @@ import { useChatStore } from "@/store/useChatStore";
 import { encodeState } from "@/lib/url-state";
 import { Check, Copy, Link, Share2, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useToast } from "./toast";
 
 export function ShareDialog() {
   const [isOpen, setIsOpen] = useState(false);
   const [generatedLink, setGeneratedLink] = useState("");
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   const generateLink = () => {
     try {
@@ -40,6 +42,7 @@ export function ShareDialog() {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generatedLink);
     setCopied(true);
+    showToast("Link copied to clipboard!", "success");
     setTimeout(() => setCopied(false), 2000);
   };
 

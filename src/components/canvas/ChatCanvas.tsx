@@ -23,6 +23,7 @@ import { Download } from "lucide-react";
 import { toPng } from "html-to-image";
 import { WatermarkOverlay } from "./watermark-overlay";
 import { KeyboardOverlay } from "./KeyboardOverlay";
+import { useToast } from "@/components/shared/toast";
 
 export const ChatCanvas = () => {
     const { platform, isDarkMode, mockupType, wallpaper, showKeyboard } = useChatStore();
@@ -90,10 +91,12 @@ export const ChatCanvas = () => {
     };
 
     const [isGenerating, setIsGenerating] = React.useState(false);
+    const { showToast } = useToast();
 
     const downloadScreenshot = async () => {
         if (isGenerating) return;
         setIsGenerating(true);
+        showToast("Generating screenshot...", "info");
 
         // Small delay to ensure UI updates before freezing for capture
         await new Promise(resolve => setTimeout(resolve, 100));
@@ -101,6 +104,7 @@ export const ChatCanvas = () => {
         const node = document.getElementById("chat-canvas");
         if (!node) {
             setIsGenerating(false);
+            showToast("Failed to generate screenshot", "error");
             return;
         }
 
@@ -113,8 +117,10 @@ export const ChatCanvas = () => {
             link.download = `mockup_${mockupType}_${platform}_${Date.now()}.png`;
             link.href = dataUrl;
             link.click();
+            showToast("Screenshot downloaded successfully!", "success");
         } catch (err) {
             console.error("Failed to generate screenshot", err);
+            showToast("Failed to generate screenshot", "error");
         } finally {
             setIsGenerating(false);
         }
