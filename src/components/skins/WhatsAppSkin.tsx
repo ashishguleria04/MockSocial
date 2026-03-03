@@ -78,6 +78,8 @@ export const WhatsAppSkin = () => {
           const nextMsg = messages[index + 1];
           const isLastInGroup = !nextMsg || nextMsg.sender !== msg.sender;
           
+          const quotedMessage = msg.replyToId ? messages.find(m => m.id === msg.replyToId) : null;
+          
           return (
             <div
               key={msg.id}
@@ -92,7 +94,7 @@ export const WhatsAppSkin = () => {
                 `}
               >
                 {/* Tail SVG */}
-                {isLastInGroup && (
+                {isLastInGroup && !quotedMessage && (
                   <span className={`absolute top-0 ${isMe ? "-right-2" : "-left-2"} w-2 h-3 overflow-hidden`}>
                     <svg viewBox="0 0 8 13" width="8" height="13" className={`w-full h-full fill-current ${isMe ? (isDarkMode ? 'text-[#005c4b]' : 'text-[#d9fdd3]') : (isDarkMode ? 'text-[#202c33]' : 'text-white')}`}>
                        <path d={isMe ? "M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z" : "M-2.188 1H3v11.193l-6.467-8.625C-4.526 2.156 -3.958 1 -2.188 1z"} transform={!isMe ? "scale(-1, 1) translate(-8, 0)" : ""} />
@@ -100,16 +102,42 @@ export const WhatsAppSkin = () => {
                   </span>
                 )}
                 
-                <div className="pr-16 pb-1 whitespace-pre-wrap break-words">
+                {/* Reply Block */}
+                {quotedMessage && (
+                  <div className={`mt-0.5 mb-1 p-1 rounded-md ${isDarkMode ? 'bg-black/20' : 'bg-black/5'} border-l-4 ${quotedMessage.sender === 'me' ? 'border-[#53bdeb]' : 'border-[#bc6fc9]'}`}>
+                    <div className="flex flex-col px-1.5 pb-0.5">
+                      <span className={`text-[12px] font-semibold leading-tight ${quotedMessage.sender === 'me' ? 'text-[#53bdeb]' : 'text-[#bc6fc9]'}`}>
+                        {quotedMessage.sender === 'me' ? 'You' : contact.name}
+                      </span>
+                      <span className={`text-[13px] truncate leading-tight ${isDarkMode ? 'text-white/70' : 'text-black/60'}`}>
+                        {quotedMessage.text}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                <div className={`pr-16 pb-1 whitespace-pre-wrap break-words ${msg.reactions?.length ? 'mb-2' : ''}`}>
                   {msg.text}
                 </div>
                 
-                  <div className="absolute bottom-1 right-2 flex items-center gap-1 select-none">
-                    <span className={`text-[10px] font-medium ${isMe && isDarkMode ? 'text-[#c1cdd3]' : (isDarkMode ? 'text-[#8696a0]' : 'text-[rgba(17,27,33,0.6)]')}`}>
-                      {msg.time}
-                    </span>
-                    {isMe && <WhatsAppStatusIcon status={msg.status} isDarkMode={isDarkMode} />}
+                <div className="absolute bottom-1 right-2 flex items-center gap-1 select-none">
+                  <span className={`text-[10px] font-medium ${isMe && isDarkMode ? 'text-[#c1cdd3]' : (isDarkMode ? 'text-[#8696a0]' : 'text-[rgba(17,27,33,0.6)]')}`}>
+                    {msg.time}
+                  </span>
+                  {isMe && <WhatsAppStatusIcon status={msg.status} isDarkMode={isDarkMode} />}
+                </div>
+
+                {/* Reactions Pill */}
+                {msg.reactions && msg.reactions.length > 0 && (
+                  <div className={`absolute -bottom-3.5 ${isMe ? 'right-2' : 'left-2'} flex items-center gap-0.5 px-1.5 py-0.5 rounded-full border shadow-sm z-10 ${isDarkMode ? 'bg-[#202c33] border-[#2a3942]' : 'bg-white border-white'}`}>
+                    {msg.reactions.map((r, i) => (
+                      <span key={i} className="flex items-center text-[12px]">
+                        {r.emoji}
+                        {r.count > 1 && <span className={`text-[10px] font-bold ml-0.5 ${isDarkMode ? 'text-[#8696a0]' : 'text-[#8696a0]'}`}>{r.count}</span>}
+                      </span>
+                    ))}
                   </div>
+                )}
               </div>
             </div>
           );
