@@ -4,9 +4,9 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, ArrowLeftRight, GripVertical } from "lucide-react";
+import { Trash2, ArrowLeftRight, GripVertical, SmilePlus, Reply } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Message } from "@/store/useChatStore";
+import { Message, useChatStore } from "@/store/useChatStore";
 
 interface SortableMessageProps {
   message: Message;
@@ -89,6 +89,71 @@ export function SortableMessage({ message, updateMessage, deleteMessage }: Sorta
         rows={Math.max(1, Math.ceil(message.text.length / 45))}
         spellCheck={false}
       />
+      
+      {/* Advanced Capabilities (Replies & Reactions) */}
+      <div className="mt-3 flex flex-col gap-2 pt-3 border-t border-border/50">
+          <div className="flex items-center gap-2">
+            <Reply className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+            <select
+                value={message.replyToId || ""}
+                onChange={(e) => updateMessage(message.id, { replyToId: e.target.value || undefined })}
+                className="flex-1 bg-background/50 border border-border text-xs rounded-md px-2 py-1 text-muted-foreground focus:outline-none focus:border-primary/50"
+            >
+                <option value="">No Reply</option>
+                {/* Dynamically list all messages visually preceding this one (or all) */}
+                {useChatStore.getState().messages.map(m => (
+                    m.id !== message.id && (
+                        <option key={m.id} value={m.id}>
+                            {m.sender === 'me' ? 'You' : 'Them'}: {m.text.substring(0, 20)}...
+                        </option>
+                    )
+                ))}
+            </select>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-1.5">
+            <SmilePlus className="w-3.5 h-3.5 text-muted-foreground shrink-0 mr-1" />
+            {message.reactions?.map((reaction, i) => (
+                <div key={i} className="flex items-center bg-background/50 border border-border rounded-full pl-2 pr-1 py-0.5 text-[10px] gap-1">
+                    <span>{reaction.emoji}</span>
+                    <input 
+                        type="number" 
+                        value={reaction.count}
+                        onChange={(e) => {
+                            const newReactions = [...(message.reactions || [])];
+                            newReactions[i].count = parseInt(e.target.value) || 1;
+                            updateMessage(message.id, { reactions: newReactions });
+                        }}
+                        className="w-6 bg-transparent text-center outline-none"
+                        min="1"
+                    />
+                    <button 
+                        onClick={() => {
+                            const newReactions = message.reactions!.filter((_, idx) => idx !== i);
+                            updateMessage(message.id, { reactions: newReactions.length > 0 ? newReactions : undefined });
+                        }}
+                        className="text-muted-foreground hover:text-destructive shrink-0 ml-0.5"
+                    >
+                        ×
+                    </button>
+                </div>
+            ))}
+            
+            <button 
+                onClick={() => {
+                    // Simple prompt for now, could be replaced with emoji-picker-react later
+                    const emoji = prompt("Enter an emoji (e.g. ❤️, 😂, 👍):", "❤️");
+                    if (emoji) {
+                        const newReactions = [...(message.reactions || []), { emoji, count: 1 }];
+                        updateMessage(message.id, { reactions: newReactions });
+                    }
+                }}
+                className="px-2 py-0.5 text-[10px] bg-secondary/80 hover:bg-secondary text-muted-foreground rounded-full border border-dashed border-border transition-colors uppercase tracking-wider font-bold"
+            >
+                + Add
+            </button>
+          </div>
+      </div>
     </div>
   );
 }

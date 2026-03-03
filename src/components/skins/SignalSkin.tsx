@@ -46,7 +46,9 @@ export const SignalSkin = () => {
           </span>
         </div>
 
-        {messages.map((msg) => (
+        {messages.map((msg) => {
+          const quotedMessage = msg.replyToId ? messages.find(m => m.id === msg.replyToId) : null;
+          return (
           <div
             key={msg.id}
             className={`flex flex-col max-w-[75%] ${
@@ -60,7 +62,31 @@ export const SignalSkin = () => {
                   : (isDarkMode ? "bg-[#333333] text-white" : "bg-[#f6f6f6] text-black") + " rounded-bl-none"
               }`}
             >
+              {/* Reply Block */}
+              {quotedMessage && (
+                  <div className={`mb-1 px-2 py-1 rounded border-l-2 ${msg.sender === 'me' ? 'bg-black/10 border-white' : (isDarkMode ? 'bg-black/20 border-gray-400' : 'bg-black/5 border-gray-500')}`}>
+                      <div className={`text-[11px] font-semibold mb-0.5 ${msg.sender === 'me' ? 'text-white/90' : (isDarkMode ? 'text-gray-300' : 'text-gray-600')}`}>
+                          {quotedMessage.sender === 'me' ? 'You' : contact.name}
+                      </div>
+                      <div className={`text-[12px] truncate ${msg.sender === 'me' ? 'text-white/80' : (isDarkMode ? 'text-gray-400' : 'text-gray-600')}`}>
+                          {quotedMessage.text}
+                      </div>
+                  </div>
+              )}
+            
               {msg.text}
+              
+              {/* Reactions Pill */}
+              {msg.reactions && msg.reactions.length > 0 && (
+                <div className={`absolute -bottom-3 ${msg.sender === 'me' ? 'right-2' : 'left-2'} flex items-center gap-0.5 px-1.5 py-0.5 rounded-full z-10 ${isDarkMode ? 'bg-[#1b1b1b] border-[#333333] border' : 'bg-white shadow-sm'}`}>
+                  {msg.reactions.map((r, i) => (
+                    <span key={i} className="flex items-center text-[12px]">
+                      {r.emoji}
+                      {r.count > 1 && <span className={`text-[10px] font-bold ml-0.5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{r.count}</span>}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="flex items-center gap-1 mt-1 mx-1">
                  {/* Status & Time Metadata */}
@@ -72,7 +98,7 @@ export const SignalSkin = () => {
                  )}
             </div>
           </div>
-        ))}
+        )})}
       </div>
 
       {/* Footer / Input */}

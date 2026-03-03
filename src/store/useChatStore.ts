@@ -26,6 +26,8 @@ export interface Message {
   sender: Sender;
   time: string;
   status: MessageStatus;
+  replyToId?: string;
+  reactions?: { emoji: string; count: number }[];
 }
 
 export interface StatusBarConfig {

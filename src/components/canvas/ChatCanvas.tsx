@@ -21,8 +21,9 @@ const XPostSkin = dynamic(() => import("../skins/XPostSkin").then(mod => mod.XPo
 const LinkedInPostSkin = dynamic(() => import("../skins/LinkedInPostSkin").then(mod => mod.LinkedInPostSkin));
 const ThreadsPostSkin = dynamic(() => import("../skins/ThreadsPostSkin").then(mod => mod.ThreadsPostSkin));
 import { StatusBar } from "./StatusBar";
-import { Download } from "lucide-react";
+import { Download, Video } from "lucide-react";
 import { toPng } from "html-to-image";
+import { generateGifFromElements } from "@/lib/export-utils";
 import { WatermarkOverlay } from "./watermark-overlay";
 import { KeyboardOverlay } from "./KeyboardOverlay";
 import { useToast } from "@/components/shared/toast";
@@ -104,6 +105,7 @@ export const ChatCanvas = () => {
     };
 
     const [isGenerating, setIsGenerating] = React.useState(false);
+    const [isGeneratingGif, setIsGeneratingGif] = React.useState(false);
     const { showToast } = useToast();
 
     const downloadScreenshot = async () => {
@@ -139,6 +141,64 @@ export const ChatCanvas = () => {
         }
     };
 
+    const downloadGif = async () => {
+        if (isGenerating || isGeneratingGif) return;
+        setIsGeneratingGif(true);
+        showToast("Generating GIF... This may take a few seconds.", "info");
+
+        // Small delay to ensure UI updates
+        await new Promise(resolve => setTimeout(resolve, 200));
+
+        const node = document.getElementById("chat-canvas");
+        if (!node) {
+            setIsGeneratingGif(false);
+            showToast("Failed to generate GIF", "error");
+            return;
+        }
+
+        try {
+            const frames = [];
+            const scrollContainer = node.querySelector('.overflow-y-auto') as HTMLElement;
+            
+            if (scrollContainer && scrollContainer.scrollHeight > scrollContainer.clientHeight) {
+                // Animate Scroll
+                scrollContainer.scrollTop = 0;
+                await new Promise(r => setTimeout(r, 300));
+                frames.push({ element: node, delayMs: 800 });
+                
+                const steps = 3;
+                const scrollStep = (scrollContainer.scrollHeight - scrollContainer.clientHeight) / steps;
+                
+                for(let i=1; i<=steps; i++) {
+                    scrollContainer.scrollTop = i * scrollStep;
+                    await new Promise(r => setTimeout(r, 400));
+                    frames.push({ element: node, delayMs: i === steps ? 2000 : 400 });
+                }
+            } else {
+                frames.push({ element: node, delayMs: 1500 });
+            }
+
+            const dims = getPhoneDimensions();
+            // Fallback sizes if regex fails
+            const width = parseInt(dims.match(/w-\[(\d+)px\]/)?.[1] || "340");
+            const height = parseInt(dims.match(/h-\[(\d+)px\]/)?.[1] || "700");
+            
+            const blob = await generateGifFromElements(frames, width, height);
+            
+            const dataUrl = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = `mockup_animated_${mockupType}_${platform}_${Date.now()}.gif`;
+            link.href = dataUrl;
+            link.click();
+            URL.revokeObjectURL(dataUrl);
+            showToast("GIF downloaded successfully!", "success");
+        } catch (err) {
+            console.error("Failed to generate GIF", err);
+            showToast("Failed to generate GIF", "error");
+        } finally {
+            setIsGeneratingGif(false);
+        }
+    };
     return (
 
         <div className="flex items-center justify-center py-8 pb-32 lg:p-8 min-h-0 lg:min-h-screen relative w-full">
@@ -178,10 +238,24 @@ export const ChatCanvas = () => {
             {/* Floating Action Buttons */}
             <div className="fixed bottom-10 right-10 flex flex-col gap-4 z-50">
                 <button
+                    onClick={downloadGif}
+                    disabled={isGenerating || isGeneratingGif}
+                    className="group relative flex items-center justify-center w-14 h-14 bg-indigo-600 rounded-2xl shadow-xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                    title="Export Animated GIF"
+                >
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    {isGeneratingGif ? (
+                        <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin relative z-10" />
+                    ) : (
+                        <Video className="w-6 h-6 text-white relative z-10" strokeWidth={2.5} />
+                    )}
+                </button>
+                
+                <button
                     onClick={downloadScreenshot}
-                    disabled={isGenerating}
-                    className="group relative flex items-center justify-center w-16 h-16 bg-slate-900 rounded-2xl shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:translate-y-0"
-                    title="Download Mockup"
+                    disabled={isGenerating || isGeneratingGif}
+                    className="group relative flex items-center justify-center w-16 h-16 bg-slate-900 rounded-2xl shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                    title="Download Mockup (PNG)"
                 >
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-slate-800 to-slate-700 opacity-0 group-hover:opacity-100 transition-opacity" />
                     {isGenerating ? (

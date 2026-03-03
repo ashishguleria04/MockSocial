@@ -54,11 +54,21 @@ export const IMessageSkin = () => {
            const showTail = !nextMsg || nextMsg.sender !== msg.sender;
            // Round corners if grouped
            
+           const quotedMessage = msg.replyToId ? messages.find(m => m.id === msg.replyToId) : null;
+           
            return (
             <div
               key={msg.id}
-              className={`flex w-full ${isMe ? "justify-end" : "justify-start"} mb-1`}
+              className={`flex flex-col w-full ${isMe ? "items-end" : "items-start"} mb-1`}
             >
+               {/* Reply Block */}
+               {quotedMessage && (
+                   <div className={`mb-1 px-3 py-1 text-[11px] rounded-2xl max-w-[65%] truncate ${isDarkMode ? 'bg-[#26262a] text-gray-400' : 'bg-[#E9E9EB] text-gray-500'}`}>
+                       <span className="font-semibold mr-1">{quotedMessage.sender === 'me' ? 'You' : contact.name}:</span>
+                       {quotedMessage.text}
+                   </div>
+               )}
+               
                <div className={`max-w-[70%] relative px-4 py-2 text-[17px] leading-[22px] tracking-tight ${
                    isMe 
                     ? (isDarkMode ? "bg-[#0A84FF] text-white" : "bg-[#007AFF] text-white") 
@@ -82,6 +92,18 @@ export const IMessageSkin = () => {
                        <svg className={`absolute -bottom-[0px] -left-[6px] w-4 h-4 fill-current ${isDarkMode ? "text-[#26262a]" : "text-[#E9E9EB]"}`} viewBox="0 0 20 20">
                           <path d="M20,20 C20,8.954305 11.045695,0 0,0 C0,0 3.394154,6.790938 7.3235339,12.723805 C9.8631105,16.558296 14.869038,19.261908 20,20 Z" transform="scale(-1, 1) translate(-20, 0)" />
                        </svg>
+                   )}
+                   
+                   {/* Reactions Pill (iMessage overlays top corner) */}
+                   {msg.reactions && msg.reactions.length > 0 && (
+                     <div className={`absolute -top-3 ${isMe ? '-left-2' : '-right-2'} flex items-center gap-0.5 px-2 py-0.5 rounded-full shadow-sm z-10 border ${isDarkMode ? 'bg-[#3A3A3C] border-black/50' : 'bg-white border-gray-200'}`}>
+                       {msg.reactions.map((r, i) => (
+                         <span key={i} className="flex items-center text-[14px]">
+                           {r.emoji}
+                           {r.count > 1 && <span className={`text-[10px] font-bold ml-1 ${isDarkMode ? 'text-gray-300' : 'text-gray-500'}`}>{r.count}</span>}
+                         </span>
+                       ))}
+                     </div>
                    )}
                </div>
             </div>

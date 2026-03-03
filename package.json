@@ -22,6 +22,7 @@
     "html-to-image": "^1.11.13",
     "lucide-react": "^0.562.0",
     "lz-string": "^1.5.0",
+    "modern-gif": "^2.0.4",
     "next": "^16.1.1",
     "next-auth": "^5.0.0-beta.30",
     "next-themes": "^0.4.6",
