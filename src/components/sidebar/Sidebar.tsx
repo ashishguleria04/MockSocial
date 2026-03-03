@@ -55,6 +55,7 @@ import { Icons } from "@/components/shared/icons";
 import { UserAuthButton } from "@/components/shared/user-auth-button";
 import { ShareDialog } from "@/components/shared/share-dialog";
 import { useToast } from "@/components/shared/toast";
+import { useTheme } from "next-themes";
 
 interface PlatformItem {
   id: Platform;
@@ -88,6 +89,15 @@ export const Sidebar = () => {
   const [newMessageText, setNewMessageText] = useState("");
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
   const { showToast } = useToast();
+  const { resolvedTheme } = useTheme();
+  
+  // Optional: Auto Sync if enabled
+  const [syncTheme, setSyncTheme] = useState(false);
+  React.useEffect(() => {
+     if (syncTheme && resolvedTheme) {
+        store.toggleDarkMode(resolvedTheme === 'dark');
+     }
+  }, [resolvedTheme, syncTheme]);
 
   React.useEffect(() => {
     if (messagesEndRef.current) {
@@ -725,17 +735,29 @@ export const Sidebar = () => {
                        
                        <div className="flex items-center justify-between">
                             <label className="text-[11px] font-medium text-foreground ml-0.5">Dark Mode</label>
-                            <Button 
-                                size="sm"
-                                variant={store.isDarkMode ? "default" : "outline"}
-                                onClick={() => {
-                                  store.toggleDarkMode(!store.isDarkMode);
-                                  showToast(store.isDarkMode ? "Switched to light mode" : "Switched to dark mode", "info");
-                                }}
-                                className={`h-7 w-12 rounded-full transition-all ${store.isDarkMode ? 'bg-primary text-primary-foreground' : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'}`}
-                            >
-                                {store.isDarkMode ? "On" : "Off"}
-                            </Button>
+                            <div className="flex gap-2">
+                              <Button 
+                                  size="sm"
+                                  variant={syncTheme ? "default" : "outline"}
+                                  onClick={() => setSyncTheme(!syncTheme)}
+                                  className={`h-7 px-3 rounded-full transition-all ${syncTheme ? 'bg-primary text-primary-foreground' : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'}`}
+                                  title="Sync with System Theme"
+                              >
+                                  Sync
+                              </Button>
+                              <Button 
+                                  size="sm"
+                                  disabled={syncTheme}
+                                  variant={store.isDarkMode ? "default" : "outline"}
+                                  onClick={() => {
+                                    store.toggleDarkMode(!store.isDarkMode);
+                                    showToast(store.isDarkMode ? "Switched to light mode" : "Switched to dark mode", "info");
+                                  }}
+                                  className={`h-7 w-12 rounded-full transition-all ${store.isDarkMode ? 'bg-primary text-primary-foreground' : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'}`}
+                              >
+                                  {store.isDarkMode ? "On" : "Off"}
+                              </Button>
+                            </div>
                        </div>
 
                        <div className="flex items-center justify-between">
@@ -760,6 +782,25 @@ export const Sidebar = () => {
                             >
                                 {store.showKeyboard ? "On" : "Off"}
                             </Button>
+                       </div>
+
+                       <div className="flex items-center justify-between">
+                            <label className="text-[11px] font-medium text-foreground ml-0.5">Phone Style</label>
+                            <div className="flex gap-1 bg-secondary/50 p-0.5 rounded-full">
+                                {(["mini", "default", "pro"] as const).map(style => (
+                                    <button
+                                        key={style}
+                                        onClick={() => store.setPhoneStyle(style)}
+                                        className={`px-3 py-1 text-[10px] font-medium rounded-full transition-all ${
+                                            store.phoneStyle === style 
+                                                ? "bg-primary text-primary-foreground shadow-sm" 
+                                                : "text-muted-foreground hover:text-foreground"
+                                        }`}
+                                    >
+                                        {style.charAt(0).toUpperCase() + style.slice(1)}
+                                    </button>
+                                ))}
+                            </div>
                        </div>
 
                        <div className="space-y-1.5 pt-1">

@@ -1,32 +1,45 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 import { useChatStore } from "@/store/useChatStore";
-import { SignalSkin } from "../skins/SignalSkin";
-import { IMessageSkin } from "../skins/IMessageSkin";
-import { WhatsAppSkin } from "../skins/WhatsAppSkin";
-import { MessengerSkin } from "../skins/MessengerSkin";
-import { TelegramSkin } from "../skins/TelegramSkin";
-import { DiscordSkin } from "../skins/DiscordSkin";
-import { InstagramSkin } from "../skins/InstagramSkin";
-import { SlackSkin } from "../skins/SlackSkin";
-import { TeamsSkin } from "../skins/TeamsSkin";
-import { XSkin } from "../skins/XSkin";
-import { SnapchatSkin } from "../skins/SnapchatSkin";
-import { TikTokSkin } from "../skins/TikTokSkin";
-import { InstagramPostSkin } from "../skins/InstagramPostSkin";
-import { XPostSkin } from "../skins/XPostSkin";
-import { LinkedInPostSkin } from "../skins/LinkedInPostSkin";
-import { ThreadsPostSkin } from "../skins/ThreadsPostSkin";
+
+const SignalSkin = dynamic(() => import("../skins/SignalSkin").then(mod => mod.SignalSkin));
+const IMessageSkin = dynamic(() => import("../skins/IMessageSkin").then(mod => mod.IMessageSkin));
+const WhatsAppSkin = dynamic(() => import("../skins/WhatsAppSkin").then(mod => mod.WhatsAppSkin));
+const MessengerSkin = dynamic(() => import("../skins/MessengerSkin").then(mod => mod.MessengerSkin));
+const TelegramSkin = dynamic(() => import("../skins/TelegramSkin").then(mod => mod.TelegramSkin));
+const DiscordSkin = dynamic(() => import("../skins/DiscordSkin").then(mod => mod.DiscordSkin));
+const InstagramSkin = dynamic(() => import("../skins/InstagramSkin").then(mod => mod.InstagramSkin));
+const SlackSkin = dynamic(() => import("../skins/SlackSkin").then(mod => mod.SlackSkin));
+const TeamsSkin = dynamic(() => import("../skins/TeamsSkin").then(mod => mod.TeamsSkin));
+const XSkin = dynamic(() => import("../skins/XSkin").then(mod => mod.XSkin));
+const SnapchatSkin = dynamic(() => import("../skins/SnapchatSkin").then(mod => mod.SnapchatSkin));
+const TikTokSkin = dynamic(() => import("../skins/TikTokSkin").then(mod => mod.TikTokSkin));
+const InstagramPostSkin = dynamic(() => import("../skins/InstagramPostSkin").then(mod => mod.InstagramPostSkin));
+const XPostSkin = dynamic(() => import("../skins/XPostSkin").then(mod => mod.XPostSkin));
+const LinkedInPostSkin = dynamic(() => import("../skins/LinkedInPostSkin").then(mod => mod.LinkedInPostSkin));
+const ThreadsPostSkin = dynamic(() => import("../skins/ThreadsPostSkin").then(mod => mod.ThreadsPostSkin));
 import { StatusBar } from "./StatusBar";
 import { Download } from "lucide-react";
 import { toPng } from "html-to-image";
 import { WatermarkOverlay } from "./watermark-overlay";
 import { KeyboardOverlay } from "./KeyboardOverlay";
 import { useToast } from "@/components/shared/toast";
+import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 
 export const ChatCanvas = () => {
-    const { platform, isDarkMode, mockupType, wallpaper, showKeyboard } = useChatStore();
+    const { platform, isDarkMode, mockupType, wallpaper, showKeyboard, phoneStyle } = useChatStore();
+
+    const getPhoneDimensions = () => {
+        switch (phoneStyle) {
+            case 'mini': return 'w-[310px] h-[640px]';
+            case 'pro': return 'w-[375px] h-[780px]';
+            case 'default':
+            default:
+                return 'w-[340px] h-[700px]';
+        }
+    };
 
     const renderSkin = () => {
         // If mockup type is 'post', use post skins
@@ -132,7 +145,7 @@ export const ChatCanvas = () => {
             <div id="chat-canvas" className="relative group transition-all duration-500 ease-in-out transform scale-[0.85] sm:scale-90 md:scale-100 hover:md:scale-[1.01] origin-center z-50">
                 <div className="absolute -inset-4 bg-gradient-to-tr from-primary/40 via-purple-500/40 to-secondary/40 rounded-[3.5rem] blur-2xl opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse pointer-events-none" />
                 {/* Phone Frame */}
-                <div className="relative w-[340px] h-[700px] bg-[#121212] rounded-[3rem] shadow-[0_0_0_9px_#333333,0_0_0_10px_#000000,0_20px_50px_rgba(0,0,0,0.5)] border-[6px] border-[#222222] overflow-hidden">
+                <div className={`relative ${getPhoneDimensions()} bg-[#121212] rounded-[3rem] shadow-[0_0_0_9px_#333333,0_0_0_10px_#000000,0_20px_50px_rgba(0,0,0,0.5)] border-[6px] border-[#222222] overflow-hidden transition-all duration-300`}>
 
                     {/* Side Buttons */}
                     <div className="absolute top-24 -left-[14px] w-[8px] h-8 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Mute */}
@@ -149,7 +162,9 @@ export const ChatCanvas = () => {
                             className="w-full h-full overflow-hidden rounded-[2.2rem] relative bg-cover bg-center bg-no-repeat"
                             style={wallpaper ? { backgroundImage: `url(${wallpaper})` } : {}}
                         >
-                            {renderSkin()}
+                            <ErrorBoundary>
+                                {renderSkin()}
+                            </ErrorBoundary>
                             {useChatStore(s => s.showWatermark ?? true) && <WatermarkOverlay />}
                             {showKeyboard && <KeyboardOverlay />}
                         </div>

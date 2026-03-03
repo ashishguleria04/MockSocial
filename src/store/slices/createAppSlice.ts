@@ -17,6 +17,8 @@ export interface AppSlice {
   setWallpaper: (url: string | null) => void;
   showKeyboard: boolean;
   toggleKeyboard: (show: boolean) => void;
+  phoneStyle: 'default' | 'mini' | 'pro';
+  setPhoneStyle: (style: 'default' | 'mini' | 'pro') => void;
 }
 
 export const createAppSlice: StateCreator<AppSlice> = (set) => ({
@@ -33,6 +35,7 @@ export const createAppSlice: StateCreator<AppSlice> = (set) => ({
   showWatermark: true,
   wallpaper: null,
   showKeyboard: false,
+  phoneStyle: 'default', // Add the default state
 
   setMockupType: (type) => set({ mockupType: type }),
   setPlatform: (platform) => set({ platform }),
@@ -42,4 +45,5 @@ export const createAppSlice: StateCreator<AppSlice> = (set) => ({
   toggleWatermark: (show) => set({ showWatermark: show }),
   setWallpaper: (url) => set({ wallpaper: url }),
   toggleKeyboard: (show) => set({ showKeyboard: show }),
+  setPhoneStyle: (style) => set({ phoneStyle: style }), // Set logic
 });

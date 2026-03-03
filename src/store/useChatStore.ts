@@ -9,6 +9,7 @@ export type Platform = 'signal' | 'imessage' | 'whatsapp' | 'discord' | 'instagr
 export type Sender = 'me' | 'them';
 export type MessageStatus = 'sent' | 'delivered' | 'read';
 export type MockupType = 'chat' | 'post';
+export type PhoneStyle = 'default' | 'mini' | 'pro';
 
 export interface PostConfig {
   text: string;
@@ -96,6 +97,14 @@ export const useChatStore = create<ChatState>()(
     },
     {
       name: 'chat-mockup-storage',
+      version: 1, // Add version for future schema migrations
+      migrate: (persistedState: any, version: number) => {
+        if (version === 0) {
+          // If we had old undefined version, ensure phoneStyle is default
+          persistedState.phoneStyle = 'default';
+        }
+        return persistedState as ChatState;
+      },
       partialize: (state) => ({
         // Selectively persist fields if needed, or persist everything
         mockupType: state.mockupType,
@@ -106,6 +115,7 @@ export const useChatStore = create<ChatState>()(
         postConfig: state.postConfig,
         isDarkMode: state.isDarkMode,
         showWatermark: state.showWatermark,
+        phoneStyle: state.phoneStyle,
       }),
     }
   )

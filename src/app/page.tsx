@@ -1,5 +1,6 @@
 import { ChatCanvas } from "@/components/canvas/ChatCanvas";
 import { Sidebar } from "@/components/sidebar/Sidebar";
+import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 
 export default function Home() {
   return (
@@ -15,7 +16,9 @@ export default function Home() {
       <div className="flex flex-col lg:flex-row w-full relative z-10">
         <Sidebar />
         <div className="flex-1 flex items-center justify-center p-4 lg:p-8 overflow-y-auto overflow-x-hidden">
-           <ChatCanvas />
+-          <ErrorBoundary>
+             <ChatCanvas />
+-          </ErrorBoundary>
         </div>
       </div>
     </main>
