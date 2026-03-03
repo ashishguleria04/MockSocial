@@ -24,6 +24,7 @@ MockSocial offers a premium, pixel-perfect environment for designing realistic s
 *   **Live Visual Editing**: 
     *   **Dynamic Status Bar**: Real-time control over time, battery (level & percentage), signal strength, and WiFi across supported skins.
     *   **Interactive Chat**: Type messages, send emojis, and upload images directly in the mockups (Instagram).
+    *   **Advanced Message Contexts**: Build deep, authentic chats by assigning reply-to quotes and interactive emoji reaction pills to individual bubbles (supported on WhatsApp, Signal, iMessage).
     *   **Avatar Uploads**: Drag and drop or select local images for user profiles.
     *   **Smart Autofill ✨**: Instantly populate your mockup with realistic, coherent English data (messages, profiles, posts) using the "Magic Wand" tool.
     *   **Db-Free Sharing 🔗**: Share your creations instantly with a unique link. The entire state is compressed into the URL, requiring no backend or database.
@@ -32,7 +33,9 @@ MockSocial offers a premium, pixel-perfect environment for designing realistic s
 *   **Customization Freedom**:
     *   **Custom Wallpapers**: Upload any image to set as your chat background for a personalized touch.
     *   **Keyboard Overlay**: Toggle a realistic iOS keyboard to simulate active typing scenarios.
-*   **Production-Ready Export**: One-click generation of high-resolution (2x) PNGs of the entire phone frame, ready for presentations or portfolios.
+*   **Production-Ready Export**: 
+    *   **High-Res PNGs**: One-click generation of high-resolution (2x) PNGs of the entire phone frame.
+    *   **Animated GIFs**: Create fluid scrolling `.gif` sequences natively in the browser to deliver video-like proof-of-work arrays.
 
 ---
 

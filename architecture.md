@@ -27,9 +27,10 @@ MockSocial is a web application that generates high-fidelity social media chat m
 
 - **Multi-platform skins**: Support for 15+ messaging platforms
 - **Two mockup types**: Chat conversations and social media posts
-- **Real-time editing**: Live visual editing with instant preview
+- **Real-time editing**: Live visual editing with instant preview including advanced contexts like replies and reactions
 - **No database required**: State fully encoded in URL for sharing
 - **Smart content generation**: AI-powered random content generation
+- **Animated Exports**: Generate native rolling `.gif` videos simulating realistic chat scrolling directly on the client
 
 ---
 
@@ -45,6 +46,7 @@ MockSocial is a web application that generates high-fidelity social media chat m
 | **Framer Motion** | Animations | ^12.26.1 |
 | **LZ-String** | URL compression | ^1.5.0 |
 | **html-to-image** | Screenshot export | ^1.11.13 |
+| **modern-gif** | Animated GIF export | ^latest |
 | **@dnd-kit** | Drag-and-drop | ^10.0.0 |
 | **lucide-react** | Icons | ^0.562.0 |
 | **@faker-js/faker** | Random data | ^10.2.0 |
@@ -463,7 +465,8 @@ mock-social/
 │   ├── lib/                          # Utilities
 │   │   ├── utils.ts                  # General utilities (cn function)
 │   │   ├── url-state.ts              # URL encoding/decoding
-│   │   └── autofill-utils.ts         # Random content generation
+│   │   ├── autofill-utils.ts         # Random content generation
+│   │   └── export-utils.ts           # GIF construction and native pipelines
 │   │
 │   ├── auth.ts                       # NextAuth configuration
 │   └── middleware.ts                 # Next.js middleware
