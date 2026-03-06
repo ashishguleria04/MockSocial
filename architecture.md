@@ -29,7 +29,7 @@ MockSocial is a web application that generates high-fidelity social media chat m
 - **Two mockup types**: Chat conversations and social media posts
 - **Real-time editing**: Live visual editing with instant preview including advanced contexts like replies and reactions
 - **No database required**: State fully encoded in URL for sharing
-- **Smart content generation**: AI-powered random content generation
+- **Smart content generation**: Random content via faker.js + AI-powered contextual conversations via Gemini
 - **Animated Exports**: Generate native rolling `.gif` videos simulating realistic chat scrolling directly on the client
 
 ---
@@ -50,6 +50,7 @@ MockSocial is a web application that generates high-fidelity social media chat m
 | **@dnd-kit** | Drag-and-drop | ^10.0.0 |
 | **lucide-react** | Icons | ^0.562.0 |
 | **@faker-js/faker** | Random data | ^10.2.0 |
+| **@google/generative-ai** | AI conversation generation | latest |
 
 ---
 
@@ -343,6 +344,75 @@ generateRandomContent: () => {
 
 ---
 
+## AI Conversation Generator
+
+The AI Conversation Generator uses **Google Gemini 2.0 Flash** to create realistic, contextual chat conversations from natural language scenario prompts.
+
+### Architecture
+
+```
+User (Sidebar Bot Button)
+    │
+    ▼
+AIChatDialog Modal
+    │  prompt, platform, messageCount
+    ▼
+POST /api/generate-chat
+    │  System prompt + platform tone
+    ▼
+Google Gemini 2.0 Flash
+    │  Structured JSON response
+    ▼
+Response Parsing & Sanitization
+    │
+    ▼
+Zustand Store Hydration
+    │  setMessages() + updateContact()
+    ▼
+Live Preview Update
+```
+
+### Platform Tone System
+
+Each platform has a unique communication style injected into the Gemini system prompt:
+
+| Platform | Tone |
+|----------|------|
+| WhatsApp | Casual, informal, emoji-heavy, short messages |
+| Discord | Very informal, internet slang, meme references |
+| Slack | Professional but friendly, workplace style |
+| Teams | Professional, polite, structured |
+| iMessage | Short texts, emojis, read receipts awareness |
+| Instagram | Trendy, emoji-heavy, casual and visual |
+
+### API Route (`src/app/api/generate-chat/route.ts`)
+
+```typescript
+// POST handler receives:
+interface RequestBody {
+  prompt: string;       // User's scenario description
+  platform: Platform;   // Current platform for tone matching
+  messageCount: number; // 3-15 messages
+}
+
+// Returns:
+interface ResponseBody {
+  messages: Message[];  // Ready to hydrate into store
+  contact: Contact;     // Generated contact info
+}
+```
+
+### Frontend Component (`src/components/shared/ai-chat-dialog.tsx`)
+
+A modal dialog featuring:
+- Scenario prompt textarea with Ctrl+Enter shortcut
+- 5 clickable example prompts for quick starts
+- Message count slider (3–15)
+- Platform-aware display showing current target platform
+- Loading state with disabled controls during generation
+
+---
+
 ## Skin System
 
 ### Adding a New Platform
@@ -398,6 +468,8 @@ mock-social/
 ├── src/
 │   ├── app/                          # Next.js App Router
 │   │   ├── api/
+│   │   │   ├── generate-chat/        # AI conversation endpoint
+│   │   │   │   └── route.ts          # Gemini API integration
 │   │   │   └── auth/[...nextauth]/   # NextAuth routes
 │   │   ├── globals.css               # Global styles
 │   │   ├── layout.tsx                # Root layout
@@ -415,6 +487,7 @@ mock-social/
 │   │   │   └── theme-provider.tsx    # Theme provider
 │   │   │
 │   │   ├── shared/                   # Reusable components
+│   │   │   ├── ai-chat-dialog.tsx    # AI conversation generator modal
 │   │   │   ├── icons.tsx             # SVG icon definitions
 │   │   │   ├── share-dialog.tsx      # URL sharing dialog
 │   │   │   ├── theme-toggle.tsx      # Theme switcher
@@ -512,3 +585,5 @@ Next.js handles initial SSR while client components handle interactivity.
 - Custom theme builder
 - Collaboration features
 - Template library
+- AI-generated post content (extend Gemini integration to post mockups)
+- Conversation templates powered by AI presets

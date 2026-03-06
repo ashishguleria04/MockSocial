@@ -26,6 +26,7 @@ MockSocial offers a premium, pixel-perfect environment for designing realistic s
     *   **Interactive Chat**: Type messages, send emojis, and upload images directly in the mockups (Instagram).
     *   **Advanced Message Contexts**: Build deep, authentic chats by assigning reply-to quotes and interactive emoji reaction pills to individual bubbles (supported on WhatsApp, Signal, iMessage).
     *   **Avatar Uploads**: Drag and drop or select local images for user profiles.
+    *   **AI Conversation Generator 🤖**: Describe a scenario in natural language and let **Google Gemini** generate an entire realistic conversation — with platform-aware tone, natural message flow, and authentic timing.
     *   **Smart Autofill ✨**: Instantly populate your mockup with realistic, coherent English data (messages, profiles, posts) using the "Magic Wand" tool.
     *   **Db-Free Sharing 🔗**: Share your creations instantly with a unique link. The entire state is compressed into the URL, requiring no backend or database.
 *   **Drag-and-Drop Reordering**:
@@ -45,12 +46,14 @@ MockSocial offers a premium, pixel-perfect environment for designing realistic s
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=google-gemini&logoColor=white)
 
 *   **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
 *   **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
 *   **Animation**: [Framer Motion](https://www.framer.com/motion/)
 *   **State Management**: [Zustand](https://github.com/pmndrs/zustand)
 *   **Icons**: [Lucide React](https://lucide.dev/)
+*   **AI**: [Google Generative AI SDK](https://ai.google.dev/) (Gemini 2.0 Flash)
 
 ---
 
@@ -72,9 +75,9 @@ src/
 │   │   ├── auth-provider.tsx  # NextAuth session provider
 │   │   └── theme-provider.tsx # Next-themes provider
 │   ├── shared/           # Reusable UI elements
+│   │   ├── ai-chat-dialog.tsx # AI conversation generator modal
 │   │   ├── icons.tsx          # SVG icon definitions
-│   │   ├── theme-toggle.tsx
-│   │   └── user-auth-button.tsx
+│   │   └── ...
 │   ├── sidebar/          # Configuration sidebar
 │   │   └── Sidebar.tsx        # Main controls interface
 │   ├── skins/            # Platform-specific UI implementations
@@ -88,6 +91,8 @@ src/
 │   │   ├── createChatSlice.ts # Chat data (Messages, Contacts)
 │   │   └── createPostSlice.ts # Post data (Config)
 │   └── useChatStore.ts   # Main store combiner
+├── app/api/
+│   └── generate-chat/    # AI conversation API route (Gemini)
 └── lib/                  # Utilities
     └── utils.ts
 ```
@@ -113,7 +118,16 @@ src/
     npm install
     ```
 
-3.  **Run Development Server**
+3.  **Set up environment variables** (for AI features)
+    ```bash
+    cp .env.local.example .env.local
+    ```
+    Add your [Gemini API key](https://aistudio.google.com/apikey) to `.env.local`:
+    ```env
+    GEMINI_API_KEY="your-gemini-api-key"
+    ```
+
+4.  **Run Development Server**
     ```bash
     npm run dev
     ```

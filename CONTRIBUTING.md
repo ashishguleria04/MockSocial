@@ -20,7 +20,13 @@ Thank you for your interest in contributing to MockSocial! We want to make it as
     npm install
     ```
 
-3.  **Run Development Server**
+3.  **Set up environment variables** (optional, for AI features)
+    ```bash
+    cp .env.local.example .env.local
+    ```
+    Add your [Gemini API key](https://aistudio.google.com/apikey) to enable the AI Conversation Generator.
+
+4.  **Run Development Server**
     ```bash
     npm run dev
     ```
@@ -36,6 +42,8 @@ MockSocial uses **Next.js 15 (App Router)** and **Zustand** for state management
 - `src/components/sidebar`: The configuration panel.
 - `src/store`: Global state management.
 - `src/lib`: core utilities including `url-state.ts` (sharing engine) and `autofill-utils.ts` (random data generator).
+- `src/app/api/generate-chat`: AI conversation generator API route (Google Gemini).
+- `src/components/shared/ai-chat-dialog.tsx`: AI conversation generator modal UI.
 
 ## How to Add a New Skin
 
