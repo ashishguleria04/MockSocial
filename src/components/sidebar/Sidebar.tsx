@@ -56,6 +56,7 @@ import { UserAuthButton } from "@/components/shared/user-auth-button";
 import { ShareDialog } from "@/components/shared/share-dialog";
 import { useToast } from "@/components/shared/toast";
 import { useTheme } from "next-themes";
+import { AIChatDialog } from "@/components/shared/ai-chat-dialog";
 
 interface PlatformItem {
   id: Platform;
@@ -87,6 +88,7 @@ const platforms: PlatformItem[] = [
 export const Sidebar = () => {
   const store = useChatStore();
   const [newMessageText, setNewMessageText] = useState("");
+  const [showAIDialog, setShowAIDialog] = useState(false);
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
   const { showToast } = useToast();
   const { resolvedTheme } = useTheme();
@@ -179,6 +181,17 @@ export const Sidebar = () => {
             >
               {store.isDarkMode ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
             </Button>
+            {store.mockupType === 'chat' && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowAIDialog(true)}
+                title="AI Conversation Generator"
+                className="h-9 w-9 rounded-xl text-muted-foreground hover:text-violet-500 hover:bg-violet-500/10 transition-all group/ai"
+              >
+                <Bot className="w-4 h-4 group-hover/ai:animate-pulse" />
+              </Button>
+            )}
             <Button
                variant="ghost"
                size="icon"
@@ -871,6 +884,9 @@ export const Sidebar = () => {
           <a href="#" className="hover:text-foreground transition-colors">API</a>
         </div>
       </motion.div>
+
+      {/* AI Chat Dialog */}
+      <AIChatDialog open={showAIDialog} onOpenChange={setShowAIDialog} />
     </div>
   );
 };
