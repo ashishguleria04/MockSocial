@@ -6,15 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Trash2, ArrowLeftRight, GripVertical, SmilePlus, Reply } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Message, useChatStore } from "@/store/useChatStore";
+import { Message } from "@/store/useChatStore";
 
 interface SortableMessageProps {
   message: Message;
+  messages: Message[];
   updateMessage: (id: string, updates: Partial<Message>) => void;
   deleteMessage: (id: string) => void;
 }
 
-export function SortableMessage({ message, updateMessage, deleteMessage }: SortableMessageProps) {
+export function SortableMessage({ message, messages, updateMessage, deleteMessage }: SortableMessageProps) {
   const {
     attributes,
     listeners,
@@ -100,8 +101,8 @@ export function SortableMessage({ message, updateMessage, deleteMessage }: Sorta
                 className="flex-1 bg-background/50 border border-border text-xs rounded-md px-2 py-1 text-muted-foreground focus:outline-none focus:border-primary/50"
             >
                 <option value="">No Reply</option>
-                {/* Dynamically list all messages visually preceding this one (or all) */}
-                {useChatStore.getState().messages.map(m => (
+                {/* Dynamically list all messages — uses live prop so updates instantly */}
+                {messages.map(m => (
                     m.id !== message.id && (
                         <option key={m.id} value={m.id}>
                             {m.sender === 'me' ? 'You' : 'Them'}: {m.text.substring(0, 20)}...

@@ -89,6 +89,7 @@ export const Sidebar = () => {
   const store = useChatStore();
   const [newMessageText, setNewMessageText] = useState("");
   const [showAIDialog, setShowAIDialog] = useState(false);
+  const [liveTime, setLiveTime] = useState(false);
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
   const { showToast } = useToast();
   const { resolvedTheme } = useTheme();
@@ -100,6 +101,14 @@ export const Sidebar = () => {
         store.toggleDarkMode(resolvedTheme === 'dark');
      }
   }, [resolvedTheme, syncTheme]);
+
+  React.useEffect(() => {
+    if (!liveTime) return;
+    const getNow = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    store.updateStatusBar({ time: getNow() });
+    const interval = setInterval(() => store.updateStatusBar({ time: getNow() }), 60_000);
+    return () => clearInterval(interval);
+  }, [liveTime]);
 
   React.useEffect(() => {
     if (messagesEndRef.current) {
@@ -623,6 +632,7 @@ export const Sidebar = () => {
                               <SortableMessage
                                 key={msg.id}
                                 message={msg}
+                                messages={store.messages}
                                 updateMessage={store.updateMessage}
                                 deleteMessage={store.deleteMessage}
                               />
@@ -666,12 +676,38 @@ export const Sidebar = () => {
                       <div className="space-y-3">
                           {/* Time */}
                           <div className="space-y-1.5">
-                              <label className="text-[10px] font-medium text-muted-foreground ml-0.5">Time</label>
+                              <div className="flex items-center justify-between">
+                                <label className="text-[10px] font-medium text-muted-foreground ml-0.5">Time</label>
+                                <Button
+                                  size="sm"
+                                  variant={liveTime ? "default" : "outline"}
+                                  onClick={() => {
+                                    setLiveTime(v => !v);
+                                    if (!liveTime) showToast("Live clock enabled!", "success");
+                                  }}
+                                  className={`h-6 px-2.5 rounded-full text-[10px] font-bold gap-1.5 transition-all ${
+                                    liveTime
+                                      ? 'bg-section-green text-white border-transparent'
+                                      : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'
+                                  }`}
+                                >
+                                  {liveTime && (
+                                    <span className="relative flex h-1.5 w-1.5">
+                                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white" />
+                                    </span>
+                                  )}
+                                  Live
+                                </Button>
+                              </div>
                               <Input
                                   type="text"
                                   value={store.statusBar.time}
                                   onChange={(e) => store.updateStatusBar({ time: e.target.value })}
-                                  className="h-9 bg-secondary/50 border-border font-medium text-sm"
+                                  disabled={liveTime}
+                                  className={`h-9 bg-secondary/50 border-border font-medium text-sm transition-opacity ${
+                                    liveTime ? 'opacity-60 cursor-not-allowed' : ''
+                                  }`}
                               />
                           </div>
 
