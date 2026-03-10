@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useChatStore, Platform, MockupType } from "@/store/useChatStore";
 import { motion, AnimatePresence } from "framer-motion";
+import { CHAT_TEMPLATES } from "@/lib/templates";
 import { 
   MessageSquare, 
   Trash2, 
@@ -31,7 +32,8 @@ import {
   Sun,
   Moon,
   Upload,
-  Wand2
+  Wand2,
+  LayoutTemplate
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -644,6 +646,69 @@ export const Sidebar = () => {
                   </AnimatePresence>
                   <div ref={messagesEndRef} />
                 </div>
+              </AccordionContent>
+            </AccordionItem>
+            )}
+            {/* TEMPLATES SECTION */}
+            {store.mockupType === 'chat' && (
+            <AccordionItem value="templates" className="border border-border rounded-2xl overflow-hidden bg-card shadow-card">
+              <AccordionTrigger className="hover:no-underline py-4 px-4 group">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-section-green/10 flex items-center justify-center transition-all duration-200 group-hover:scale-105">
+                    <LayoutTemplate className="w-5 h-5 text-section-green" strokeWidth={2} />
+                  </div>
+                  <div className="flex flex-col items-start gap-0.5 text-left">
+                    <span className="text-sm font-bold text-foreground leading-none">Templates</span>
+                    <span className="text-xs font-medium text-muted-foreground">One-click preset conversations</span>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-4">
+                <motion.div
+                  variants={sectionVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="grid grid-cols-2 gap-2.5"
+                >
+                  {CHAT_TEMPLATES.map((template, index) => (
+                    <motion.button
+                      key={template.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.04 }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => {
+                        store.setPlatform(template.platform);
+                        store.updateContact(template.contact);
+                        store.setMessages(
+                          template.messages.map((m) => ({ ...m, id: crypto.randomUUID() }))
+                        );
+                        showToast(`"${template.title}" template loaded!`, 'success');
+                      }}
+                      className="relative flex flex-col items-start gap-2 p-3.5 rounded-xl border border-border bg-card hover:border-primary/30 hover:bg-secondary/50 transition-all text-left group overflow-hidden"
+                    >
+                      {/* Colour accent strip */}
+                      <div className={`absolute top-0 left-0 right-0 h-0.5 ${template.color.replace('/10', '')} opacity-60 group-hover:opacity-100 transition-opacity`} />
+
+                      {/* Emoji badge */}
+                      <div className={`w-9 h-9 rounded-xl ${template.color} flex items-center justify-center text-xl shrink-0`}>
+                        {template.emoji}
+                      </div>
+
+                      {/* Text */}
+                      <div className="w-full">
+                        <p className="text-[12px] font-bold text-foreground leading-tight">{template.title}</p>
+                        <p className="text-[10px] text-muted-foreground mt-0.5 leading-snug">{template.description}</p>
+                      </div>
+
+                      {/* Platform chip */}
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 border border-border/50 px-1.5 py-0.5 rounded-full">
+                        {template.platform}
+                      </span>
+                    </motion.button>
+                  ))}
+                </motion.div>
               </AccordionContent>
             </AccordionItem>
             )}

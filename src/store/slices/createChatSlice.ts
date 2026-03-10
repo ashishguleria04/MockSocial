@@ -50,7 +50,7 @@ export const createChatSlice: StateCreator<ChatSlice> = (set) => ({
         set((state) => ({
             messages: [
                 ...state.messages,
-                { ...msg, id: Math.random().toString(36).substring(7) },
+                { ...msg, id: crypto.randomUUID() },
             ],
         })),
     updateMessage: (id, updates) =>
