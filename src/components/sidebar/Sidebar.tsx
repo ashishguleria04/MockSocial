@@ -46,6 +46,7 @@ import { SortableMessage } from "./SortableMessage";
 import { SavedMockupsPanel } from "./SavedMockupsPanel";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
@@ -110,6 +111,49 @@ export const Sidebar = () => {
         store.toggleDarkMode(resolvedTheme === 'dark');
      }
   }, [resolvedTheme, syncTheme]);
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if user is inside an input/textarea
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement).tagName)) {
+         // Allow cmd+enter even in textarea/input
+         if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+             e.preventDefault();
+             handleAddMessage();
+             return;
+         }
+         return;
+      }
+
+      // Cmd/Ctrl + Enter to send message
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        e.preventDefault();
+        handleAddMessage();
+      }
+      
+      // Cmd/Ctrl + Backspace to clear messages
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Backspace') {
+        e.preventDefault();
+        if (store.mockupType === 'chat' && store.messages.length > 0) {
+           if (confirm("Are you sure you want to clear all messages?")) {
+              store.setMessages([]);
+           }
+        }
+      }
+
+      // Cmd/Ctrl + S to save mockup
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        const name = prompt("Enter a name to save this mockup snapshot:", `Mockup ${new Date().toLocaleDateString()}`);
+        if (name) {
+           store.saveMockup(name);
+           showToast("Mockup saved successfully!", "success");
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [store, newMessageText]);
 
   React.useEffect(() => {
     if (!liveTime) return;
@@ -562,6 +606,10 @@ export const Sidebar = () => {
                                 messages={store.messages}
                                 updateMessage={store.updateMessage}
                                 deleteMessage={store.deleteMessage}
+                                duplicateMessage={(id) => {
+                                  const m = store.messages.find(x => x.id === id);
+                                  if (m) store.addMessage(m); // addMessage generates a new ID
+                                }}
                               />
                             ))}
                           </AnimatePresence>
@@ -575,17 +623,18 @@ export const Sidebar = () => {
                )}
             </TabsContent>
 
-            <TabsContent value="design" className="space-y-6 mt-0">
-               <div className="space-y-4">
-                 <h3 className="text-sm font-bold text-foreground flex items-center gap-2 pl-1">
-                   Platform
-                 </h3>
-                 <motion.div 
-                  variants={sectionVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="grid grid-cols-2 gap-2.5"
-                >
+            <TabsContent value="design" className="space-y-0 mt-0">
+               <Accordion type="single" collapsible defaultValue="platform" className="w-full">
+                 
+                 <AccordionItem value="platform">
+                   <AccordionTrigger>Platform & Style</AccordionTrigger>
+                   <AccordionContent>
+                     <motion.div 
+                      variants={sectionVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className="grid grid-cols-2 gap-2.5 pt-2"
+                    >
                   {validPlatforms.map((p, index) => {
                     const isSelected = store.platform === p.id;
                     return (
@@ -634,19 +683,20 @@ export const Sidebar = () => {
                       </motion.button>
                     );
                   })}
-                </motion.div>
-               </div>
+                    </motion.div>
+                  </AccordionContent>
+                 </AccordionItem>
 
-               <div className="space-y-4 pt-4 border-t border-border">
-                 <h3 className="text-sm font-bold text-foreground flex items-center gap-2 pl-1">
-                   Message Type
-                 </h3>
-                 <motion.div
-                  variants={sectionVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  <button className="w-full bg-secondary/50 border border-border px-4 py-3.5 rounded-xl text-sm font-semibold text-foreground flex justify-between items-center cursor-pointer hover:border-primary/30 hover:bg-secondary transition-all group">
+                 <AccordionItem value="messageType">
+                   <AccordionTrigger>Message Type</AccordionTrigger>
+                   <AccordionContent>
+                     <motion.div
+                      variants={sectionVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className="pt-2"
+                    >
+                      <button className="w-full bg-secondary/50 border border-border px-4 py-3.5 rounded-xl text-sm font-semibold text-foreground flex justify-between items-center cursor-pointer hover:border-primary/30 hover:bg-secondary transition-all group">
                     <span className="flex items-center gap-3">
                       <span className="relative flex h-2.5 w-2.5">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-section-green opacity-75"></span>
@@ -656,21 +706,21 @@ export const Sidebar = () => {
                     </span>
                     <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-0.5 transition-all" />
                   </button>
-                </motion.div>
-               </div>
+                    </motion.div>
+                   </AccordionContent>
+                 </AccordionItem>
 
                {store.mockupType === 'chat' && 
                 !['discord', 'slack', 'threads'].includes(store.platform) && (
-                 <div className="space-y-4 pt-4 border-t border-border">
-                   <h3 className="text-sm font-bold text-foreground flex items-center gap-2 pl-1">
-                     Chat Bubble Colors
-                   </h3>
-                   <motion.div
-                    variants={sectionVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="space-y-3"
-                  >
+                 <AccordionItem value="chatColors">
+                   <AccordionTrigger>Chat Bubble Colors</AccordionTrigger>
+                   <AccordionContent>
+                     <motion.div
+                      variants={sectionVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className="space-y-3 pt-2"
+                    >
                      <div className="flex items-center justify-between">
                         <label className="text-[11px] font-medium text-foreground ml-0.5">Enable Custom Colors</label>
                         <Button 
@@ -681,7 +731,6 @@ export const Sidebar = () => {
                               store.setUseCustomColors(newUseCustomColors);
                               
                               if (newUseCustomColors && !store.meBubbleColor && !store.themBubbleColor) {
-                                // Apply platform colors initially when enabling
                                 const { getPlatformColors } = require('@/lib/platform-colors');
                                 const colors = getPlatformColors(store.platform, store.isDarkMode);
                                 store.setMeBubbleColor(colors.me);
@@ -738,26 +787,25 @@ export const Sidebar = () => {
                        </>
                      )}
                    </motion.div>
-                 </div>
+                   </AccordionContent>
+                 </AccordionItem>
                )}
 
-               <div className="space-y-4 pt-4 border-t border-border">
-                 <h3 className="text-sm font-bold text-foreground flex items-center gap-2 pl-1">
-                   Appearance
-                 </h3>
-                 <motion.div
-                  variants={sectionVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="space-y-4"
-                >
+                 <AccordionItem value="appearance">
+                   <AccordionTrigger>Appearance & Status Bar</AccordionTrigger>
+                   <AccordionContent>
+                     <motion.div
+                      variants={sectionVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className="space-y-4 pt-2"
+                    >
                   <div className="space-y-4 pt-1">
                       <div className="flex items-center justify-between">
                           <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest ml-0.5">Status Bar</label>
                       </div>
 
                       <div className="space-y-3">
-                          {/* Time */}
                           <div className="space-y-1.5">
                               <div className="flex items-center justify-between">
                                 <label className="text-[10px] font-medium text-muted-foreground ml-0.5">Time</label>
@@ -794,7 +842,6 @@ export const Sidebar = () => {
                               />
                           </div>
 
-                          {/* Battery Level Slider */}
                           <div className="space-y-2">
                               <div className="flex items-center justify-between">
                                   <label className="text-[10px] font-medium text-muted-foreground ml-0.5">Battery Level</label>
@@ -810,7 +857,6 @@ export const Sidebar = () => {
                               />
                           </div>
 
-                          {/* Signal Strength Slider */}
                           <div className="space-y-2">
                               <div className="flex items-center justify-between">
                                   <label className="text-[10px] font-medium text-muted-foreground ml-0.5">Signal</label>
@@ -831,7 +877,6 @@ export const Sidebar = () => {
                               />
                           </div>
                       
-                           {/* Toggles */}
                            <div className="flex items-center justify-between pt-1">
                                 <label className="text-[11px] font-medium text-foreground ml-0.5">WiFi</label>
                                 <Button 
@@ -859,7 +904,6 @@ export const Sidebar = () => {
 
                    <Separator className="bg-border/50" />
 
-                   {/* Dark Mode Config */}
                    <div className="space-y-3">
                        <div className="flex items-center justify-between">
                           <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest ml-0.5">Theme</label>
@@ -981,9 +1025,12 @@ export const Sidebar = () => {
 
                        </div>
                    </div>
-                 </motion.div>
-               </div>
-            </TabsContent>
+                  </motion.div>
+                  </AccordionContent>
+                 </AccordionItem>
+
+               </Accordion>
+             </TabsContent>
 
             <TabsContent value="saved" className="space-y-6 mt-0">
                {store.mockupType === 'chat' && (

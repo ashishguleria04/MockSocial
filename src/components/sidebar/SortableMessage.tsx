@@ -4,7 +4,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, ArrowLeftRight, GripVertical, SmilePlus, Reply } from "lucide-react";
+import { Trash2, ArrowLeftRight, GripVertical, SmilePlus, Reply, Copy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Message } from "@/store/useChatStore";
 
@@ -13,9 +13,10 @@ interface SortableMessageProps {
   messages: Message[];
   updateMessage: (id: string, updates: Partial<Message>) => void;
   deleteMessage: (id: string) => void;
+  duplicateMessage?: (id: string) => void;
 }
 
-export function SortableMessage({ message, messages, updateMessage, deleteMessage }: SortableMessageProps) {
+export function SortableMessage({ message, messages, updateMessage, deleteMessage, duplicateMessage }: SortableMessageProps) {
   const {
     attributes,
     listeners,
@@ -68,8 +69,18 @@ export function SortableMessage({ message, messages, updateMessage, deleteMessag
           <Button 
             variant="ghost"
             size="icon"
+            className="h-6 w-6 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-foreground hover:bg-secondary transition-all" 
+            onClick={() => duplicateMessage && duplicateMessage(message.id)}
+            title="Duplicate"
+          >
+            <Copy className="w-3.5 h-3.5" />
+          </Button>
+          <Button 
+            variant="ghost"
+            size="icon"
             className="h-6 w-6 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all" 
             onClick={() => deleteMessage(message.id)}
+            title="Delete"
           >
             <Trash2 className="w-3.5 h-3.5" />
           </Button>
@@ -78,6 +89,7 @@ export function SortableMessage({ message, messages, updateMessage, deleteMessag
             size="icon"
             className="h-6 w-6 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-foreground hover:bg-secondary transition-all" 
             onClick={() => updateMessage(message.id, { sender: message.sender === 'me' ? 'them' : 'me' })}
+            title="Swap Sender"
           >
             <ArrowLeftRight className="w-3.5 h-3.5" />
           </Button>
