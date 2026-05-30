@@ -95,7 +95,7 @@ const AccordionTrigger = React.forwardRef<
                 {...props}
                 >
                 {children}
-                <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 text-slate-400" />
+                <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-75 text-slate-400" />
                 </button>
             </div>
           )
@@ -119,7 +119,7 @@ const AccordionContent = React.forwardRef<
                     <div
                     ref={ref}
                     className={cn(
-                        "overflow-hidden text-sm transition-all animate-in slide-in-from-top-1 duration-200",
+                        "overflow-hidden text-sm transition-all animate-in slide-in-from-top-1 duration-75",
                         className
                     )}
                     {...props}

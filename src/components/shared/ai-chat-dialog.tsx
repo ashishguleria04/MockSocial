@@ -201,7 +201,7 @@ export function AIChatDialog({ open, onOpenChange }: AIChatDialogProps) {
                   onClick={handleGenerate}
                   disabled={!prompt.trim() || isGenerating}
                   className={cn(
-                    "h-10 px-5 rounded-xl font-bold text-sm gap-2 transition-all duration-200",
+                    "h-10 px-5 rounded-xl font-bold text-sm gap-2 transition-all duration-75",
                     "bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white",
                     "hover:from-violet-600 hover:to-fuchsia-600 hover:shadow-lg hover:-translate-y-0.5",
                     "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"

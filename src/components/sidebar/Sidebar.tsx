@@ -318,7 +318,7 @@ export const Sidebar = () => {
             <span className="hidden lg:contents">
               <ShareDialog />
               <UserAuthButton />
-              <Button className="h-9 px-4 rounded-xl font-bold text-xs gap-1.5 bg-foreground text-background shadow-medium hover:shadow-glow hover:-translate-y-0.5 transition-all duration-200">
+              <Button className="h-9 px-4 rounded-xl font-bold text-xs gap-1.5 bg-foreground text-background shadow-medium hover:shadow-glow hover:-translate-y-0.5 transition-all duration-75">
                 <Sparkles className="w-3.5 h-3.5" />
                 Pro
               </Button>
@@ -655,7 +655,7 @@ export const Sidebar = () => {
                         )}
                       >
                         <span className={cn(
-                          "flex items-center justify-center transition-all duration-200", 
+                          "flex items-center justify-center transition-all duration-75", 
                           !p.locked && !isSelected && p.color,
                           isSelected && "text-background",
                           p.locked && "grayscale"

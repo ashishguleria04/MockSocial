@@ -190,7 +190,7 @@ export const ChatCanvas = () => {
         showToast("Generating screenshot...", "info");
 
         // Small delay to ensure UI updates before freezing for capture
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise(resolve => setTimeout(resolve, 10));
 
         const node = document.getElementById("chat-canvas");
         if (!node) {
@@ -281,16 +281,16 @@ export const ChatCanvas = () => {
         <div ref={wrapperRef} className="flex items-center justify-center py-6 pb-28 lg:py-8 lg:pb-32 lg:p-8 min-h-0 lg:min-h-full relative w-full overflow-x-hidden">
             <div
                 id="chat-canvas"
-                className="relative group transition-all duration-500 ease-in-out origin-center z-10"
+                className="relative group transition-all duration-75 ease-in-out origin-center z-10"
                 suppressHydrationWarning
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 style={dynamicScale !== null ? { transform: `scale(${dynamicScale})`, transformOrigin: 'center center' } : { transformOrigin: 'center center' }}
             >
-                <div className="absolute -inset-4 bg-gradient-to-tr from-primary/40 via-purple-500/40 to-secondary/40 rounded-[3.5rem] blur-2xl opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse pointer-events-none" />
+                <div className="absolute -inset-4 bg-gradient-to-tr from-primary/40 via-purple-500/40 to-secondary/40 rounded-[3.5rem] blur-2xl opacity-75 group-hover:opacity-100 transition duration-75 group-hover:duration-75 animate-pulse pointer-events-none" />
                 {/* Phone Frame */}
-                <div className={`relative ${getPhoneDimensions()} bg-[#121212] rounded-[3rem] shadow-[0_0_0_9px_#333333,0_0_0_10px_#000000,0_20px_50px_rgba(0,0,0,0.5)] border-[6px] border-[#222222] overflow-hidden transition-all duration-300`}>
+                <div className={`relative ${getPhoneDimensions()} bg-[#121212] rounded-[3rem] shadow-[0_0_0_9px_#333333,0_0_0_10px_#000000,0_20px_50px_rgba(0,0,0,0.5)] border-[6px] border-[#222222] overflow-hidden transition-all duration-75`}>
 
                     {/* Side Buttons */}
                     <div className="absolute top-24 -left-[14px] w-[8px] h-8 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Mute */}
@@ -335,7 +335,7 @@ export const ChatCanvas = () => {
                 <button
                     onClick={downloadGif}
                     disabled={isGenerating || isGeneratingGif}
-                    className="group relative flex items-center justify-center w-11 h-11 lg:w-14 lg:h-14 bg-indigo-600 rounded-2xl shadow-xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="group relative flex items-center justify-center w-11 h-11 lg:w-14 lg:h-14 bg-indigo-600 rounded-2xl shadow-xl hover:scale-105 hover:-translate-y-1 transition-all duration-75 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
                     title="Export Animated GIF"
                 >
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -349,7 +349,7 @@ export const ChatCanvas = () => {
                 <button
                     onClick={downloadScreenshot}
                     disabled={isGenerating || isGeneratingGif}
-                    className="group relative flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 bg-slate-900 rounded-2xl shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="group relative flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 bg-slate-900 rounded-2xl shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-75 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
                     title="Download Mockup (PNG)"
                 >
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-slate-800 to-slate-700 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -364,7 +364,7 @@ export const ChatCanvas = () => {
             {/* Edit FAB — mobile only, opens the sidebar bottom sheet */}
             <button
                 onClick={() => setMobileSheetOpen(true)}
-                className="lg:hidden fixed bottom-4 left-4 z-50 flex items-center gap-2 h-12 px-4 bg-primary text-primary-foreground rounded-2xl shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 font-bold text-sm"
+                className="lg:hidden fixed bottom-4 left-4 z-50 flex items-center gap-2 h-12 px-4 bg-primary text-primary-foreground rounded-2xl shadow-2xl hover:scale-105 active:scale-95 transition-all duration-75 font-bold text-sm"
                 title="Open Editor"
             >
                 <SlidersHorizontal className="w-4 h-4" strokeWidth={2.5} />
