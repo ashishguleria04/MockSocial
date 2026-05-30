@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -44,7 +44,9 @@
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
+    "babel-plugin-react-compiler": "19.0.0-beta-e552027-20250112",
     "eslint": "^9.39.2",
+    "eslint-plugin-react-compiler": "19.0.0-beta-e552027-20250112",
     "eslint-config-next": "^16.1.1",
     "jsdom": "^28.1.0",
     "postcss": "^8.5.6",
