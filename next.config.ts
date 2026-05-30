@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  reactCompiler: true,
   experimental: {
-    reactCompiler: true,
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
   compiler: {
