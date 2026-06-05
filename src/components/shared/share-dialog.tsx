@@ -31,7 +31,7 @@ export function ShareDialog() {
             setError(null);
         }
 
-        const url = `${window.location.origin}/?s=${encoded}`;
+        const url = `${window.location.origin}/editor?s=${encoded}`;
         setGeneratedLink(url);
     } catch (e) {
         console.error(e);

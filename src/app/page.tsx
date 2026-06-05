@@ -1,28 +1,70 @@
-import { ChatCanvas } from "@/components/canvas/ChatCanvas";
-import { Sidebar } from "@/components/sidebar/Sidebar";
-import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
+import { Metadata } from "next";
+import { Navbar } from "@/components/landing/Navbar";
+import { Hero } from "@/components/landing/Hero";
+import { PlatformShowcase } from "@/components/landing/PlatformShowcase";
+import { Features } from "@/components/landing/Features";
+import { Pricing } from "@/components/landing/Pricing";
+import { Faq } from "@/components/landing/Faq";
+import { Footer } from "@/components/landing/Footer";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "MockSocial | Ultimate Chat Simulator & Social Media Mockup Generator",
+  description: "Create pixel-perfect, high-fidelity chat simulation mockups for WhatsApp, Signal, Discord, Instagram, Telegram, Slack, and X. Instantly share via URL, generate AI conversations, and export high-res PNGs.",
+  keywords: ["chat mockup", "social media mockup", "WhatsApp generator", "fake chat", "UI mockup tool", "Signal mockup", "Instagram post mockup", "Twitter mockup"],
+  openGraph: {
+    title: "MockSocial | Ultimate Chat Simulator",
+    description: "Create pixel-perfect chat mockups and social media posts. Export to high-res PNGs and GIFs.",
+    type: "website",
+    url: "https://mocksocial.com",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MockSocial | Ultimate Chat Simulator",
+    description: "Create pixel-perfect chat mockups and social media posts.",
+  }
+};
+
+export default function LandingPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "MockSocial",
+    "url": "https://mocksocial.com",
+    "description": "Generate pixel-perfect chat and social media mockups for WhatsApp, Signal, Discord, Slack, Messenger, Instagram, X (Twitter), LinkedIn, and Threads using AI.",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    }
+  };
+
   return (
-    <main className="flex min-h-screen lg:h-[100dvh] lg:min-h-0 lg:overflow-hidden relative bg-background text-foreground overflow-x-hidden">
-      {/* Dynamic Animated Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[120px] animate-[float_1.5s_infinite]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-secondary/20 blur-[120px] animate-[float_2s_infinite_reverse]" />
-        <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] rounded-full bg-accent/20 blur-[100px] animate-[float_2.5s_infinite]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
+      {/* Dynamic Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[150px] animate-[float_4s_infinite]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-secondary/10 blur-[150px] animate-[float_5s_infinite_reverse]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)]" />
       </div>
 
-      {/* On lg+: row layout (sidebar left, canvas right).
-          On mobile: column — canvas first, sidebar becomes a floating bottom sheet. */}
-      <div className="flex flex-col lg:flex-row w-full h-full lg:min-h-0 relative z-10">
-        <Sidebar />
-        <div className="flex-1 flex items-center justify-center p-4 lg:p-8 overflow-y-auto lg:overflow-hidden overflow-x-hidden min-h-[100svh] lg:min-h-0 lg:h-full">
-          <ErrorBoundary>
-            <ChatCanvas />
-          </ErrorBoundary>
-        </div>
+      <div className="relative z-10">
+        <Navbar />
+        <main>
+          <Hero />
+          <PlatformShowcase />
+          <Features />
+          <Pricing />
+          <Faq />
+        </main>
+        <Footer />
       </div>
-    </main>
+    </div>
   );
 }

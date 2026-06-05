@@ -16,8 +16,8 @@ export const UrlHydrator = () => {
       const decoded = decodeState(stateStr);
       if (decoded) {
         importState(decoded);
-        // Clean URL after hydration to look nice
-        router.replace("/", { scroll: false }); 
+        // Clean URL after hydration to look nice and ensure we are in the editor
+        router.replace("/editor", { scroll: false }); 
       }
     }
   }, [searchParams, importState, router]);
