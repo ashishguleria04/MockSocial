@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useChatStore, Platform, MockupType } from "@/store/useChatStore";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { CHAT_TEMPLATES } from "@/lib/templates";
 import { 
   MessageSquare, 
@@ -245,7 +246,7 @@ export const Sidebar = () => {
         className="px-4 lg:px-6 py-4 lg:py-5 border-b border-border glass sticky top-0 z-50 bg-background/80 backdrop-blur-md"
       >
         <div className="flex items-center justify-between mb-4 lg:mb-6">
-          <div className="flex items-center gap-3 group cursor-pointer">
+          <Link href="/" className="flex items-center gap-3 group cursor-pointer">
             <motion.div 
               whileHover={{ scale: 1.05, rotate: 3 }}
               whileTap={{ scale: 0.95 }}
@@ -261,7 +262,7 @@ export const Sidebar = () => {
                 <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">v2.5</span>
               </div>
             </div>
-          </div>
+          </Link>
           
           <div className="flex gap-1 lg:gap-2 items-center">
             <Button
