@@ -36,11 +36,7 @@
   <img src="public/screenshots/desktop-dark.png" width="48%" alt="Desktop Dark Mode">
   <img src="public/screenshots/desktop-light.png" width="48%" alt="Desktop Light Mode">
 </p>
-<br/>
-<p align="center">
-  <img src="public/screenshots/mobile-canvas.png" width="48%" alt="Mobile Canvas">
-  <img src="public/screenshots/mobile-sheet-open.png" width="48%" alt="Mobile Editor">
-</p>
+
 
 ## Tech Stack
 
