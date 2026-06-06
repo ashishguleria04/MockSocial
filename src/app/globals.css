@@ -125,17 +125,9 @@ body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
-  overflow: hidden;
+  overflow-x: hidden;
   transition: background-color 75ms ease, color 75ms ease;
   -webkit-tap-highlight-color: transparent;
-}
-
-/* Mobile: allow scrolling */
-@media (max-width: 1023px) {
-  body {
-    overflow: auto;
-    overflow-x: hidden;
-  }
 }
 
 /* Glassmorphism Utilities */

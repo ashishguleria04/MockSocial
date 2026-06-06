@@ -35,7 +35,7 @@ export function Hero() {
             </div>
           </motion.div>
           
-          <motion.h1 variants={item} className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]">
+          <motion.h1 variants={item} className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1] text-foreground">
             The Ultimate Social Media <br className="hidden md:block" />
             <span className="text-gradient">Mockup Generator</span>
           </motion.h1>

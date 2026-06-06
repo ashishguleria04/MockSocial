@@ -44,7 +44,7 @@ export function Features() {
     <section id="features" className="py-24 relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Powerful Features</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Powerful Features</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Everything you need to create convincing chat screenshots, fake conversations, and social media posts.
           </p>
@@ -59,7 +59,7 @@ export function Features() {
               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 border ${feature.color} group-hover:scale-110 transition-transform`}>
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+              <h3 className="text-xl font-bold mb-3 text-card-foreground">{feature.title}</h3>
               <p className="text-muted-foreground leading-relaxed">
                 {feature.description}
               </p>

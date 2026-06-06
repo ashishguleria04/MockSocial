@@ -35,7 +35,7 @@ export function Faq() {
     <section id="faq" className="py-24">
       <div className="container mx-auto px-4 max-w-3xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Frequently Asked Questions</h2>
           <p className="text-muted-foreground text-lg">
             Got questions? We've got answers.
           </p>
@@ -54,7 +54,7 @@ export function Faq() {
                 className="flex items-center justify-between w-full p-6 text-left"
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
               >
-                <span className="font-semibold text-lg">{faq.question}</span>
+                <span className="font-semibold text-lg text-foreground">{faq.question}</span>
                 <ChevronDown 
                   className={cn(
                     "w-5 h-5 text-muted-foreground transition-transform duration-300",

@@ -6,7 +6,7 @@ export function Pricing() {
     <section id="pricing" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Simple, Transparent Pricing</h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
             MockSocial is completely free and open-source. Enjoy all the premium features without paying a dime.
           </p>
@@ -20,9 +20,9 @@ export function Pricing() {
               </span>
             </div>
             
-            <h3 className="text-2xl font-bold mb-2">Free Forever</h3>
+            <h3 className="text-2xl font-bold mb-2 text-card-foreground">Free Forever</h3>
             <div className="flex items-baseline gap-1 mb-6">
-              <span className="text-5xl font-extrabold">$0</span>
+              <span className="text-5xl font-extrabold text-card-foreground">$0</span>
               <span className="text-muted-foreground font-medium">/month</span>
             </div>
             <p className="text-muted-foreground mb-8">
@@ -43,7 +43,7 @@ export function Pricing() {
                   <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center text-primary">
                     <Check className="w-3 h-3" />
                   </div>
-                  <span className="font-medium">{feature}</span>
+                  <span className="font-medium text-card-foreground">{feature}</span>
                 </li>
               ))}
             </ul>

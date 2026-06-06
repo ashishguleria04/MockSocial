@@ -16,7 +16,7 @@ export function PlatformShowcase() {
     <section id="platforms" className="py-24 bg-muted/30 border-y border-border/40">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight">Support for 10+ Platforms</h2>
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight text-foreground">Support for 10+ Platforms</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Design mockups for all major social and messaging apps. Each platform is recreated with pixel-perfect accuracy, matching native UI components perfectly. Click a platform to start.
           </p>
