@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Sparkles, MessageCircle, Bot } from "lucide-react";
+import { ArrowRight, Sparkles, MessageCircle, Bot, Star, Github } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function Hero() {
@@ -57,6 +57,28 @@ export function Hero() {
               className="w-full sm:w-auto inline-flex h-14 items-center justify-center rounded-full bg-secondary/80 dark:bg-white/10 backdrop-blur-md border border-border dark:border-white/20 px-8 text-base font-bold text-secondary-foreground shadow-sm hover:bg-secondary dark:hover:bg-white/20 transition-all"
             >
               Explore Platforms
+            </a>
+          </motion.div>
+
+          <motion.div variants={item} className="mt-6 flex items-center justify-center gap-1.5 text-sm text-muted-foreground">
+            <a
+              href="https://github.com/ashishguleria04/MockSocial"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 hover:text-foreground transition-colors"
+            >
+              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+              <span className="font-medium">50+ stars on GitHub</span>
+            </a>
+            <span className="text-border">·</span>
+            <a
+              href="https://github.com/ashishguleria04/MockSocial/blob/main/CONTRIBUTING.md"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
+            >
+              <Github className="w-3.5 h-3.5" />
+              <span>Open to contributions</span>
             </a>
           </motion.div>
         </motion.div>
