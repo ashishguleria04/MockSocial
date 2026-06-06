@@ -82,43 +82,43 @@
 }
 
 .dark {
-  --background: #09090b;
-  /* Zinc 950 */
-  --foreground: #fafafa;
-  /* Zinc 50 */
+  --background: #0a0a0f;
+  /* Deep blue-black */
+  --foreground: #f0f0f5;
+  /* Soft white with blue tint */
 
   --primary: #818cf8;
   /* Indigo 400 */
-  --primary-foreground: #09090b;
+  --primary-foreground: #0a0a0f;
 
-  --secondary: #27272a;
-  /* Zinc 800 */
-  --secondary-foreground: #fafafa;
+  --secondary: #1a1a2e;
+  /* Deep indigo-navy */
+  --secondary-foreground: #f0f0f5;
 
-  --muted: #27272a;
-  /* Zinc 800 */
-  --muted-foreground: #a1a1aa;
-  /* Zinc 400 */
+  --muted: #16162a;
+  /* Dark indigo */
+  --muted-foreground: #8b8fa3;
+  /* Muted lavender-grey */
 
-  --card: #18181b;
-  /* Zinc 900 */
-  --card-foreground: #fafafa;
+  --card: #111122;
+  /* Deep navy */
+  --card-foreground: #f0f0f5;
 
-  --border: #27272a;
-  /* Zinc 800 */
-  --input: #27272a;
+  --border: #1e1e3a;
+  /* Indigo-tinted border */
+  --input: #1e1e3a;
 
-  --accent: #27272a;
-  /* Zinc 800 (used for hover usually) */
-  --accent-foreground: #fafafa;
+  --accent: #1e1e3a;
+  /* Indigo-tinted accent */
+  --accent-foreground: #f0f0f5;
 
   --destructive: #7f1d1d;
   /* Red 900 */
   --destructive-foreground: #fef2f2;
   /* Red 50 */
 
-  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-  --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-soft: 0 4px 24px -4px rgba(99, 102, 241, 0.15), 0 2px 8px -2px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 8px 32px -8px rgba(99, 102, 241, 0.12), 0 4px 12px -4px rgba(0, 0, 0, 0.4);
 }
 
 body {
@@ -140,8 +140,9 @@ body {
 }
 
 .dark .glass {
-  background: rgba(9, 9, 11, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 10, 15, 0.7);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .glass-card {
@@ -152,8 +153,9 @@ body {
 }
 
 .dark .glass-card {
-  background: rgba(24, 24, 27, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(17, 17, 34, 0.8), rgba(26, 26, 46, 0.6));
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.3);
 }
 
 /* Scrollbar */
@@ -192,7 +194,7 @@ body {
 }
 
 .dark .text-gradient {
-  background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+  background: linear-gradient(135deg, #a5b4fc 0%, #c084fc 50%, #f0abfc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

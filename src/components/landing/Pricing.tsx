@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function Pricing() {
   return (
-    <section id="pricing" className="py-24 bg-gradient-to-b from-indigo-50/60 via-purple-50/30 to-background dark:from-transparent dark:via-transparent dark:to-transparent">
+    <section id="pricing" className="py-24 bg-gradient-to-b from-indigo-50/60 via-purple-50/30 to-background dark:from-indigo-950/30 dark:via-purple-950/15 dark:to-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Simple, Transparent Pricing</h2>
@@ -13,7 +13,7 @@ export function Pricing() {
         </div>
 
         <div className="max-w-md mx-auto">
-          <div className="relative p-8 rounded-[2rem] bg-white dark:bg-card border border-indigo-200/60 dark:border-border shadow-xl shadow-indigo-500/10 dark:shadow-xl ring-1 ring-indigo-500/5 dark:ring-0">
+          <div className="relative p-8 rounded-[2rem] bg-white dark:bg-card/80 border border-indigo-200/60 dark:border-indigo-500/15 shadow-xl shadow-indigo-500/10 dark:shadow-[0_8px_40px_-12px_rgba(99,102,241,0.2)] ring-1 ring-indigo-500/5 dark:ring-indigo-500/10">
             <div className="absolute top-0 right-8 -translate-y-1/2">
               <span className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                 Most Popular

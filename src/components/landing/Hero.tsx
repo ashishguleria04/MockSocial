@@ -47,7 +47,7 @@ export function Hero() {
           <motion.div variants={item} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/editor"
-              className="w-full sm:w-auto inline-flex h-14 items-center justify-center gap-2 rounded-full bg-primary px-8 text-base font-bold text-primary-foreground shadow-xl hover:bg-primary/90 transition-all hover:scale-105 active:scale-95"
+              className="w-full sm:w-auto inline-flex h-14 items-center justify-center gap-2 rounded-full bg-primary px-8 text-base font-bold text-primary-foreground shadow-xl dark:shadow-indigo-500/25 hover:bg-primary/90 transition-all hover:scale-105 active:scale-95"
             >
               Start Creating for Free
               <ArrowRight className="w-5 h-5" />
@@ -89,7 +89,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.5, type: "spring", stiffness: 200, damping: 30 }}
           className="mt-20 relative max-w-5xl mx-auto perspective-1000"
         >
-          <div className="relative rounded-2xl md:rounded-[32px] border border-indigo-200/60 dark:border-border/50 bg-background/80 backdrop-blur-3xl shadow-[0_8px_60px_-12px_rgba(79,70,229,0.25),0_0_100px_-20px_rgba(168,85,247,0.15)] dark:shadow-[0_0_80px_-20px_rgba(79,70,229,0.3)] overflow-hidden ring-1 ring-indigo-500/5 dark:ring-0">
+          <div className="relative rounded-2xl md:rounded-[32px] border border-indigo-200/60 dark:border-indigo-500/20 bg-background/80 backdrop-blur-3xl shadow-[0_8px_60px_-12px_rgba(79,70,229,0.25),0_0_100px_-20px_rgba(168,85,247,0.15)] dark:shadow-[0_0_80px_-20px_rgba(99,102,241,0.35),0_0_120px_-30px_rgba(168,85,247,0.2)] overflow-hidden ring-1 ring-indigo-500/5 dark:ring-indigo-500/10">
             {/* Browser/Window Chrome */}
             <div className="h-12 border-b border-border/50 flex items-center px-4 bg-muted/50 backdrop-blur-xl">
               <div className="flex gap-2.5">
@@ -123,7 +123,7 @@ export function Hero() {
           
           {/* Floating decorative elements */}
           <div className="absolute -left-6 md:-left-12 top-1/3 animate-[float_4s_infinite_ease-in-out]">
-            <div className="bg-background/80 backdrop-blur-xl p-4 rounded-2xl shadow-2xl flex items-center gap-3 border border-border/50">
+            <div className="bg-background/80 backdrop-blur-xl p-4 rounded-2xl shadow-2xl dark:shadow-green-500/10 flex items-center gap-3 border border-border/50 dark:border-green-500/15">
               <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-500">
                 <MessageCircle className="w-6 h-6 fill-current" />
               </div>
@@ -135,7 +135,7 @@ export function Hero() {
           </div>
 
           <div className="absolute -right-6 md:-right-12 bottom-1/4 animate-[float_5s_infinite_ease-in-out_reverse]">
-            <div className="bg-background/80 backdrop-blur-xl p-4 rounded-2xl shadow-2xl flex items-center gap-3 border border-border/50">
+            <div className="bg-background/80 backdrop-blur-xl p-4 rounded-2xl shadow-2xl dark:shadow-indigo-500/10 flex items-center gap-3 border border-border/50 dark:border-indigo-500/15">
               <div className="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-500">
                 <Bot className="w-6 h-6" />
               </div>

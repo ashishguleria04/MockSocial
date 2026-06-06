@@ -3,7 +3,7 @@ import { MessageSquare, Github, Twitter } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="border-t border-indigo-100/60 dark:border-border/40 bg-gradient-to-b from-indigo-50/40 to-background dark:from-transparent dark:to-background pt-16 pb-8">
+    <footer className="border-t border-indigo-100/60 dark:border-indigo-500/10 bg-gradient-to-b from-indigo-50/40 to-background dark:from-indigo-950/20 dark:to-background pt-16 pb-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">

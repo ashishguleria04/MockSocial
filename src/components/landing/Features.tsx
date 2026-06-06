@@ -41,7 +41,7 @@ const features = [
 
 export function Features() {
   return (
-    <section id="features" className="py-24 relative bg-gradient-to-b from-background via-violet-50/30 to-background dark:from-transparent dark:via-transparent dark:to-transparent">
+    <section id="features" className="py-24 relative bg-gradient-to-b from-background via-violet-50/30 to-background dark:from-background dark:via-indigo-950/20 dark:to-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Powerful Features</h2>
@@ -54,7 +54,7 @@ export function Features() {
           {features.map((feature, i) => (
             <div 
               key={i} 
-              className="p-6 rounded-3xl bg-white dark:bg-card border border-indigo-100/50 dark:border-border shadow-sm shadow-indigo-500/[0.03] hover:shadow-lg hover:shadow-indigo-500/10 transition-all group hover:border-indigo-200/60 dark:hover:border-border"
+              className="p-6 rounded-3xl bg-white dark:bg-card/80 border border-indigo-100/50 dark:border-indigo-500/10 shadow-sm shadow-indigo-500/[0.03] dark:shadow-indigo-500/5 hover:shadow-lg hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/15 transition-all group hover:border-indigo-200/60 dark:hover:border-indigo-500/20"
             >
               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 border ${feature.color} group-hover:scale-110 transition-transform`}>
                 {feature.icon}

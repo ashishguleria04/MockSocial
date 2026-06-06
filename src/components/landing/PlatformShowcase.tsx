@@ -13,7 +13,7 @@ const platforms = [
 
 export function PlatformShowcase() {
   return (
-    <section id="platforms" className="py-24 bg-gradient-to-b from-indigo-50/80 via-purple-50/40 to-background dark:from-transparent dark:via-transparent dark:to-transparent border-y border-indigo-100/60 dark:border-border/40">
+    <section id="platforms" className="py-24 bg-gradient-to-b from-indigo-50/80 via-purple-50/40 to-background dark:from-indigo-950/40 dark:via-purple-950/20 dark:to-background border-y border-indigo-100/60 dark:border-indigo-500/10">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight text-foreground">Support for 10+ Platforms</h2>
@@ -27,7 +27,7 @@ export function PlatformShowcase() {
             <Link
               href={`/editor?platform=${platform.id}`}
               key={platform.name}
-              className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white dark:bg-card border border-indigo-100/60 dark:border-border shadow-sm shadow-indigo-500/5 hover:shadow-xl hover:shadow-indigo-500/10 transition-all hover:-translate-y-1 hover:border-indigo-300/60 dark:hover:border-primary/30 cursor-pointer group"
+              className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white dark:bg-card/80 border border-indigo-100/60 dark:border-indigo-500/10 shadow-sm shadow-indigo-500/5 dark:shadow-indigo-500/5 hover:shadow-xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/15 transition-all hover:-translate-y-1 hover:border-indigo-300/60 dark:hover:border-indigo-500/30 cursor-pointer group"
             >
               <div className={`p-2 rounded-xl bg-muted group-hover:${platform.text} transition-colors duration-300`}>
                 {platform.icon}
