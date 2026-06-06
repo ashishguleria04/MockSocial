@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { MessageSquare, Github } from "lucide-react";
-import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -46,7 +45,6 @@ export function Navbar() {
             <a href="https://github.com/ashishguleria04/MockSocial" target="_blank" rel="noreferrer" className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-full transition-colors">
               <Github className="w-5 h-5" />
             </a>
-            <ThemeToggle />
           </div>
           <Link
             href="/editor"

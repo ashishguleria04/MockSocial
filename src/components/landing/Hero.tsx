@@ -54,7 +54,7 @@ export function Hero() {
             </Link>
             <a
               href="#platforms"
-              className="w-full sm:w-auto inline-flex h-14 items-center justify-center rounded-full bg-secondary/80 backdrop-blur-md border border-border px-8 text-base font-bold text-secondary-foreground shadow-sm hover:bg-secondary transition-all"
+              className="w-full sm:w-auto inline-flex h-14 items-center justify-center rounded-full bg-secondary/80 dark:bg-white/10 backdrop-blur-md border border-border dark:border-white/20 px-8 text-base font-bold text-secondary-foreground shadow-sm hover:bg-secondary dark:hover:bg-white/20 transition-all"
             >
               Explore Platforms
             </a>
