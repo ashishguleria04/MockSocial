@@ -32,7 +32,7 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-24">
+    <section id="faq" className="py-24 bg-gradient-to-b from-background via-indigo-50/30 to-background dark:from-transparent dark:via-transparent dark:to-transparent">
       <div className="container mx-auto px-4 max-w-3xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Frequently Asked Questions</h2>
@@ -46,8 +46,8 @@ export function Faq() {
             <div 
               key={i} 
               className={cn(
-                "border border-border rounded-2xl overflow-hidden transition-colors duration-200",
-                openIndex === i ? "bg-muted/50 border-primary/20" : "bg-card hover:bg-muted/30"
+                "border rounded-2xl overflow-hidden transition-colors duration-200",
+                openIndex === i ? "bg-indigo-50/50 dark:bg-muted/50 border-indigo-200/60 dark:border-primary/20" : "bg-white dark:bg-card border-indigo-100/50 dark:border-border hover:bg-indigo-50/30 dark:hover:bg-muted/30"
               )}
             >
               <button

@@ -49,9 +49,12 @@ export default function LandingPage() {
       
       {/* Dynamic Background */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[150px] animate-[float_4s_infinite]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-secondary/10 blur-[150px] animate-[float_5s_infinite_reverse]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)]" />
+        {/* Light mode: colorful gradient orbs */}
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-gradient-to-br from-indigo-200/40 via-purple-200/30 to-pink-200/20 blur-[120px] animate-[float_6s_infinite] dark:from-primary/10 dark:via-primary/5 dark:to-transparent" />
+        <div className="absolute top-[20%] right-[-15%] w-[50%] h-[50%] rounded-full bg-gradient-to-bl from-blue-200/30 via-cyan-100/20 to-transparent blur-[120px] animate-[float_8s_infinite_reverse] dark:from-accent/5 dark:via-transparent dark:to-transparent" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[50%] rounded-full bg-gradient-to-tr from-violet-200/30 via-fuchsia-100/20 to-transparent blur-[140px] animate-[float_7s_infinite] dark:from-primary/5 dark:via-transparent dark:to-transparent" />
+        {/* Grid pattern - visible in light mode too */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(99,102,241,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
       </div>
 
       <div className="relative z-10">

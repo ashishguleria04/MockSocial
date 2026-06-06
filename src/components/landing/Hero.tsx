@@ -29,7 +29,7 @@ export function Hero() {
           className="max-w-4xl mx-auto text-center"
         >
           <motion.div variants={item}>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 text-indigo-500 mb-8 border border-indigo-500/20 shadow-sm backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500/15 to-purple-500/15 text-indigo-600 dark:text-indigo-400 mb-8 border border-indigo-500/25 shadow-sm shadow-indigo-500/10 backdrop-blur-md">
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-semibold tracking-wide">Powered by Gemini 2.0 AI</span>
             </div>
@@ -89,7 +89,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.5, type: "spring", stiffness: 200, damping: 30 }}
           className="mt-20 relative max-w-5xl mx-auto perspective-1000"
         >
-          <div className="relative rounded-2xl md:rounded-[32px] border border-border/50 bg-background/50 backdrop-blur-3xl shadow-[0_0_80px_-20px_rgba(79,70,229,0.3)] overflow-hidden">
+          <div className="relative rounded-2xl md:rounded-[32px] border border-indigo-200/60 dark:border-border/50 bg-background/80 backdrop-blur-3xl shadow-[0_8px_60px_-12px_rgba(79,70,229,0.25),0_0_100px_-20px_rgba(168,85,247,0.15)] dark:shadow-[0_0_80px_-20px_rgba(79,70,229,0.3)] overflow-hidden ring-1 ring-indigo-500/5 dark:ring-0">
             {/* Browser/Window Chrome */}
             <div className="h-12 border-b border-border/50 flex items-center px-4 bg-muted/50 backdrop-blur-xl">
               <div className="flex gap-2.5">

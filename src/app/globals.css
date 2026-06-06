@@ -33,9 +33,9 @@
   --color-section-blue: #3b82f6;
   --color-section-orange: #f97316;
 
-  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-  --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.15);
-  --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  --shadow-soft: 0 4px 24px -4px rgba(79, 70, 229, 0.08), 0 2px 8px -2px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 24px rgba(79, 70, 229, 0.2), 0 0 48px rgba(168, 85, 247, 0.08);
+  --shadow-card: 0 8px 32px -8px rgba(79, 70, 229, 0.1), 0 4px 12px -4px rgba(0, 0, 0, 0.04);
 
   --animate-float: float 1s ease-in-out infinite;
 
@@ -60,11 +60,11 @@
   /* Indigo 600 */
   --primary-foreground: #ffffff;
 
-  --secondary: #f1f5f9;
-  /* Slate 100 */
+  --secondary: #eef2ff;
+  /* Indigo 50 */
   --secondary-foreground: #0f172a;
 
-  --muted: #f8fafc;
+  --muted: #f5f3ff;
   --muted-foreground: #64748b;
 
   --card: #ffffff;
@@ -132,10 +132,11 @@ body {
 
 /* Glassmorphism Utilities */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(79, 70, 229, 0.08);
+  box-shadow: 0 1px 3px rgba(79, 70, 229, 0.04);
 }
 
 .dark .glass {
@@ -144,9 +145,9 @@ body {
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(238, 242, 255, 0.6));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(79, 70, 229, 0.1);
   box-shadow: var(--shadow-soft);
 }
 
@@ -195,6 +196,15 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Light mode section accents */
+.section-gradient-light {
+  background: linear-gradient(180deg, #ffffff 0%, #f5f3ff 30%, #eef2ff 70%, #ffffff 100%);
+}
+
+.dark .section-gradient-light {
+  background: transparent;
 }
 
 /* Mobile bottom-sheet backdrop */
