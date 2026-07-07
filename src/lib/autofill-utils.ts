@@ -56,7 +56,7 @@ export const generateRandomContact = (): Partial<Contact> => {
 
 export const generateRandomMessages = (count: number = 5): Message[] => {
     const messages: Message[] = [];
-    let currentTime = new Date();
+    const currentTime = new Date();
     // Go back some time to start the conversation
     currentTime.setMinutes(currentTime.getMinutes() - (count * 2));
 

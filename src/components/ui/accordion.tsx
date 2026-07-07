@@ -51,11 +51,11 @@ const AccordionItem = React.forwardRef<
 >(({ className, value, ...props }, ref) => {
     // Clone children to pass value? No, use context in trigger/content
     return (
-        <div 
-            ref={ref} 
-            className={cn("border-b border-slate-200/50 last:border-0", className)} 
-            data-value={value} 
-            {...props} 
+        <div
+            ref={ref}
+            className={cn("border-b border-border/60 last:border-0", className)}
+            data-value={value}
+            {...props}
         />
     )
 })
@@ -88,14 +88,14 @@ const AccordionTrigger = React.forwardRef<
                 ref={ref}
                 onClick={() => context?.setActiveItem(isOpen ? null : value)}
                 className={cn(
-                    "flex flex-1 items-center justify-between py-4 font-bold text-sm transition-all hover:text-slate-900 text-slate-700 [&[data-state=open]>svg]:rotate-180",
+                    "flex flex-1 items-center justify-between py-4 font-bold text-sm transition-all hover:text-foreground text-foreground/80 [&[data-state=open]>svg]:rotate-180",
                     className
                 )}
                 data-state={isOpen ? "open" : "closed"}
                 {...props}
                 >
                 {children}
-                <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-75 text-slate-400" />
+                <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 text-muted-foreground" />
                 </button>
             </div>
           )

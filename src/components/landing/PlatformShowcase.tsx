@@ -2,41 +2,43 @@ import { MessageCircle, Smartphone, Hash, Twitter, MessageSquare, Linkedin, Slac
 import Link from "next/link";
 
 const platforms = [
-  { id: "whatsapp", name: "WhatsApp", icon: <MessageCircle className="w-6 h-6" />, color: "bg-green-500", text: "text-green-500" },
-  { id: "imessage", name: "iMessage", icon: <MessageSquare className="w-6 h-6" />, color: "bg-blue-500", text: "text-blue-500" },
-  { id: "instagram", name: "Instagram", icon: <Smartphone className="w-6 h-6" />, color: "bg-pink-500", text: "text-pink-500" },
-  { id: "discord", name: "Discord", icon: <Hash className="w-6 h-6" />, color: "bg-indigo-500", text: "text-indigo-500" },
-  { id: "x", name: "X (Twitter)", icon: <Twitter className="w-6 h-6" />, color: "bg-black dark:bg-white", text: "text-black dark:text-white" },
-  { id: "linkedin", name: "LinkedIn", icon: <Linkedin className="w-6 h-6" />, color: "bg-blue-700", text: "text-blue-700" },
-  { id: "slack", name: "Slack", icon: <Slack className="w-6 h-6" />, color: "bg-purple-600", text: "text-purple-600" },
+  { id: "whatsapp", name: "WhatsApp", icon: <MessageCircle className="w-5 h-5" /> },
+  { id: "imessage", name: "iMessage", icon: <MessageSquare className="w-5 h-5" /> },
+  { id: "instagram", name: "Instagram", icon: <Smartphone className="w-5 h-5" /> },
+  { id: "discord", name: "Discord", icon: <Hash className="w-5 h-5" /> },
+  { id: "x", name: "X (Twitter)", icon: <Twitter className="w-5 h-5" /> },
+  { id: "linkedin", name: "LinkedIn", icon: <Linkedin className="w-5 h-5" /> },
+  { id: "slack", name: "Slack", icon: <Slack className="w-5 h-5" /> },
 ];
 
 export function PlatformShowcase() {
   return (
-    <section id="platforms" className="py-24 bg-gradient-to-b from-indigo-50/80 via-purple-50/40 to-background dark:from-indigo-950/40 dark:via-purple-950/20 dark:to-background border-y border-indigo-100/60 dark:border-indigo-500/10">
+    <section id="platforms" className="py-24 border-y border-border bg-secondary/40">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight text-foreground">Support for 10+ Platforms</h2>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">Platforms</p>
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight text-foreground">One editor. 14 platforms.</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Design mockups for all major social and messaging apps. Each platform is recreated with pixel-perfect accuracy, matching native UI components perfectly. Click a platform to start.
+            Every platform is recreated with pixel-perfect accuracy, matching native UI components 1:1.
+            Click a platform to start editing.
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
           {platforms.map((platform) => (
             <Link
               href={`/editor?platform=${platform.id}`}
               key={platform.name}
-              className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white dark:bg-card/80 border border-indigo-100/60 dark:border-indigo-500/10 shadow-sm shadow-indigo-500/5 dark:shadow-indigo-500/5 hover:shadow-xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/15 transition-all hover:-translate-y-1 hover:border-indigo-300/60 dark:hover:border-indigo-500/30 cursor-pointer group"
+              className="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-background border border-border shadow-sm hover:shadow-card hover:-translate-y-1 hover:border-foreground/30 transition-all cursor-pointer group"
             >
-              <div className={`p-2 rounded-xl bg-muted group-hover:${platform.text} transition-colors duration-300`}>
+              <span className="p-2 rounded-xl bg-secondary border border-border text-muted-foreground group-hover:bg-foreground group-hover:text-background group-hover:border-foreground transition-colors">
                 {platform.icon}
-              </div>
-              <span className="font-semibold text-foreground group-hover:text-primary transition-colors">{platform.name}</span>
+              </span>
+              <span className="font-semibold text-foreground">{platform.name}</span>
             </Link>
           ))}
-          <div className="flex items-center justify-center px-6 py-4 rounded-2xl bg-transparent border border-dashed border-muted-foreground/50 text-muted-foreground font-medium select-none">
-            + Telegram, Teams, Threads & more
+          <div className="flex items-center justify-center px-5 py-3.5 rounded-2xl bg-transparent border border-dashed border-muted-foreground/40 text-muted-foreground font-medium select-none">
+            + Telegram, Teams, Threads &amp; more
           </div>
         </div>
       </div>

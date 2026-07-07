@@ -4,63 +4,58 @@ const features = [
   {
     title: "Gemini AI Generator",
     description: "Describe a scenario and watch as Google's Gemini AI generates a realistic, multi-participant conversation in seconds.",
-    icon: <Bot className="w-6 h-6 text-indigo-500" />,
-    color: "bg-indigo-500/10 border-indigo-500/20",
+    icon: <Bot className="w-6 h-6" />,
   },
   {
     title: "Zero-Database Sharing",
     description: "Share your exact mockup state via a unique URL. No accounts, no database, no limits. The entire state lives in the link.",
-    icon: <Share2 className="w-6 h-6 text-green-500" />,
-    color: "bg-green-500/10 border-green-500/20",
+    icon: <Share2 className="w-6 h-6" />,
   },
   {
     title: "High-Res Exports",
     description: "Download 1x, 2x, or 3x pixel-ratio PNGs, or generate smooth animated GIFs directly in your browser.",
-    icon: <ImageIcon className="w-6 h-6 text-pink-500" />,
-    color: "bg-pink-500/10 border-pink-500/20",
+    icon: <ImageIcon className="w-6 h-6" />,
   },
   {
     title: "Pixel-Perfect UI",
     description: "Authentic typography, native icons, dynamic islands, and interactive emoji reactions match real apps 1:1.",
-    icon: <Smartphone className="w-6 h-6 text-blue-500" />,
-    color: "bg-blue-500/10 border-blue-500/20",
+    icon: <Smartphone className="w-6 h-6" />,
   },
   {
     title: "Local Save System",
     description: "Save unlimited mockups locally to your browser. Revisit and edit them anytime without ever logging in.",
-    icon: <HardDrive className="w-6 h-6 text-amber-500" />,
-    color: "bg-amber-500/10 border-amber-500/20",
+    icon: <HardDrive className="w-6 h-6" />,
   },
   {
     title: "Drag & Drop Ordering",
     description: "Easily reorder messages, change sides, and adjust timestamps using our intuitive drag-and-drop editor.",
-    icon: <Layout className="w-6 h-6 text-purple-500" />,
-    color: "bg-purple-500/10 border-purple-500/20",
+    icon: <Layout className="w-6 h-6" />,
   },
 ];
 
 export function Features() {
   return (
-    <section id="features" className="py-24 relative bg-gradient-to-b from-background via-violet-50/30 to-background dark:from-background dark:via-indigo-950/20 dark:to-background">
+    <section id="features" className="py-24 relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Powerful Features</h2>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">Features</p>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-foreground">Everything you need. Nothing you don&apos;t.</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Everything you need to create convincing chat screenshots, fake conversations, and social media posts.
+            Create convincing chat screenshots, fake conversations, and social media posts — all in the browser.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
           {features.map((feature, i) => (
-            <div 
-              key={i} 
-              className="p-6 rounded-3xl bg-white dark:bg-card/80 border border-indigo-100/50 dark:border-indigo-500/10 shadow-sm shadow-indigo-500/[0.03] dark:shadow-indigo-500/5 hover:shadow-lg hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/15 transition-all group hover:border-indigo-200/60 dark:hover:border-indigo-500/20"
+            <div
+              key={i}
+              className="p-6 rounded-2xl bg-card border border-border shadow-sm hover:shadow-card hover:border-foreground/25 hover:-translate-y-0.5 transition-all group"
             >
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 border ${feature.color} group-hover:scale-110 transition-transform`}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 border border-border bg-secondary text-foreground group-hover:bg-foreground group-hover:text-background group-hover:border-foreground transition-colors">
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-bold mb-3 text-card-foreground">{feature.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <h3 className="text-lg font-bold mb-2 text-card-foreground">{feature.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 {feature.description}
               </p>
             </div>

@@ -32,25 +32,29 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-24 bg-gradient-to-b from-background via-indigo-50/30 to-background dark:from-background dark:via-indigo-950/20 dark:to-background">
+    <section id="faq" className="py-24 border-t border-border">
       <div className="container mx-auto px-4 max-w-3xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Frequently Asked Questions</h2>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">FAQ</p>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-foreground">Frequently asked questions</h2>
           <p className="text-muted-foreground text-lg">
-            Got questions? We've got answers.
+            Got questions? We&apos;ve got answers.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {faqs.map((faq, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className={cn(
                 "border rounded-2xl overflow-hidden transition-colors duration-200",
-                openIndex === i ? "bg-indigo-50/50 dark:bg-indigo-950/30 border-indigo-200/60 dark:border-indigo-500/25" : "bg-white dark:bg-card/80 border-indigo-100/50 dark:border-indigo-500/10 hover:bg-indigo-50/30 dark:hover:bg-indigo-950/20"
+                openIndex === i
+                  ? "bg-secondary/60 border-foreground/25"
+                  : "bg-card border-border hover:bg-secondary/40"
               )}
             >
               <button
+                type="button"
                 className="flex items-center justify-between w-full p-6 text-left"
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
               >

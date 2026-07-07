@@ -5,21 +5,15 @@ import { useChatStore, Platform, MockupType } from "@/store/useChatStore";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { CHAT_TEMPLATES } from "@/lib/templates";
-import { 
-  MessageSquare, 
-  Trash2, 
-  ArrowLeftRight, 
+import {
+  MessageSquare,
+  Trash2,
   User,
   Clock,
   Lock,
-  ArrowRight,
   Bot,
   Share2,
   Users,
-  Palette,
-  Info,
-  LogIn,
-  Sparkles,
   Smartphone,
   CheckCircle2,
   Image as ImageIcon,
@@ -33,10 +27,9 @@ import {
   Sun,
   Moon,
   Upload,
-  Wand2,
-  LayoutTemplate,
-  Bookmark
+  Wand2
 } from "lucide-react";
+import { getPlatformColors } from "@/lib/platform-colors";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -62,27 +55,25 @@ interface PlatformItem {
   id: Platform;
   name: string;
   icon: React.ReactNode;
-  color: string;
-  bgColor: string;
   locked: boolean;
   types: MockupType[];
 }
 
 const platforms: PlatformItem[] = [
-  { id: 'whatsapp', name: 'WhatsApp', icon: <Icons.WhatsApp className="w-5 h-5 fill-current" />, color: 'text-green-600 dark:text-green-400', bgColor: 'bg-green-50', locked: false, types: ['chat'] },
-  { id: 'messenger', name: 'Messenger', icon: <Icons.Messenger className="w-5 h-5 fill-current" />, color: 'text-blue-500 dark:text-blue-400', bgColor: 'bg-blue-50', locked: false, types: ['chat'] },
-  { id: 'telegram', name: 'Telegram', icon: <Icons.Telegram className="w-5 h-5 fill-current" />, color: 'text-sky-500 dark:text-sky-400', bgColor: 'bg-sky-50', locked: false, types: ['chat'] },
-  { id: 'discord', name: 'Discord', icon: <Icons.Discord className="w-5 h-5 fill-current" />, color: 'text-indigo-600 dark:text-indigo-400', bgColor: 'bg-indigo-50', locked: false, types: ['chat'] },
-  { id: 'imessage', name: 'iMessage', icon: <Icons.Apple className="w-5 h-5 fill-current" />, color: 'text-slate-800 dark:text-slate-200', bgColor: 'bg-slate-100', locked: false, types: ['chat'] },
-  { id: 'instagram', name: 'Instagram', icon: <Icons.Instagram className="w-5 h-5" />, color: 'text-pink-600 dark:text-pink-400', bgColor: 'bg-pink-50', locked: false, types: ['chat', 'post'] },
-  { id: 'slack', name: 'Slack', icon: <Icons.Slack className="w-5 h-5 fill-current" />, color: 'text-purple-700 dark:text-purple-400', bgColor: 'bg-purple-50', locked: false, types: ['chat'] },
-  { id: 'teams', name: 'Teams', icon: <Users className="w-5 h-5" />, color: 'text-blue-700 dark:text-blue-400', bgColor: 'bg-blue-50', locked: false, types: ['chat'] },
-  { id: 'signal', name: 'Signal', icon: <Icons.Signal className="w-5 h-5 fill-current" />, color: 'text-blue-600 dark:text-blue-400', bgColor: 'bg-blue-50', locked: false, types: ['chat'] },
-  { id: 'x', name: 'X / Twitter', icon: <Icons.Twitter className="w-5 h-5 fill-current" />, color: 'text-slate-900 dark:text-slate-200', bgColor: 'bg-slate-100', locked: false, types: ['chat', 'post'] },
-  { id: 'snapchat', name: 'Snapchat', icon: <MessageSquare className="w-5 h-5" />, color: 'text-yellow-500 dark:text-yellow-400', bgColor: 'bg-yellow-50', locked: false, types: ['chat'] },
-  { id: 'tiktok', name: 'TikTok', icon: <Smartphone className="w-5 h-5" />, color: 'text-slate-900 dark:text-slate-200', bgColor: 'bg-slate-100', locked: false, types: ['chat'] }, // TikTok post? Maybe later
-  { id: 'linkedin', name: 'LinkedIn', icon: <Linkedin className="w-5 h-5" />, color: 'text-blue-700 dark:text-blue-400', bgColor: 'bg-blue-50', locked: false, types: ['post'] },
-  { id: 'threads', name: 'Threads', icon: <AtSign className="w-5 h-5" />, color: 'text-slate-900 dark:text-slate-200', bgColor: 'bg-slate-100', locked: false, types: ['post'] },
+  { id: 'whatsapp', name: 'WhatsApp', icon: <Icons.WhatsApp className="w-5 h-5 fill-current" />, locked: false, types: ['chat'] },
+  { id: 'messenger', name: 'Messenger', icon: <Icons.Messenger className="w-5 h-5 fill-current" />, locked: false, types: ['chat'] },
+  { id: 'telegram', name: 'Telegram', icon: <Icons.Telegram className="w-5 h-5 fill-current" />, locked: false, types: ['chat'] },
+  { id: 'discord', name: 'Discord', icon: <Icons.Discord className="w-5 h-5 fill-current" />, locked: false, types: ['chat'] },
+  { id: 'imessage', name: 'iMessage', icon: <Icons.Apple className="w-5 h-5 fill-current" />, locked: false, types: ['chat'] },
+  { id: 'instagram', name: 'Instagram', icon: <Icons.Instagram className="w-5 h-5" />, locked: false, types: ['chat', 'post'] },
+  { id: 'slack', name: 'Slack', icon: <Icons.Slack className="w-5 h-5 fill-current" />, locked: false, types: ['chat'] },
+  { id: 'teams', name: 'Teams', icon: <Users className="w-5 h-5" />, locked: false, types: ['chat'] },
+  { id: 'signal', name: 'Signal', icon: <Icons.Signal className="w-5 h-5 fill-current" />, locked: false, types: ['chat'] },
+  { id: 'x', name: 'X / Twitter', icon: <Icons.Twitter className="w-5 h-5 fill-current" />, locked: false, types: ['chat', 'post'] },
+  { id: 'snapchat', name: 'Snapchat', icon: <MessageSquare className="w-5 h-5" />, locked: false, types: ['chat'] },
+  { id: 'tiktok', name: 'TikTok', icon: <Smartphone className="w-5 h-5" />, locked: false, types: ['chat'] },
+  { id: 'linkedin', name: 'LinkedIn', icon: <Linkedin className="w-5 h-5" />, locked: false, types: ['post'] },
+  { id: 'threads', name: 'Threads', icon: <AtSign className="w-5 h-5" />, locked: false, types: ['post'] },
 ];
 
 export const Sidebar = () => {
@@ -112,6 +103,17 @@ export const Sidebar = () => {
         store.toggleDarkMode(resolvedTheme === 'dark');
      }
   }, [resolvedTheme, syncTheme]);
+
+  const handleAddMessage = () => {
+    if (!newMessageText.trim()) return;
+    store.addMessage({
+      text: newMessageText,
+      sender: "me",
+      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      status: "read",
+    });
+    setNewMessageText("");
+  };
 
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -187,17 +189,6 @@ export const Sidebar = () => {
     }
   }
 
-  const handleAddMessage = () => {
-    if (!newMessageText.trim()) return;
-    store.addMessage({
-      text: newMessageText,
-      sender: "me",
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      status: "read",
-    });
-    setNewMessageText("");
-  };
-
   const sectionVariants = {
     hidden: { opacity: 0, y: 8 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.2 } }
@@ -247,15 +238,15 @@ export const Sidebar = () => {
       >
         <div className="flex items-center justify-between mb-4 lg:mb-6">
           <Link href="/" className="flex items-center gap-3 group cursor-pointer">
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.05, rotate: 3 }}
               whileTap={{ scale: 0.95 }}
-              className="w-10 h-10 lg:w-11 lg:h-11 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-glow"
+              className="w-10 h-10 lg:w-11 lg:h-11 rounded-2xl bg-foreground flex items-center justify-center shadow-medium"
             >
-              <span className="text-lg lg:text-xl font-black text-primary-foreground tracking-tighter">M</span>
+              <span className="text-lg lg:text-xl font-black text-background tracking-tighter">M</span>
             </motion.div>
             <div>
-              <h1 className="text-lg lg:text-xl font-extrabold text-foreground tracking-tight leading-none group-hover:text-gradient transition-all">
+              <h1 className="text-lg lg:text-xl font-extrabold text-foreground tracking-tight leading-none">
                 MockSocial
               </h1>
               <div className="flex items-center gap-2 mt-0.5">
@@ -282,7 +273,7 @@ export const Sidebar = () => {
                 size="icon"
                 onClick={() => setShowAIDialog(true)}
                 title="AI Conversation Generator"
-                className="h-9 w-9 rounded-xl text-muted-foreground hover:text-violet-500 hover:bg-violet-500/10 transition-all group/ai"
+                className="h-9 w-9 rounded-xl text-muted-foreground hover:text-foreground hover:bg-secondary transition-all group/ai"
               >
                 <Bot className="w-4 h-4 group-hover/ai:animate-pulse" />
               </Button>
@@ -292,12 +283,15 @@ export const Sidebar = () => {
                size="icon"
                onClick={() => {
                   store.generateRandomContent();
-                  store.mockupType === 'chat' 
-                    ? showToast("Generated random chat content!", "success")
-                    : showToast("Generated random post content!", "success");
+                  showToast(
+                    store.mockupType === 'chat'
+                      ? "Generated random chat content!"
+                      : "Generated random post content!",
+                    "success"
+                  );
                }}
                title="Smart Autofill (Populate random data)"
-               className="h-9 w-9 rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all group/wand"
+               className="h-9 w-9 rounded-xl text-muted-foreground hover:text-foreground hover:bg-secondary transition-all group/wand"
             >
                <Wand2 className="w-4 h-4 group-hover/wand:animate-pulse" />
             </Button>
@@ -311,7 +305,7 @@ export const Sidebar = () => {
                    }
                }}
                title="Reset / Clear All"
-               className="h-9 w-9 rounded-xl text-muted-foreground hover:text-red-500 hover:bg-red-500/10 transition-all"
+               className="h-9 w-9 rounded-xl text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
             >
                <Trash2 className="w-4 h-4" />
             </Button>
@@ -319,10 +313,6 @@ export const Sidebar = () => {
             <span className="hidden lg:contents">
               <ShareDialog />
               <UserAuthButton />
-              <Button className="h-9 px-4 rounded-xl font-bold text-xs gap-1.5 bg-foreground text-background shadow-medium hover:shadow-glow hover:-translate-y-0.5 transition-all duration-75">
-                <Sparkles className="w-3.5 h-3.5" />
-                Pro
-              </Button>
             </span>
           </div>
         </div>
@@ -397,8 +387,8 @@ export const Sidebar = () => {
                       {store.mockupType === 'chat' && (
                         <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-background rounded-full flex items-center justify-center shadow-soft border border-border">
                           <span className="relative flex h-3 w-3">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-section-green opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-section-green border-2 border-background"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foreground opacity-50"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-foreground border-2 border-background"></span>
                           </span>
                         </div>
                       )}
@@ -459,6 +449,8 @@ export const Sidebar = () => {
                         <input
                             type="file"
                             id="avatar-upload"
+                            title="Upload avatar image"
+                            aria-label="Upload avatar image"
                             className="hidden"
                             accept="image/*"
                             onChange={(e) => {
@@ -651,15 +643,13 @@ export const Sidebar = () => {
                           "relative px-3.5 py-3 rounded-xl flex items-center gap-3 transition-all border group text-left",
                           isSelected
                             ? 'bg-foreground border-foreground text-background shadow-medium'
-                            : 'bg-card border-border hover:border-primary/30 hover:bg-secondary/50',
+                            : 'bg-card border-border hover:border-foreground/30 hover:bg-secondary/50',
                           p.locked && "opacity-50 cursor-not-allowed hover:border-border hover:bg-card"
                         )}
                       >
                         <span className={cn(
-                          "flex items-center justify-center transition-all duration-75", 
-                          !p.locked && !isSelected && p.color,
-                          isSelected && "text-background",
-                          p.locked && "grayscale"
+                          "flex items-center justify-center transition-all duration-75",
+                          isSelected ? "text-background" : "text-muted-foreground group-hover:text-foreground"
                         )}>
                           {p.icon}
                         </span>
@@ -697,11 +687,11 @@ export const Sidebar = () => {
                       animate="visible"
                       className="pt-2"
                     >
-                      <button className="w-full bg-secondary/50 border border-border px-4 py-3.5 rounded-xl text-sm font-semibold text-foreground flex justify-between items-center cursor-pointer hover:border-primary/30 hover:bg-secondary transition-all group">
+                      <button type="button" className="w-full bg-secondary/50 border border-border px-4 py-3.5 rounded-xl text-sm font-semibold text-foreground flex justify-between items-center cursor-pointer hover:border-foreground/30 hover:bg-secondary transition-all group">
                     <span className="flex items-center gap-3">
                       <span className="relative flex h-2.5 w-2.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-section-green opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-section-green"></span>
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foreground opacity-50"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-foreground"></span>
                       </span>
                       Direct Message
                     </span>
@@ -732,7 +722,6 @@ export const Sidebar = () => {
                               store.setUseCustomColors(newUseCustomColors);
                               
                               if (newUseCustomColors && !store.meBubbleColor && !store.themBubbleColor) {
-                                const { getPlatformColors } = require('@/lib/platform-colors');
                                 const colors = getPlatformColors(store.platform, store.isDarkMode);
                                 store.setMeBubbleColor(colors.me);
                                 store.setThemBubbleColor(colors.them);
@@ -753,6 +742,8 @@ export const Sidebar = () => {
                                   type="color"
                                   value={store.meBubbleColor ?? "#0A84FF"}
                                   onChange={(e) => store.setMeBubbleColor(e.target.value)}
+                                  title="Our bubble color"
+                                  aria-label="Our bubble color"
                                   className="w-8 h-8 p-0 border-0 rounded overflow-hidden cursor-pointer"
                                 />
                                 <Button 
@@ -773,6 +764,8 @@ export const Sidebar = () => {
                                   type="color"
                                   value={store.themBubbleColor ?? "#E5E5E8"}
                                   onChange={(e) => store.setThemBubbleColor(e.target.value)}
+                                  title="Other bubble color"
+                                  aria-label="Other bubble color"
                                   className="w-8 h-8 p-0 border-0 rounded overflow-hidden cursor-pointer"
                                 />
                                 <Button 
@@ -819,14 +812,14 @@ export const Sidebar = () => {
                                   }}
                                   className={`h-6 px-2.5 rounded-full text-[10px] font-bold gap-1.5 transition-all ${
                                     liveTime
-                                      ? 'bg-section-green text-white border-transparent'
+                                      ? 'bg-foreground text-background border-transparent'
                                       : 'bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary'
                                   }`}
                                 >
                                   {liveTime && (
                                     <span className="relative flex h-1.5 w-1.5">
-                                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
-                                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white" />
+                                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-background opacity-75" />
+                                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-background" />
                                     </span>
                                   )}
                                   Live
@@ -836,6 +829,8 @@ export const Sidebar = () => {
                                   type="text"
                                   value={store.statusBar.time}
                                   onChange={(e) => store.updateStatusBar({ time: e.target.value })}
+                                  placeholder="9:41"
+                                  aria-label="Status bar time"
                                   disabled={liveTime}
                                   className={`h-9 bg-secondary/50 border-border font-medium text-sm transition-opacity ${
                                     liveTime ? 'opacity-60 cursor-not-allowed' : ''
@@ -848,11 +843,13 @@ export const Sidebar = () => {
                                   <label className="text-[10px] font-medium text-muted-foreground ml-0.5">Battery Level</label>
                                   <span className="text-[10px] font-bold text-foreground">{store.statusBar.batteryLevel}%</span>
                               </div>
-                              <input 
-                                  type="range" 
-                                  min="0" 
-                                  max="100" 
-                                  value={store.statusBar.batteryLevel} 
+                              <input
+                                  type="range"
+                                  min="0"
+                                  max="100"
+                                  title="Battery level"
+                                  aria-label="Battery level"
+                                  value={store.statusBar.batteryLevel}
                                   onChange={(e) => store.updateStatusBar({ batteryLevel: parseInt(e.target.value) })}
                                   className="w-full h-1.5 bg-secondary rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary"
                               />
@@ -867,12 +864,14 @@ export const Sidebar = () => {
                                       ))}
                                   </div>
                               </div>
-                              <input 
-                                  type="range" 
-                                  min="1" 
-                                  max="4" 
+                              <input
+                                  type="range"
+                                  min="1"
+                                  max="4"
                                   step="1"
-                                  value={store.statusBar.signalStrength} 
+                                  title="Signal strength"
+                                  aria-label="Signal strength"
+                                  value={store.statusBar.signalStrength}
                                   onChange={(e) => store.updateStatusBar({ signalStrength: parseInt(e.target.value) })}
                                   className="w-full h-1.5 bg-secondary rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary"
                               />
@@ -995,7 +994,7 @@ export const Sidebar = () => {
                                 {([1, 2, 3] as const).map(q => (
                                     <button
                                         key={q}
-                                        onClick={() => store.setExportQuality(q as any)}
+                                        onClick={() => store.setExportQuality(q)}
                                         className={`px-3 py-1 text-[10px] font-medium rounded-full transition-all ${
                                             store.exportQuality === q 
                                                 ? "bg-primary text-primary-foreground shadow-sm" 
@@ -1061,13 +1060,13 @@ export const Sidebar = () => {
                         );
                         showToast(`"${template.title}" template loaded!`, 'success');
                       }}
-                      className="relative flex flex-col items-start gap-2 p-3.5 rounded-xl border border-border bg-card hover:border-primary/30 hover:bg-secondary/50 transition-all text-left group overflow-hidden"
+                      className="relative flex flex-col items-start gap-2 p-3.5 rounded-xl border border-border bg-card hover:border-foreground/30 hover:bg-secondary/50 transition-all text-left group overflow-hidden"
                     >
-                      {/* Colour accent strip */}
-                      <div className={`absolute top-0 left-0 right-0 h-0.5 ${template.color.replace('/10', '')} opacity-60 group-hover:opacity-100 transition-opacity`} />
+                      {/* Accent strip */}
+                      <div className="absolute top-0 left-0 right-0 h-0.5 bg-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
 
                       {/* Emoji badge */}
-                      <div className={`w-9 h-9 rounded-xl ${template.color} flex items-center justify-center text-xl shrink-0`}>
+                      <div className="w-9 h-9 rounded-xl bg-secondary border border-border flex items-center justify-center text-xl shrink-0">
                         {template.emoji}
                       </div>
 

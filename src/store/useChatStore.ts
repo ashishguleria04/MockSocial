@@ -108,16 +108,17 @@ export const useChatStore = create<ChatState>()(
     {
       name: 'chat-mockup-storage',
       version: 2, // Bumped: added savedMockups
-      migrate: (persistedState: any, version: number) => {
+      migrate: (persistedState: unknown, version: number) => {
+        const state = persistedState as Record<string, unknown>;
         if (version === 0) {
           // Ensure phoneStyle exists for very old state
-          persistedState.phoneStyle = 'default';
+          state.phoneStyle = 'default';
         }
         if (version < 2) {
           // Seed empty savedMockups array for users upgrading from v1
-          persistedState.savedMockups = [];
+          state.savedMockups = [];
         }
-        return persistedState as ChatState;
+        return state as unknown as ChatState;
       },
       partialize: (state) => ({
         // Selectively persist fields if needed, or persist everything

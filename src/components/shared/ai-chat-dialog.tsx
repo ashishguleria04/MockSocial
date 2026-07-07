@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, Sparkles, X, Loader2, MessageSquare, Zap } from "lucide-react";
+import { Bot, Sparkles, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useChatStore, Platform } from "@/store/useChatStore";
@@ -57,8 +57,9 @@ export function AIChatDialog({ open, onOpenChange }: AIChatDialogProps) {
       showToast("AI conversation generated! ✨", "success");
       onOpenChange(false);
       setPrompt("");
-    } catch (error: any) {
-      showToast(error.message || "Failed to generate. Check your API key.", "error");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to generate. Check your API key.";
+      showToast(message, "error");
     } finally {
       setIsGenerating(false);
     }
@@ -76,7 +77,7 @@ export function AIChatDialog({ open, onOpenChange }: AIChatDialogProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => !isGenerating && onOpenChange(false)}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[90]"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-90"
           />
 
           {/* Dialog */}
@@ -85,14 +86,14 @@ export function AIChatDialog({ open, onOpenChange }: AIChatDialogProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5, bounce: 0.2 }}
-            className="fixed inset-0 flex items-center justify-center z-[100] p-4"
+            className="fixed inset-0 flex items-center justify-center z-100 p-4"
           >
             <div className="w-full max-w-lg bg-background border border-border rounded-2xl shadow-2xl overflow-hidden">
               {/* Header */}
-              <div className="relative px-6 py-5 border-b border-border bg-gradient-to-r from-violet-500/10 via-purple-500/10 to-fuchsia-500/10">
+              <div className="relative px-6 py-5 border-b border-border bg-secondary/40">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg">
-                    <Bot className="w-5 h-5 text-white" />
+                  <div className="w-10 h-10 rounded-xl bg-foreground flex items-center justify-center shadow-medium">
+                    <Bot className="w-5 h-5 text-background" />
                   </div>
                   <div>
                     <h2 className="text-lg font-bold text-foreground">
@@ -107,8 +108,11 @@ export function AIChatDialog({ open, onOpenChange }: AIChatDialogProps) {
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={() => !isGenerating && onOpenChange(false)}
-                  className="absolute right-4 top-4 p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                  aria-label="Close dialog"
+                  title="Close dialog"
+                  className="absolute right-4 top-4 p-1.5 rounded-lg hover:bg-secondary transition-colors"
                 >
                   <X className="w-5 h-5 text-muted-foreground" />
                 </button>
@@ -125,7 +129,7 @@ export function AIChatDialog({ open, onOpenChange }: AIChatDialogProps) {
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder="e.g. Two best friends planning a road trip, one is super excited and the other is worried about costs..."
-                    className="min-h-[100px] bg-secondary/50 border-border focus:bg-background resize-none text-sm"
+                    className="min-h-25 bg-secondary/50 border-border focus:bg-background resize-none text-sm"
                     disabled={isGenerating}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
@@ -143,6 +147,7 @@ export function AIChatDialog({ open, onOpenChange }: AIChatDialogProps) {
                   <div className="flex flex-wrap gap-1.5">
                     {EXAMPLE_PROMPTS.map((example) => (
                       <button
+                        type="button"
                         key={example}
                         onClick={() => setPrompt(example)}
                         disabled={isGenerating}
@@ -173,10 +178,12 @@ export function AIChatDialog({ open, onOpenChange }: AIChatDialogProps) {
                     type="range"
                     min="3"
                     max="15"
+                    title="Number of messages"
+                    aria-label="Number of messages"
                     value={messageCount}
                     onChange={(e) => setMessageCount(parseInt(e.target.value))}
                     disabled={isGenerating}
-                    className="w-full h-1.5 bg-secondary rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-violet-500"
+                    className="w-full h-1.5 bg-secondary rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-foreground"
                   />
                   <div className="flex justify-between text-[10px] text-muted-foreground">
                     <span>Quick</span>
@@ -201,9 +208,9 @@ export function AIChatDialog({ open, onOpenChange }: AIChatDialogProps) {
                   onClick={handleGenerate}
                   disabled={!prompt.trim() || isGenerating}
                   className={cn(
-                    "h-10 px-5 rounded-xl font-bold text-sm gap-2 transition-all duration-75",
-                    "bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white",
-                    "hover:from-violet-600 hover:to-fuchsia-600 hover:shadow-lg hover:-translate-y-0.5",
+                    "h-10 px-5 rounded-xl font-bold text-sm gap-2 transition-all duration-150",
+                    "bg-foreground text-background",
+                    "hover:opacity-90 hover:shadow-medium hover:-translate-y-0.5",
                     "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
                   )}
                 >

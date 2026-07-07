@@ -8,7 +8,6 @@ import { Bookmark, RotateCcw, Trash2, Save, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Icons } from "@/components/shared/icons";
-import { cn } from "@/lib/utils";
 import { useToast } from "@/components/shared/toast";
 import {
   MessageSquare,
@@ -34,29 +33,27 @@ function relativeTime(ms: number): string {
 
 const PLATFORM_META: Record<
   string,
-  { label: string; color: string; bgColor: string; icon: React.ReactNode }
+  { label: string; icon: React.ReactNode }
 > = {
-  whatsapp:  { label: "WhatsApp",  color: "text-green-600 dark:text-green-400",  bgColor: "bg-green-50 dark:bg-green-900/20",  icon: <Icons.WhatsApp className="w-4 h-4 fill-current" /> },
-  messenger: { label: "Messenger", color: "text-blue-500 dark:text-blue-400",   bgColor: "bg-blue-50 dark:bg-blue-900/20",   icon: <Icons.Messenger className="w-4 h-4 fill-current" /> },
-  telegram:  { label: "Telegram",  color: "text-sky-500 dark:text-sky-400",    bgColor: "bg-sky-50 dark:bg-sky-900/20",     icon: <Icons.Telegram className="w-4 h-4 fill-current" /> },
-  discord:   { label: "Discord",   color: "text-indigo-600 dark:text-indigo-400", bgColor: "bg-indigo-50 dark:bg-indigo-900/20",icon: <Icons.Discord className="w-4 h-4 fill-current" /> },
-  imessage:  { label: "iMessage",  color: "text-slate-800 dark:text-slate-200",  bgColor: "bg-slate-100 dark:bg-slate-800",   icon: <Icons.Apple className="w-4 h-4 fill-current" /> },
-  instagram: { label: "Instagram", color: "text-pink-600 dark:text-pink-400",   bgColor: "bg-pink-50 dark:bg-pink-900/20",   icon: <Icons.Instagram className="w-4 h-4" /> },
-  slack:     { label: "Slack",     color: "text-purple-700 dark:text-purple-400", bgColor: "bg-purple-50 dark:bg-purple-900/20",icon: <Icons.Slack className="w-4 h-4 fill-current" /> },
-  signal:    { label: "Signal",    color: "text-blue-600 dark:text-blue-400",   bgColor: "bg-blue-50 dark:bg-blue-900/20",   icon: <Icons.Signal className="w-4 h-4 fill-current" /> },
-  x:         { label: "X/Twitter", color: "text-slate-900 dark:text-slate-200",  bgColor: "bg-slate-100 dark:bg-slate-800",   icon: <Icons.Twitter className="w-4 h-4 fill-current" /> },
-  teams:     { label: "Teams",     color: "text-blue-700 dark:text-blue-400",   bgColor: "bg-blue-50 dark:bg-blue-900/20",   icon: <Users className="w-4 h-4" /> },
-  snapchat:  { label: "Snapchat",  color: "text-yellow-500 dark:text-yellow-400", bgColor: "bg-yellow-50 dark:bg-yellow-900/20",icon: <MessageSquare className="w-4 h-4" /> },
-  tiktok:    { label: "TikTok",    color: "text-slate-900 dark:text-slate-200",  bgColor: "bg-slate-100 dark:bg-slate-800",   icon: <Smartphone className="w-4 h-4" /> },
-  linkedin:  { label: "LinkedIn",  color: "text-blue-700 dark:text-blue-400",   bgColor: "bg-blue-50 dark:bg-blue-900/20",   icon: <Linkedin className="w-4 h-4" /> },
-  threads:   { label: "Threads",   color: "text-slate-900 dark:text-slate-200",  bgColor: "bg-slate-100 dark:bg-slate-800",   icon: <AtSign className="w-4 h-4" /> },
+  whatsapp:  { label: "WhatsApp",  icon: <Icons.WhatsApp className="w-4 h-4 fill-current" /> },
+  messenger: { label: "Messenger", icon: <Icons.Messenger className="w-4 h-4 fill-current" /> },
+  telegram:  { label: "Telegram",  icon: <Icons.Telegram className="w-4 h-4 fill-current" /> },
+  discord:   { label: "Discord",   icon: <Icons.Discord className="w-4 h-4 fill-current" /> },
+  imessage:  { label: "iMessage",  icon: <Icons.Apple className="w-4 h-4 fill-current" /> },
+  instagram: { label: "Instagram", icon: <Icons.Instagram className="w-4 h-4" /> },
+  slack:     { label: "Slack",     icon: <Icons.Slack className="w-4 h-4 fill-current" /> },
+  signal:    { label: "Signal",    icon: <Icons.Signal className="w-4 h-4 fill-current" /> },
+  x:         { label: "X/Twitter", icon: <Icons.Twitter className="w-4 h-4 fill-current" /> },
+  teams:     { label: "Teams",     icon: <Users className="w-4 h-4" /> },
+  snapchat:  { label: "Snapchat",  icon: <MessageSquare className="w-4 h-4" /> },
+  tiktok:    { label: "TikTok",    icon: <Smartphone className="w-4 h-4" /> },
+  linkedin:  { label: "LinkedIn",  icon: <Linkedin className="w-4 h-4" /> },
+  threads:   { label: "Threads",   icon: <AtSign className="w-4 h-4" /> },
 };
 
 const getplatformMeta = (platform: string) =>
   PLATFORM_META[platform] ?? {
     label: platform,
-    color: "text-muted-foreground",
-    bgColor: "bg-secondary",
     icon: <Share2 className="w-4 h-4" />,
   };
 
@@ -77,16 +74,10 @@ const SavedMockupCard = ({ saved, onLoad, onDelete }: CardProps) => {
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -20, transition: { duration: 0.15 } }}
-      className="group relative flex items-center gap-3 p-3 rounded-xl border border-border bg-card hover:border-primary/30 hover:bg-secondary/40 transition-all"
+      className="group relative flex items-center gap-3 p-3 rounded-xl border border-border bg-card hover:border-foreground/30 hover:bg-secondary/40 transition-all"
     >
       {/* Platform icon badge */}
-      <div
-        className={cn(
-          "w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all",
-          meta.bgColor,
-          meta.color
-        )}
-      >
+      <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-secondary border border-border text-foreground transition-all">
         {meta.icon}
       </div>
 
@@ -106,7 +97,7 @@ const SavedMockupCard = ({ saved, onLoad, onDelete }: CardProps) => {
           {saved.mockupType === "post" && (
             <>
               <span className="text-border">·</span>
-              <span className="text-[10px] font-medium text-pink-500">post</span>
+              <span className="text-[10px] font-semibold text-foreground border border-border rounded-full px-1.5">post</span>
             </>
           )}
         </div>
@@ -119,7 +110,7 @@ const SavedMockupCard = ({ saved, onLoad, onDelete }: CardProps) => {
           size="icon"
           onClick={onLoad}
           title="Restore this mockup"
-          className="h-7 w-7 rounded-lg hover:bg-primary/10 hover:text-primary transition-all"
+          className="h-7 w-7 rounded-lg hover:bg-secondary hover:text-foreground transition-all"
         >
           <RotateCcw className="w-3.5 h-3.5" />
         </Button>
@@ -128,7 +119,7 @@ const SavedMockupCard = ({ saved, onLoad, onDelete }: CardProps) => {
           size="icon"
           onClick={onDelete}
           title="Delete"
-          className="h-7 w-7 rounded-lg hover:bg-red-500/10 hover:text-red-500 transition-all"
+          className="h-7 w-7 rounded-lg hover:bg-foreground hover:text-background transition-all"
         >
           <Trash2 className="w-3.5 h-3.5" />
         </Button>

@@ -44,10 +44,12 @@ export function SortableMessage({ message, messages, updateMessage, deleteMessag
     >
       <div className="flex justify-between items-center mb-2.5">
         <div className="flex items-center gap-2">
-           <button 
-             {...attributes} 
+           <button
+             type="button"
+             title="Drag to reorder"
+             {...attributes}
              {...listeners}
-             className="cursor-grab active:cursor-grabbing p-1 rounded hover:bg-white/10 text-muted-foreground hover:text-foreground transition-colors"
+             className="cursor-grab active:cursor-grabbing p-1 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
            >
              <GripVertical className="w-3.5 h-3.5" />
            </button>
@@ -98,6 +100,8 @@ export function SortableMessage({ message, messages, updateMessage, deleteMessag
       <textarea
         value={message.text}
         onChange={(e) => updateMessage(message.id, { text: e.target.value })}
+        aria-label="Message text"
+        placeholder="Message text…"
         className="w-full text-sm text-foreground bg-transparent outline-none resize-none font-medium leading-relaxed placeholder:text-muted-foreground focus:ring-0"
         rows={Math.max(1, Math.ceil(message.text.length / 45))}
         spellCheck={false}
@@ -110,6 +114,8 @@ export function SortableMessage({ message, messages, updateMessage, deleteMessag
             <select
                 value={message.replyToId || ""}
                 onChange={(e) => updateMessage(message.id, { replyToId: e.target.value || undefined })}
+                title="Reply to message"
+                aria-label="Reply to message"
                 className="flex-1 bg-background/50 border border-border text-xs rounded-md px-2 py-1 text-muted-foreground focus:outline-none focus:border-primary/50"
             >
                 <option value="">No Reply</option>
@@ -129,18 +135,22 @@ export function SortableMessage({ message, messages, updateMessage, deleteMessag
             {message.reactions?.map((reaction, i) => (
                 <div key={i} className="flex items-center bg-background/50 border border-border rounded-full pl-2 pr-1 py-0.5 text-[10px] gap-1">
                     <span>{reaction.emoji}</span>
-                    <input 
-                        type="number" 
+                    <input
+                        type="number"
                         value={reaction.count}
                         onChange={(e) => {
                             const newReactions = [...(message.reactions || [])];
                             newReactions[i].count = parseInt(e.target.value) || 1;
                             updateMessage(message.id, { reactions: newReactions });
                         }}
+                        title="Reaction count"
+                        aria-label="Reaction count"
                         className="w-6 bg-transparent text-center outline-none"
                         min="1"
                     />
-                    <button 
+                    <button
+                        type="button"
+                        title="Remove reaction"
                         onClick={() => {
                             const newReactions = message.reactions!.filter((_, idx) => idx !== i);
                             updateMessage(message.id, { reactions: newReactions.length > 0 ? newReactions : undefined });
@@ -152,7 +162,8 @@ export function SortableMessage({ message, messages, updateMessage, deleteMessag
                 </div>
             ))}
             
-            <button 
+            <button
+                type="button"
                 onClick={() => {
                     // Simple prompt for now, could be replaced with emoji-picker-react later
                     const emoji = prompt("Enter an emoji (e.g. ❤️, 😂, 👍):", "❤️");

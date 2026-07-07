@@ -34,45 +34,35 @@ const ThreadsPostSkin = dynamic(() => import("../skins/ThreadsPostSkin").then(mo
 
 
 
+const PHONE_DIMENSIONS = {
+    mini: { width: 310, height: 640 },
+    default: { width: 340, height: 700 },
+    pro: { width: 375, height: 780 },
+} as const;
+
 export const ChatCanvas = () => {
-    const { platform, isDarkMode, mockupType, wallpaper, showKeyboard, phoneStyle, setMobileSheetOpen, exportQuality } = useChatStore();
+    const { platform, isDarkMode, mockupType, wallpaper, showKeyboard, showWatermark, phoneStyle, setMobileSheetOpen, exportQuality } = useChatStore();
+
+    const phoneSize = PHONE_DIMENSIONS[phoneStyle] ?? PHONE_DIMENSIONS.default;
 
     // Dynamic scale: fit mockup to available width on any screen size.
     // Initialized to null so the server render uses no inline style (avoids hydration mismatch).
     const wrapperRef = React.useRef<HTMLDivElement>(null);
     const [dynamicScale, setDynamicScale] = React.useState<number | null>(null);
 
-    const getMockupWidth = React.useCallback(() => {
-        switch (phoneStyle) {
-            case 'mini': return 310;
-            case 'pro': return 375;
-            default: return 340;
-        }
-    }, [phoneStyle]);
-
     React.useEffect(() => {
         const wrapper = wrapperRef.current;
         if (!wrapper) return;
         const compute = () => {
             const available = wrapper.clientWidth - 32; // 16px padding each side
-            const scale = Math.min(1, available / getMockupWidth());
+            const scale = Math.min(1, available / phoneSize.width);
             setDynamicScale(scale);
         };
         compute(); // run immediately on mount
         const obs = new ResizeObserver(compute);
         obs.observe(wrapper);
         return () => obs.disconnect();
-    }, [getMockupWidth]);
-
-    const getPhoneDimensions = () => {
-        switch (phoneStyle) {
-            case 'mini': return 'w-[310px] h-[640px]';
-            case 'pro': return 'w-[375px] h-[780px]';
-            case 'default':
-            default:
-                return 'w-[340px] h-[700px]';
-        }
-    };
+    }, [phoneSize.width]);
 
     const renderSkin = () => {
         // If mockup type is 'post', use post skins
@@ -255,13 +245,8 @@ export const ChatCanvas = () => {
                 frames.push({ element: node, delayMs: 1500 });
             }
 
-            const dims = getPhoneDimensions();
-            // Fallback sizes if regex fails
-            const width = parseInt(dims.match(/w-\[(\d+)px\]/)?.[1] || "340");
-            const height = parseInt(dims.match(/h-\[(\d+)px\]/)?.[1] || "700");
-            
             const { generateGifFromElements } = await import("@/lib/export-utils");
-            const blob = await generateGifFromElements(frames, width, height);
+            const blob = await generateGifFromElements(frames, phoneSize.width, phoneSize.height);
             
             const dataUrl = URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -288,9 +273,12 @@ export const ChatCanvas = () => {
                 onDrop={handleDrop}
                 style={dynamicScale !== null ? { transform: `scale(${dynamicScale})`, transformOrigin: 'center center' } : { transformOrigin: 'center center' }}
             >
-                <div className="absolute -inset-4 bg-gradient-to-tr from-primary/40 via-purple-500/40 to-secondary/40 rounded-[3.5rem] blur-2xl opacity-75 group-hover:opacity-100 transition duration-75 group-hover:duration-75 animate-pulse pointer-events-none" />
+                <div className="absolute -inset-4 bg-foreground/10 dark:bg-white/5 rounded-[3.5rem] blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 {/* Phone Frame */}
-                <div className={`relative ${getPhoneDimensions()} bg-[#121212] rounded-[3rem] shadow-[0_0_0_9px_#333333,0_0_0_10px_#000000,0_20px_50px_rgba(0,0,0,0.5)] border-[6px] border-[#222222] overflow-hidden transition-all duration-75`}>
+                <div
+                    className="relative bg-[#121212] rounded-[3rem] shadow-[0_0_0_9px_#333333,0_0_0_10px_#000000,0_20px_50px_rgba(0,0,0,0.5)] border-[6px] border-[#222222] overflow-hidden transition-all duration-150"
+                    style={{ width: phoneSize.width, height: phoneSize.height }}
+                >
 
                     {/* Side Buttons */}
                     <div className="absolute top-24 -left-[14px] w-[8px] h-8 bg-[#222222] rounded-l-lg shadow-sm" /> {/* Mute */}
@@ -299,7 +287,7 @@ export const ChatCanvas = () => {
                     <div className="absolute top-44 -right-[14px] w-[8px] h-20 bg-[#222222] rounded-r-lg shadow-sm" /> {/* Power */}
 
                     {/* Inner Screen Container */}
-                    <div className={`relative w-full h-full rounded-[2.5rem] overflow-hidden border-[6px] border-black ${isDarkMode ? 'bg-black' : 'bg-black'}`}>
+                    <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden border-[6px] border-black bg-black">
                         <StatusBar platform={platform} />
 
                         {/* Screen Content */}
@@ -310,12 +298,12 @@ export const ChatCanvas = () => {
                             <ErrorBoundary>
                                 {renderSkin()}
                             </ErrorBoundary>
-                            {useChatStore(s => s.showWatermark ?? true) && <WatermarkOverlay />}
+                            {(showWatermark ?? true) && <WatermarkOverlay />}
                             {showKeyboard && <KeyboardOverlay />}
                             
                             {/* Drag and Drop Overlay */}
                             {isDragging && (
-                                <div className="absolute inset-0 z-[100] bg-primary/20 backdrop-blur-sm flex flex-col items-center justify-center border-4 border-dashed border-primary rounded-[2.2rem] transition-all">
+                                <div className="absolute inset-0 z-100 bg-foreground/20 backdrop-blur-sm flex flex-col items-center justify-center border-4 border-dashed border-foreground rounded-[2.2rem] transition-all">
                                     <div className="bg-background shadow-xl rounded-2xl p-4 flex flex-col items-center gap-2 animate-bounce">
                                         <Download className="w-8 h-8 text-primary" strokeWidth={2.5} />
                                         <span className="font-bold text-foreground text-sm">Drop image to add</span>
@@ -333,38 +321,39 @@ export const ChatCanvas = () => {
             {/* Floating Action Buttons — Download & GIF */}
             <div className="fixed bottom-4 right-4 lg:bottom-10 lg:right-10 flex flex-col gap-3 z-50">
                 <button
+                    type="button"
                     onClick={downloadGif}
                     disabled={isGenerating || isGeneratingGif}
-                    className="group relative flex items-center justify-center w-11 h-11 lg:w-14 lg:h-14 bg-indigo-600 rounded-2xl shadow-xl hover:scale-105 hover:-translate-y-1 transition-all duration-75 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="group flex items-center justify-center w-11 h-11 lg:w-14 lg:h-14 bg-background border border-border text-foreground rounded-2xl shadow-card hover:scale-105 hover:-translate-y-1 hover:border-foreground/40 transition-all duration-150 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
                     title="Export Animated GIF"
                 >
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                     {isGeneratingGif ? (
-                        <div className="w-5 h-5 lg:w-6 lg:h-6 border-2 border-white/30 border-t-white rounded-full animate-spin relative z-10" />
+                        <div className="w-5 h-5 lg:w-6 lg:h-6 border-2 border-foreground/30 border-t-foreground rounded-full animate-spin" />
                     ) : (
-                        <Video className="w-5 h-5 lg:w-6 lg:h-6 text-white relative z-10" strokeWidth={2.5} />
+                        <Video className="w-5 h-5 lg:w-6 lg:h-6" strokeWidth={2.5} />
                     )}
                 </button>
-                
+
                 <button
+                    type="button"
                     onClick={downloadScreenshot}
                     disabled={isGenerating || isGeneratingGif}
-                    className="group relative flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 bg-slate-900 rounded-2xl shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-75 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="group flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 bg-foreground text-background rounded-2xl shadow-medium hover:scale-105 hover:-translate-y-1 hover:opacity-90 transition-all duration-150 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
                     title="Download Mockup (PNG)"
                 >
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-slate-800 to-slate-700 opacity-0 group-hover:opacity-100 transition-opacity" />
                     {isGenerating ? (
-                        <div className="w-5 h-5 lg:w-7 lg:h-7 border-2 border-white/30 border-t-white rounded-full animate-spin relative z-10" />
+                        <div className="w-5 h-5 lg:w-7 lg:h-7 border-2 border-background/30 border-t-background rounded-full animate-spin" />
                     ) : (
-                        <Download className="w-5 h-5 lg:w-7 lg:h-7 text-white relative z-10" strokeWidth={2.5} />
+                        <Download className="w-5 h-5 lg:w-7 lg:h-7" strokeWidth={2.5} />
                     )}
                 </button>
             </div>
 
             {/* Edit FAB — mobile only, opens the sidebar bottom sheet */}
             <button
+                type="button"
                 onClick={() => setMobileSheetOpen(true)}
-                className="lg:hidden fixed bottom-4 left-4 z-50 flex items-center gap-2 h-12 px-4 bg-primary text-primary-foreground rounded-2xl shadow-2xl hover:scale-105 active:scale-95 transition-all duration-75 font-bold text-sm"
+                className="lg:hidden fixed bottom-4 left-4 z-50 flex items-center gap-2 h-12 px-4 bg-foreground text-background rounded-2xl shadow-medium hover:scale-105 active:scale-95 transition-all duration-150 font-bold text-sm"
                 title="Open Editor"
             >
                 <SlidersHorizontal className="w-4 h-4" strokeWidth={2.5} />

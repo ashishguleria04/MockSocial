@@ -99,7 +99,7 @@ status must be "read" for all messages except optionally the very last "me" mess
       throw new Error('Invalid response structure');
     }
 
-    const messages = parsed.messages.map((msg: any, i: number) => ({
+    const messages = parsed.messages.map((msg: Record<string, unknown>, i: number) => ({
       id: Math.random().toString(36).substring(2, 9),
       text: String(msg.text || ''),
       sender: msg.sender === 'me' ? 'me' : 'them',
@@ -114,10 +114,11 @@ status must be "read" for all messages except optionally the very last "me" mess
     };
 
     return NextResponse.json({ messages, contact });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Generate chat error:', error);
+    const message = error instanceof Error ? error.message : 'Failed to generate conversation';
     return NextResponse.json(
-      { error: error.message || 'Failed to generate conversation' },
+      { error: message },
       { status: 500 }
     );
   }

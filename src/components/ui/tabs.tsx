@@ -46,6 +46,7 @@ const TabsList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
+    role="tablist"
     className={cn(
       "inline-flex h-10 items-center justify-center rounded-xl bg-secondary p-1 text-muted-foreground",
       className
@@ -67,7 +68,7 @@ const TabsTrigger = React.forwardRef<
         ref={ref}
         type="button"
         role="tab"
-        aria-selected={isActive}
+      aria-selected={isActive ? "true" : "false"}
         data-state={isActive ? "active" : "inactive"}
         onClick={(e) => {
             context?.setActiveTab(value)
@@ -93,6 +94,7 @@ const TabsContent = React.forwardRef<
   return (
     <div
       ref={ref}
+      role="tabpanel"
       className={cn(
         "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 animate-in fade-in-50 zoom-in-95 duration-200",
         className

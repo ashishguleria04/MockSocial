@@ -4,23 +4,21 @@ import { cn } from "@/lib/utils";
 interface WatermarkOverlayProps {
   className?: string;
   count?: number; // Number of times to repeat the watermark (grid size approx)
-  opacity?: number;
 }
 
-export const WatermarkOverlay: React.FC<WatermarkOverlayProps> = ({ 
+export const WatermarkOverlay: React.FC<WatermarkOverlayProps> = ({
   className,
   count = 12,
-  opacity = 15 // Increased default opacity for visibility
 }) => {
   return (
     <div className={cn(
-      "absolute inset-0 pointer-events-none z-[50] overflow-hidden flex flex-wrap content-center justify-center gap-12 p-8 select-none",
+      "absolute inset-0 pointer-events-none z-50 overflow-hidden flex flex-wrap content-center justify-center gap-12 p-8 select-none",
       className
     )}>
       {Array.from({ length: count }).map((_, i) => (
-        <div 
-          key={i} 
-          className="transform -rotate-45 text-slate-900/10 dark:text-slate-100/10 font-black text-2xl whitespace-nowrap"
+        <div
+          key={i}
+          className="transform -rotate-45 text-neutral-500/25 font-black text-2xl whitespace-nowrap"
         >
           MockSocial
         </div>

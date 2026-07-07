@@ -8,15 +8,15 @@ export interface ButtonProps
 }
 
 const buttonVariants = (variant: string = "default", size: string = "default", className: string = "") => {
-  const base = "inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-sm font-semibold ring-offset-white transition-all duration-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.96]"
-  
+  const base = "inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-sm font-semibold transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 active:scale-[0.97]"
+
   const variants: Record<string, string> = {
-    default: "bg-slate-900 text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800 hover:shadow-xl hover:shadow-slate-900/30 hover:-translate-y-0.5",
-    destructive: "bg-red-500 text-slate-50 shadow-sm hover:bg-red-600",
-    outline: "border-[1.5px] border-slate-200 bg-white shadow-sm hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300",
-    secondary: "bg-slate-100 text-slate-900 hover:bg-slate-200",
-    ghost: "hover:bg-slate-100/50 hover:text-slate-900 text-slate-500",
-    link: "text-slate-900 underline-offset-4 hover:underline",
+    default: "bg-primary text-primary-foreground shadow-medium hover:bg-primary/90 hover:-translate-y-0.5",
+    destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+    outline: "border border-border bg-background shadow-sm hover:bg-secondary hover:text-foreground",
+    secondary: "bg-secondary text-secondary-foreground hover:bg-accent",
+    ghost: "hover:bg-secondary hover:text-foreground text-muted-foreground",
+    link: "text-foreground underline-offset-4 hover:underline",
   }
 
   const sizes: Record<string, string> = {
